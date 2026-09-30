@@ -11,30 +11,32 @@
 <body>
 
     <header>
-        <div class="header-inner">
+    <div class="header-inner">
 
-            <div class="logo">
-                YAROSLAV MASLAKOV
-            </div>
-
-            <nav>
-                <a href="index.html" class="active">Home</a>
-                <a href="articles/index.html">Articles</a>
-                <a href="research/index.html">Research</a>
-                <a href="publications/index.html">Publications</a>
-                <a href="certificates/index.html">Certificates</a>
-                <a href="about/index.html">About</a>
-                <a href="contacts/index.html">Contacts</a>
-            </nav>
-
-            <div class="language">
-                <a href="../uk/index.html">UA</a>
-                <span>|</span>
-                <a href="../en/index.html">EN</a>
-            </div>
-
+        <div class="logo">
+            YAROSLAV MASLAKOV
         </div>
-    </header>
+
+        <nav>
+            <a href="index.html" class="active">Home</a>
+            <a href="articles/index.html">Articles</a>
+            <a href="research/index.html">Research</a>
+            <a href="publications/index.html">Publications</a>
+            <a href="certificates/index.html">Certificates</a>
+            <a href="about/index.html">About</a>
+            <a href="contacts/index.html">Contacts</a>
+        </nav>
+
+        <button class="menu-toggle" type="button" aria-label="Open menu" onclick="this.textContent = this.textContent === 'MENU' ? 'CLOSE' : 'MENU'; document.querySelector('nav').classList.toggle('menu-open')">MENU</button>
+
+        <div class="language">
+            <a href="../uk/index.html">UA</a>
+            <span>|</span>
+            <a href="../en/index.html">EN</a>
+        </div>
+
+    </div>
+</header>
 
 
     <main>
@@ -132,6 +134,18 @@
     <footer>
         © 2026 Yaroslav Maslakov
     </footer>
+<script>
+    const menuButton = document.querySelector('.menu-toggle');
+    const menu = document.querySelector('nav');
 
+    document.addEventListener('click', function(event) {
+        if (!menuButton || !menu) return;
+
+        if (!menu.contains(event.target) && !menuButton.contains(event.target)) {
+            menu.classList.remove('menu-open');
+            menuButton.textContent = 'MENU';
+        }
+    });
+</script>
 </body>
 </html>

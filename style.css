@@ -481,10 +481,17 @@ footer {
     border: 1px solid #DED8D0;
     background-color: transparent;
     color: #4A1725;
-    font-size: 24px;
-    line-height: 1;
-    padding: 6px 10px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 8px 12px;
     cursor: pointer;
+}
+
+.menu-toggle:hover {
+    color: #6E2235;
+    border-color: #6E2235;
 }
 
 @media (max-width: 1050px) {
@@ -494,6 +501,7 @@ footer {
 
     .menu-toggle {
         display: block;
+        margin-left: auto;
     }
 
     header nav {
@@ -503,6 +511,7 @@ footer {
         align-items: flex-start;
         gap: 0;
         padding-top: 15px;
+        margin-top: 15px;
         border-top: 1px solid #DED8D0;
     }
 
@@ -517,9 +526,5 @@ footer {
 
     header nav a.active::after {
         display: none;
-    }
-
-    .language {
-        margin-left: auto;
     }
 }

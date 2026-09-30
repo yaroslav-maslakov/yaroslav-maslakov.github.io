@@ -16,9 +16,7 @@
             <div class="logo">
                 ЯРОСЛАВ МАСЛАКОВ
             </div>
-            
-            <button class="menu-toggle" type="button" aria-label="Відкрити меню" onclick="document.querySelector('nav').classList.toggle('menu-open')">☰</button>
-            
+             
             <nav>
                 <a href="index.html" class="active">Головна</a>
                 <a href="articles/index.html">Статті</a>
@@ -29,6 +27,8 @@
                 <a href="contacts/index.html">Контакти</a>
             </nav>
 
+            <button class="menu-toggle" type="button" aria-label="Відкрити меню" onclick="this.textContent = this.textContent === 'МЕНЮ' ? 'ЗАКРИТИ' : 'МЕНЮ'; document.querySelector('nav').classList.toggle('menu-open')">МЕНЮ</button>
+            
             <div class="language">
                 <a href="../uk/index.html">UA</a>
                 <span>|</span>

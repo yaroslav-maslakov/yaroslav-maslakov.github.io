@@ -393,6 +393,7 @@ footer {
         color: #6E2235;
         font-weight: 700;
     }
+    header nav a.active::after { display: none; }
 
     .language {
         margin-left: 12px;

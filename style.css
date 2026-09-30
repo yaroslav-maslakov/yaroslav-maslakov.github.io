@@ -389,8 +389,9 @@ header nav a {
     text-align: right;
 }
 
-header nav a.active::after {
-    display: none;
+header nav a.active {
+    color: #6E2235;
+    font-weight: 700;
 }
 
 .language {

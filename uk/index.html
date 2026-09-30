@@ -134,5 +134,19 @@
         © 2026 Ярослав Маслаков
     </footer>
 
+<script>
+    const menuButton = document.querySelector('.menu-toggle');
+    const menu = document.querySelector('nav');
+
+    document.addEventListener('click', function(event) {
+        if (!menuButton || !menu) return;
+
+        if (!menu.contains(event.target) && !menuButton.contains(event.target)) {
+            menu.classList.remove('menu-open');
+            menuButton.textContent = 'МЕНЮ';
+        }
+    });
+</script>
+    
 </body>
 </html>

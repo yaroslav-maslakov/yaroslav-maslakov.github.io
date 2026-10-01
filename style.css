@@ -708,3 +708,48 @@ footer {
     }
 
 }
+/* =========================
+   ADMIN — TOOLBAR
+   ========================= */
+
+.admin-certificates-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 32px;
+    margin-bottom: 32px;
+}
+
+.admin-primary-button,
+.admin-export-button {
+    padding: 11px 18px;
+    border: 1px solid #6E2235;
+    background: #6E2235;
+    color: #FFFFFF;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+}
+
+.admin-primary-button:hover,
+.admin-export-button:hover {
+    background: #4A1725;
+    border-color: #4A1725;
+}
+
+@media (max-width: 700px) {
+
+    .admin-certificates-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .admin-primary-button,
+    .admin-export-button {
+        width: 100%;
+    }
+
+}

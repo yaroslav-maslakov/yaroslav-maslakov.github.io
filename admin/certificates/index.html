@@ -269,202 +269,328 @@
         }
 
 
+       /*
+ * ЗАВАНТАЖЕННЯ СЕРТИФІКАТІВ
+ */
+
+async function loadCertificates() {
+
+    certificates.textContent =
+        "Завантаження...";
+
+
+    const {
+        data,
+        error
+    } = await client
+        .from("certificates")
+        .select("*")
+        .order("certificate_date", {
+            ascending: false
+        });
+
+
+    if (error) {
+
+        certificates.textContent =
+            "Помилка завантаження: " +
+            error.message;
+
+        return;
+
+    }
+
+
+    if (!data || data.length === 0) {
+
+        certificates.textContent =
+            "Сертифікатів поки немає.";
+
+        return;
+
+    }
+
+
+    certificates.innerHTML = "";
+
+
+    data.forEach(function(certificate) {
+
+        const item =
+            document.createElement("div");
+
+        item.className =
+            "certificate-card";
+
+
+        const title =
+            document.createElement("h3");
+
+        title.textContent =
+            certificate.title;
+
+
+        const organization =
+            document.createElement("p");
+
+        organization.textContent =
+            certificate.organization;
+
+
+        const date =
+            document.createElement("p");
+
+        date.textContent =
+            "Дата: " +
+            certificate.certificate_date;
+
+
+        const details =
+            document.createElement("p");
+
+        details.textContent =
+            "Години: " +
+            (certificate.hours ?? "—") +
+            " | ЄКТС: " +
+            (certificate.ects ?? "—");
+
+
         /*
-         * ЗАВАНТАЖЕННЯ СЕРТИФІКАТІВ
+         * СТАТУС
          */
 
-        async function loadCertificates() {
+        const status =
+            document.createElement("p");
 
-            certificates.textContent =
-                "Завантаження...";
+        status.className =
+            "certificate-status";
 
-
-            const {
-                data,
-                error
-            } = await client
-                .from("certificates")
-                .select("*")
-                .order("certificate_date", {
-                    ascending: false
-                });
+        status.textContent =
+            certificate.published
+            ? "Статус: Опубліковано"
+            : "Статус: Чернетка";
 
 
-            if (error) {
+        /*
+         * ПОСИЛАННЯ НА PDF
+         */
 
-                certificates.textContent =
-                    "Помилка завантаження: " +
-                    error.message;
+        if (certificate.file_url) {
 
-                return;
-
-            }
-
-
-            if (!data || data.length === 0) {
-
-                certificates.textContent =
-                    "Сертифікатів поки немає.";
-
-                return;
-
-            }
+            const linkWrapper =
+                document.createElement("p");
 
 
-            certificates.innerHTML = "";
+            const link =
+                document.createElement("a");
+
+            link.href =
+                certificate.file_url;
+
+            link.target =
+                "_blank";
+
+            link.textContent =
+                "Відкрити сертифікат →";
 
 
-            data.forEach(function(certificate) {
+            linkWrapper.appendChild(link);
 
-                const item =
-                    document.createElement("div");
+            item.appendChild(linkWrapper);
 
-                item.className =
-                    "certificate-card";
+        }
 
 
-                const title =
-                    document.createElement("h3");
+        /*
+         * ПЕРЕМИКАЧ ПУБЛІКАЦІЇ
+         */
 
-                title.textContent =
-                    certificate.title;
+        const publishLabel =
+            document.createElement("label");
 
-
-                const organization =
-                    document.createElement("p");
-
-                organization.textContent =
-                    certificate.organization;
+        publishLabel.className =
+            "checkbox-label";
 
 
-                const date =
-                    document.createElement("p");
+        const publishToggle =
+            document.createElement("input");
 
-                date.textContent =
-                    "Дата: " +
-                    certificate.certificate_date;
+        publishToggle.type =
+            "checkbox";
 
-
-                const details =
-                    document.createElement("p");
-
-                details.textContent =
-                    "Години: " +
-                    (certificate.hours ?? "—") +
-                    " | ЄКТС: " +
-                    (certificate.ects ?? "—");
+        publishToggle.checked =
+            certificate.published;
 
 
-                const status =
-                    document.createElement("p");
+        const publishText =
+            document.createElement("span");
 
-                status.textContent =
-                    "Статус: " +
-                    (
-                        certificate.published
-                        ? "Опубліковано"
-                        : "Чернетка"
+        publishText.textContent =
+            "Показувати гостям";
+
+
+        publishLabel.appendChild(
+            publishToggle
+        );
+
+        publishLabel.appendChild(
+            publishText
+        );
+
+
+        /*
+         * ЗМІНА СТАТУСУ
+         */
+
+        publishToggle.addEventListener(
+            "change",
+            async function() {
+
+                publishToggle.disabled =
+                    true;
+
+
+                const newStatus =
+                    publishToggle.checked;
+
+
+                const {
+                    error
+                } = await client
+                    .from("certificates")
+                    .update({
+                        published: newStatus
+                    })
+                    .eq(
+                        "id",
+                        certificate.id
                     );
 
 
-                item.appendChild(title);
-                item.appendChild(organization);
-                item.appendChild(date);
-                item.appendChild(details);
-                item.appendChild(status);
+                if (error) {
+
+                    alert(
+                        "Не вдалося змінити статус: " +
+                        error.message
+                    );
 
 
-                if (certificate.file_url) {
+                    publishToggle.checked =
+                        !newStatus;
 
-                    const linkWrapper =
-                        document.createElement("p");
+                    publishToggle.disabled =
+                        false;
 
-
-                    const link =
-                        document.createElement("a");
-
-                    link.href =
-                        certificate.file_url;
-
-                    link.target =
-                        "_blank";
-
-                    link.textContent =
-                        "Відкрити сертифікат →";
-
-
-                    linkWrapper.appendChild(link);
-
-                    item.appendChild(linkWrapper);
+                    return;
 
                 }
 
 
-                /*
-                 * КНОПКА ВИДАЛЕННЯ
-                 */
-
-                const deleteButton =
-                    document.createElement("button");
-
-                deleteButton.type =
-                    "button";
-
-                deleteButton.textContent =
-                    "ВИДАЛИТИ";
+                certificate.published =
+                    newStatus;
 
 
-                deleteButton.addEventListener(
-                    "click",
-                    async function() {
-
-                        const confirmed =
-                            confirm(
-                                "Видалити цей сертифікат?"
-                            );
+                status.textContent =
+                    newStatus
+                    ? "Статус: Опубліковано"
+                    : "Статус: Чернетка";
 
 
-                        if (!confirmed) {
-                            return;
-                        }
+                publishToggle.disabled =
+                    false;
+
+            }
+        );
 
 
-                        const {
-                            error
-                        } = await client
-                            .from("certificates")
-                            .delete()
-                            .eq(
-                                "id",
-                                certificate.id
-                            );
+        /*
+         * КНОПКА ВИДАЛЕННЯ
+         */
+
+        const deleteButton =
+            document.createElement("button");
+
+        deleteButton.type =
+            "button";
+
+        deleteButton.textContent =
+            "ВИДАЛИТИ";
 
 
-                        if (error) {
+        deleteButton.addEventListener(
+            "click",
+            async function() {
 
-                            alert(
-                                "Помилка видалення: " +
-                                error.message
-                            );
-
-                            return;
-
-                        }
+                const confirmed =
+                    confirm(
+                        "Видалити цей сертифікат?"
+                    );
 
 
-                        loadCertificates();
+                if (!confirmed) {
+                    return;
+                }
 
-                    }
-                );
+
+                const {
+                    error
+                } = await client
+                    .from("certificates")
+                    .delete()
+                    .eq(
+                        "id",
+                        certificate.id
+                    );
 
 
-                item.appendChild(deleteButton);
+                if (error) {
 
-                certificates.appendChild(item);
+                    alert(
+                        "Помилка видалення: " +
+                        error.message
+                    );
 
-            });
+                    return;
 
-        }
+                }
+
+
+                loadCertificates();
+
+            }
+        );
+
+
+        /*
+         * ФОРМУЄМО КАРТКУ
+         */
+
+        item.appendChild(title);
+
+        item.appendChild(
+            organization
+        );
+
+        item.appendChild(date);
+
+        item.appendChild(details);
+
+        item.appendChild(status);
+
+        item.appendChild(
+            publishLabel
+        );
+
+        item.appendChild(
+            deleteButton
+        );
+
+
+        certificates.appendChild(item);
+
+    });
+
+}
 
 
         /*

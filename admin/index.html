@@ -107,10 +107,17 @@
 
 
     const client =
-        createClient(
-            SUPABASE_URL,
-            SUPABASE_KEY
-        );
+    createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY,
+        {
+            auth: {
+                flowType: "pkce",
+                detectSessionInUrl: true,
+                persistSession: true
+            }
+        }
+    );
 
 
     const loginForm =

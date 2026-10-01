@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Certificates — Yaroslav Maslakov</title>
+
+    <link rel="stylesheet" href="../../style.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="header-inner">
+
+            <div class="logo">
+                ЯРОСЛАВ МАСЛАКОВ
+            </div>
+
+            <nav>
+                <a href="../index.html">Home</a>
+                <a href="../articles/index.html">Articles</a>
+                <a href="../research/index.html">Research</a>
+                <a href="../publications/index.html">Publications</a>
+                <a href="index.html" class="active">Certificates</a>
+                <a href="../about/index.html">About</a>
+                <a href="../contacts/index.html">Contacts</a>
+            </nav>
+
+            <button
+                class="menu-toggle"
+                type="button"
+                aria-label="Open menu"
+                onclick="this.textContent = this.textContent === 'МЕНЮ' ? 'ЗАКРИТИ' : 'МЕНЮ'; document.querySelector('nav').classList.toggle('menu-open')"
+            >
+                МЕНЮ
+            </button>
+
+            <div class="language">
+                <a href="../../uk/certificates/index.html">UA</a>
+                <span>|</span>
+                <a href="index.html">EN</a>
+            </div>
+
+        </div>
+    </header>
+
+
+    <main>
+
+        <section class="latest">
+
+            <h2>Certificates</h2>
+
+            <div id="certificates">
+                Loading...
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+        © 2026 Yaroslav Maslakov
+    </footer>
+
+
+<script>
+    const SUPABASE_URL = "https://jtplvfweyguheyqyewal.supabase.co";
+
+    const SUPABASE_KEY = "sb_publishable_jAg0mG8Pj30tCF7qND3ydQ_-WDv4EhP";
+
+
+    const certificatesContainer =
+        document.getElementById('certificates');
+
+
+    async function loadCertificates() {
+
+        try {
+
+            const response = await fetch(
+                `${SUPABASE_URL}/rest/v1/certificates?select=*&published=eq.true&order=certificate_date.desc`,
+                {
+                    headers: {
+                        "apikey": SUPABASE_KEY,
+                        "Authorization": `Bearer ${SUPABASE_KEY}`
+                    }
+                }
+            );
+
+
+            if (!response.ok) {
+                throw new Error(
+                    "Failed to load certificates"
+                );
+            }
+
+
+            const certificates = await response.json();
+
+
+            if (certificates.length === 0) {
+
+                certificatesContainer.innerHTML =
+                    "<p>No certificates available yet.</p>";
+
+                return;
+            }
+
+
+            certificatesContainer.innerHTML =
+                certificates.map(certificate => {
+
+                    const date =
+                        new Date(
+                            certificate.certificate_date
+                        ).toLocaleDateString("en-GB");
+
+
+                    return `
+                        <article class="certificate-card">
+
+                            <h3>
+                                ${escapeHtml(
+                                    certificate.title_en ||
+                                    certificate.title
+                                )}
+                            </h3>
+
+                            <p class="certificate-organization">
+                                ${escapeHtml(
+                                    certificate.organization_en ||
+                                    certificate.organization
+                                )}
+                            </p>
+
+                            <p class="certificate-meta">
+                                ${date}
+                                ${certificate.hours
+                                    ? ` · ${certificate.hours} hours`
+                                    : ""}
+                                ${certificate.ects
+                                    ? ` · ${certificate.ects} ECTS`
+                                    : ""}
+                            </p>
+
+                            ${
+                                certificate.description_en
+                                ? `
+                                    <p>
+                                        ${escapeHtml(
+                                            certificate.description_en
+                                        )}
+                                    </p>
+                                `
+                                : certificate.description
+                                ? `
+                                    <p>
+                                        ${escapeHtml(
+                                            certificate.description
+                                        )}
+                                    </p>
+                                `
+                                : ""
+                            }
+
+                            ${
+                                certificate.file_url
+                                ? `
+                                    <a
+                                        href="${escapeAttribute(
+                                            certificate.file_url
+                                        )}"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        View certificate →
+                                    </a>
+                                `
+                                : ""
+                            }
+
+                        </article>
+                    `;
+
+                }).join("");
+
+        } catch (error) {
+
+            console.error(error);
+
+            certificatesContainer.innerHTML =
+                "<p>Failed to load certificates.</p>";
+        }
+    }
+
+
+    function escapeHtml(value) {
+
+        return String(value)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+
+    function escapeAttribute(value) {
+
+        return String(value)
+            .replace(/&/g, "&amp;")
+            .replace(/"/g, "&quot;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;");
+    }
+
+
+    loadCertificates();
+
+
+    const menuButton =
+        document.querySelector('.menu-toggle');
+
+    const menu =
+        document.querySelector('nav');
+
+
+    document.addEventListener('click', function(event) {
+
+        if (!menuButton || !menu) return;
+
+        if (
+            !menu.contains(event.target) &&
+            !menuButton.contains(event.target)
+        ) {
+
+            menu.classList.remove('menu-open');
+
+            menuButton.textContent = 'МЕНЮ';
+        }
+
+    });
+</script>
+
+</body>
+</html>

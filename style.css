@@ -753,3 +753,36 @@ footer {
     }
 
 }
+/* =========================
+   ADMIN — HEADER ACTIONS
+   ========================= */
+
+.admin-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.admin-header-logout {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #6E2235;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.admin-header-logout:hover {
+    color: #4A1725;
+    text-decoration: underline;
+}
+
+@media (max-width: 700px) {
+
+    .admin-header-actions {
+        gap: 16px;
+    }
+
+}

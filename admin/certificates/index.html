@@ -434,17 +434,25 @@
         </div>
 
 
-        <div class="filters-actions">
+<div class="filters-actions">
 
-            <button
-                type="button"
-                id="clearFiltersButton"
-                class="filters-clear-button"
-            >
-                ОЧИСТИТИ ФІЛЬТРИ
-            </button>
+    <button
+        type="button"
+        id="applyFiltersButton"
+        class="filters-apply-button"
+    >
+        ЗАСТОСУВАТИ ФІЛЬТРИ
+    </button>
 
-        </div>
+    <button
+        type="button"
+        id="clearFiltersButton"
+        class="filters-clear-button"
+    >
+        ОЧИСТИТИ ФІЛЬТРИ
+    </button>
+
+</div>
 
     </div>
 
@@ -645,6 +653,8 @@ const clearFiltersButton =
     document.getElementById(
         "clearFiltersButton"
     );
+
+    const applyFiltersButton = document.getElementById("applyFiltersButton");
 
 
     const currentFile =

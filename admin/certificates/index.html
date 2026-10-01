@@ -1708,7 +1708,7 @@ clearFormButton.addEventListener(
         }
     );
 
-    /*
+   /*
  * =========================
  * ЛІЧИЛЬНИК ЕКСПОРТУ
  * =========================
@@ -1726,9 +1726,10 @@ function updateExportCount() {
 
     }
 
+}
 
 
-    /*
+/*
  * =========================
  * ЗАСТОСУВАННЯ ФІЛЬТРІВ
  * =========================
@@ -1799,7 +1800,8 @@ clearFiltersButton.addEventListener(
     }
 );
 
-    /*
+
+/*
  * =========================
  * ЕКСПОРТ XLSX
  * =========================
@@ -1809,9 +1811,12 @@ exportXlsxButton.addEventListener(
     "click",
     function() {
 
+        const certificatesToExport =
+            getFilteredCertificates();
+
         if (
-            !allCertificates ||
-            allCertificates.length === 0
+            !certificatesToExport ||
+            certificatesToExport.length === 0
         ) {
 
             alert(
@@ -1824,7 +1829,7 @@ exportXlsxButton.addEventListener(
 
 
         const exportData =
-            allCertificates.map(
+            certificatesToExport.map(
                 function(certificate) {
 
                     return {
@@ -1901,7 +1906,7 @@ exportXlsxButton.addEventListener(
     }
 );
 
-    
+
 /*
  * =========================
  * ФІЛЬТРИ
@@ -1931,13 +1936,13 @@ filtersToggle.addEventListener(
 );
 
 
-    /*
-     * =========================
-     * ЗАПУСК
-     * =========================
-     */
+/*
+ * =========================
+ * ЗАПУСК
+ * =========================
+ */
 
-    checkSession();
+checkSession();
 
 
 </script>

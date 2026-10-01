@@ -60,6 +60,10 @@
                         УВІЙТИ
                     </button>
 
+                    <button type="button" id="resetPasswordButton">
+                        ВІДНОВИТИ ПАРОЛЬ
+                    </button>
+
                 </form>
 
                 <p id="message"></p>
@@ -134,6 +138,9 @@
 
     const logoutButton =
         document.getElementById("logoutButton");
+    
+    const resetPasswordButton =
+        document.getElementById("resetPasswordButton");
 
 
     async function checkSession() {
@@ -155,7 +162,49 @@
 
     }
 
+resetPasswordButton.addEventListener(
+    "click",
+    async function() {
 
+        const email =
+            document.getElementById("email").value;
+
+        if (!email) {
+
+            message.textContent =
+                "Спочатку введіть email.";
+
+            return;
+        }
+
+
+        message.textContent =
+            "Надсилаємо лист...";
+
+
+        const { error } =
+            await client.auth.resetPasswordForEmail(
+                email,
+                {
+                    redirectTo:
+                        "https://yaroslav-maslakov.github.io/admin/"
+                }
+            );
+
+
+        if (error) {
+
+            message.textContent =
+                "Помилка: " + error.message;
+
+            return;
+        }
+
+
+        message.textContent =
+            "Лист для відновлення пароля надіслано.";
+    }
+);
     loginForm.addEventListener(
         "submit",
         async function(event) {

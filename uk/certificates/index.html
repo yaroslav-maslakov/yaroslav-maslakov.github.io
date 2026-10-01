@@ -11,48 +11,76 @@
 
 <body>
 
-<header>
-    <div class="container">
-        <a href="../index.html" class="logo">ЯРОСЛАВ МАСЛАКОВ</a>
+    <header>
+        <div class="header-inner">
 
-        <button class="menu-toggle" id="menuToggle">МЕНЮ</button>
+            <div class="logo">
+                ЯРОСЛАВ МАСЛАКОВ
+            </div>
 
-        <nav id="mainNav">
-            <a href="../index.html">ГОЛОВНА</a>
-            <a href="../articles/index.html">СТАТТІ</a>
-            <a href="../research/index.html">ДОСЛІДЖЕННЯ</a>
-            <a href="../publications/index.html">ПУБЛІКАЦІЇ</a>
-            <a href="index.html" class="active">СЕРТИФІКАТИ</a>
-            <a href="../about/index.html">ПРО МЕНЕ</a>
-            <a href="../contacts/index.html">КОНТАКТИ</a>
-        </nav>
-    </div>
-</header>
+            <nav>
+                <a href="../index.html">Головна</a>
+                <a href="../articles/index.html">Статті</a>
+                <a href="../research/index.html">Дослідження</a>
+                <a href="../publications/index.html">Публікації</a>
+                <a href="index.html" class="active">Сертифікати</a>
+                <a href="../about/index.html">Про мене</a>
+                <a href="../contacts/index.html">Контакти</a>
+            </nav>
 
-<main class="container">
+            <button
+                class="menu-toggle"
+                type="button"
+                aria-label="Відкрити меню"
+                onclick="this.textContent = this.textContent === 'МЕНЮ' ? 'ЗАКРИТИ' : 'МЕНЮ'; document.querySelector('nav').classList.toggle('menu-open')"
+            >
+                МЕНЮ
+            </button>
 
-    <h1>СЕРТИФІКАТИ</h1>
+            <div class="language">
+                <a href="../certificates/index.html">UA</a>
+                <span>|</span>
+                <a href="../../en/certificates/index.html">EN</a>
+            </div>
 
-    <div id="certificates">
-        Завантаження...
-    </div>
+        </div>
+    </header>
 
-</main>
 
-<footer>
-    <div class="container">
-        © Ярослав Маслаков
-    </div>
-</footer>
+    <main>
+
+        <section class="latest">
+
+            <h2>Сертифікати</h2>
+
+            <div id="certificates">
+                Завантаження...
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+        © 2026 Ярослав Маслаков
+    </footer>
+
 
 <script>
     const SUPABASE_URL = "https://jtplvfweyguheyqyewal.supabase.co";
+
     const SUPABASE_KEY = "sb_publishable_jAg0mG8Pj30tCF7qND3ydQ_-WDv4EhP";
 
-    const certificatesContainer = document.getElementById("certificates");
+
+    const certificatesContainer =
+        document.getElementById('certificates');
+
 
     async function loadCertificates() {
+
         try {
+
             const response = await fetch(
                 `${SUPABASE_URL}/rest/v1/certificates?select=*&published=eq.true&order=certificate_date.desc`,
                 {
@@ -63,59 +91,92 @@
                 }
             );
 
+
             if (!response.ok) {
-                throw new Error("Не вдалося завантажити сертифікати");
+                throw new Error(
+                    "Не вдалося завантажити сертифікати"
+                );
             }
+
 
             const certificates = await response.json();
 
+
             if (certificates.length === 0) {
+
                 certificatesContainer.innerHTML =
                     "<p>Сертифікатів поки немає.</p>";
+
                 return;
             }
 
-            certificatesContainer.innerHTML = certificates.map(certificate => {
 
-                const date = new Date(certificate.certificate_date)
-                    .toLocaleDateString("uk-UA");
+            certificatesContainer.innerHTML =
+                certificates.map(certificate => {
 
-                return `
-                    <article class="certificate-card">
+                    const date =
+                        new Date(
+                            certificate.certificate_date
+                        ).toLocaleDateString("uk-UA");
 
-                        <h2>${escapeHtml(certificate.title)}</h2>
 
-                        <p class="certificate-organization">
-                            ${escapeHtml(certificate.organization)}
-                        </p>
+                    return `
+                        <article class="certificate-card">
 
-                        <p class="certificate-meta">
-                            ${date}
-                            ${certificate.hours ? ` · ${certificate.hours} год.` : ""}
-                            ${certificate.ects ? ` · ${certificate.ects} кредит ЄКТС` : ""}
-                        </p>
+                            <div class="card-type">
+                                Сертифікат
+                            </div>
 
-                        ${certificate.description ? `
-                            <p class="certificate-description">
-                                ${escapeHtml(certificate.description)}
+                            <h3>
+                                ${escapeHtml(certificate.title)}
+                            </h3>
+
+                            <p class="certificate-organization">
+                                ${escapeHtml(certificate.organization)}
                             </p>
-                        ` : ""}
 
-                        ${certificate.file_url ? `
-                            <a
-                                href="${escapeAttribute(certificate.file_url)}"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="certificate-link"
-                            >
-                                ПЕРЕГЛЯНУТИ СЕРТИФІКАТ →
-                            </a>
-                        ` : ""}
+                            <p class="certificate-meta">
+                                ${date}
+                                ${certificate.hours
+                                    ? ` · ${certificate.hours} год.`
+                                    : ""}
+                                ${certificate.ects
+                                    ? ` · ${certificate.ects} кредит ЄКТС`
+                                    : ""}
+                            </p>
 
-                    </article>
-                `;
+                            ${
+                                certificate.description
+                                ? `
+                                    <p>
+                                        ${escapeHtml(
+                                            certificate.description
+                                        )}
+                                    </p>
+                                `
+                                : ""
+                            }
 
-            }).join("");
+                            ${
+                                certificate.file_url
+                                ? `
+                                    <a
+                                        href="${escapeAttribute(
+                                            certificate.file_url
+                                        )}"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        Переглянути сертифікат →
+                                    </a>
+                                `
+                                : ""
+                            }
+
+                        </article>
+                    `;
+
+                }).join("");
 
         } catch (error) {
 
@@ -126,7 +187,9 @@
         }
     }
 
+
     function escapeHtml(value) {
+
         return String(value)
             .replace(/&/g, "&amp;")
             .replace(/</g, "&lt;")
@@ -135,7 +198,9 @@
             .replace(/'/g, "&#039;");
     }
 
+
     function escapeAttribute(value) {
+
         return String(value)
             .replace(/&/g, "&amp;")
             .replace(/"/g, "&quot;")
@@ -143,7 +208,32 @@
             .replace(/>/g, "&gt;");
     }
 
+
     loadCertificates();
+
+
+    const menuButton =
+        document.querySelector('.menu-toggle');
+
+    const menu =
+        document.querySelector('nav');
+
+
+    document.addEventListener('click', function(event) {
+
+        if (!menuButton || !menu) return;
+
+        if (
+            !menu.contains(event.target) &&
+            !menuButton.contains(event.target)
+        ) {
+
+            menu.classList.remove('menu-open');
+
+            menuButton.textContent = 'МЕНЮ';
+        }
+
+    });
 </script>
 
 </body>

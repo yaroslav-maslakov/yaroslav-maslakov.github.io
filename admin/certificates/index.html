@@ -1811,7 +1811,33 @@ exportXlsxButton.addEventListener(
 );
 
     
+/*
+ * =========================
+ * ФІЛЬТРИ
+ * =========================
+ */
 
+filtersToggle.addEventListener(
+    "click",
+    function() {
+
+        const isOpen =
+            filtersPanel.style.display === "block";
+
+        if (isOpen) {
+
+            filtersPanel.style.display = "none";
+            filtersArrow.textContent = "＋";
+
+        } else {
+
+            filtersPanel.style.display = "block";
+            filtersArrow.textContent = "−";
+
+        }
+
+    }
+);
 
 
     /*

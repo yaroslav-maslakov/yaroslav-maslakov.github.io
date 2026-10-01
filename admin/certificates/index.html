@@ -72,6 +72,18 @@
                 Керування сертифікатами сайту.
             </p>
 
+            <div class="admin-certificates-toolbar">
+
+                <button
+                    type="button"
+                    id="addCertificateButton"
+                    class="admin-primary-button"
+                >
+                    ＋ ДОДАТИ СЕРТИФІКАТ
+                </button>
+
+            </div>
+
 
 
             <!-- =========================
@@ -357,6 +369,16 @@
         document.getElementById(
             "clearFormButton"
         );
+    const addCertificateButton =
+    document.getElementById(
+        "addCertificateButton"
+    );
+
+
+const certificateFormContainer =
+    document.getElementById(
+        "certificateFormContainer"
+    );
 
 
     const formMessage =
@@ -1494,10 +1516,35 @@
      * =========================
      */
 
-    clearFormButton.addEventListener(
-        "click",
-        clearForm
-    );
+    addCertificateButton.addEventListener(
+    "click",
+    function() {
+
+        certificateFormContainer.style.display =
+            "block";
+
+        clearForm();
+
+        certificateFormContainer.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+
+    }
+);
+
+
+clearFormButton.addEventListener(
+    "click",
+    function() {
+
+        clearForm();
+
+        certificateFormContainer.style.display =
+            "none";
+
+    }
+);
 
 
     function clearForm() {

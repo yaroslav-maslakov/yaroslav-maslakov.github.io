@@ -295,6 +295,161 @@
                     Усі сертифікати
                 </h3>
 
+                <div class="certificate-filters">
+
+    <button
+        type="button"
+        id="filtersToggle"
+        class="filters-toggle"
+    >
+        ФІЛЬТРИ
+        <span id="filtersArrow">＋</span>
+    </button>
+
+
+    <div
+        id="filtersPanel"
+        class="filters-panel"
+        style="display: none;"
+    >
+
+        <div class="filters-grid">
+
+            <div class="filter-field">
+
+                <label for="filterTitle">
+                    Назва
+                </label>
+
+                <input
+                    type="text"
+                    id="filterTitle"
+                    placeholder="Пошук за назвою"
+                >
+
+            </div>
+
+
+            <div class="filter-field">
+
+                <label for="filterOrganization">
+                    Організація
+                </label>
+
+                <input
+                    type="text"
+                    id="filterOrganization"
+                    placeholder="Пошук за організацією"
+                >
+
+            </div>
+
+
+            <div class="filter-field">
+
+                <label for="filterDateFrom">
+                    Дата від
+                </label>
+
+                <input
+                    type="date"
+                    id="filterDateFrom"
+                >
+
+            </div>
+
+
+            <div class="filter-field">
+
+                <label for="filterDateTo">
+                    Дата до
+                </label>
+
+                <input
+                    type="date"
+                    id="filterDateTo"
+                >
+
+            </div>
+
+
+            <div class="filter-field">
+
+                <label for="filterPublished">
+                    Статус
+                </label>
+
+                <select id="filterPublished">
+
+                    <option value="">
+                        Усі
+                    </option>
+
+                    <option value="published">
+                        Опубліковані
+                    </option>
+
+                    <option value="draft">
+                        Чернетки
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="filter-field">
+
+                <label for="filterHours">
+                    Години
+                </label>
+
+                <input
+                    type="number"
+                    id="filterHours"
+                    placeholder="Від"
+                    min="0"
+                    step="0.5"
+                >
+
+            </div>
+
+
+            <div class="filter-field">
+
+                <label for="filterEcts">
+                    ЄКТС
+                </label>
+
+                <input
+                    type="number"
+                    id="filterEcts"
+                    placeholder="Від"
+                    min="0"
+                    step="0.1"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="filters-actions">
+
+            <button
+                type="button"
+                id="clearFiltersButton"
+                class="filters-clear-button"
+            >
+                ОЧИСТИТИ ФІЛЬТРИ
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
 
                 <div id="certificates">
                     Завантаження...

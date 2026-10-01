@@ -73,11 +73,11 @@
 
             <div id="adminPanel" style="display: none;">
 
-                <h3>Вітаю в адмін-панелі</h3>
+                <h3>Сертифікати</h3>
 
-                <p>
-                    Авторизація успішна.
-                </p>
+                <div id="certificates">
+                    Завантаження...
+                </div>
 
                 <button id="logoutButton">
                     ВИЙТИ
@@ -157,6 +157,8 @@
             auth.style.display = "none";
 
             adminPanel.style.display = "block";
+
+            loadCertificates();
 
         }
 
@@ -270,6 +272,91 @@ resetPasswordButton.addEventListener(
 
 
     checkSession();
+    async function loadCertificates() {
+
+    const certificates =
+        document.getElementById("certificates");
+
+    certificates.textContent =
+        "Завантаження...";
+
+    const {
+        data,
+        error
+    } = await client
+        .from("certificates")
+        .select("*")
+        .order("certificate_date", {
+            ascending: false
+        });
+
+    if (error) {
+
+        certificates.textContent =
+            "Помилка завантаження: " +
+            error.message;
+
+        return;
+    }
+
+    if (!data || data.length === 0) {
+
+        certificates.textContent =
+            "Сертифікатів поки немає.";
+
+        return;
+    }
+
+    certificates.innerHTML = "";
+
+    data.forEach(function(certificate) {
+
+        const item =
+            document.createElement("div");
+
+        item.className =
+            "certificate-card";
+
+        item.innerHTML = `
+            <h3>${certificate.title}</h3>
+
+            <p>
+                ${certificate.organization}
+            </p>
+
+            <p>
+                Дата: ${certificate.certificate_date}
+            </p>
+
+            <p>
+                Години: ${certificate.hours ?? "—"}
+                |
+                ЄКТС: ${certificate.ects ?? "—"}
+            </p>
+
+            <p>
+                Статус:
+                ${certificate.published ? "Опубліковано" : "Чернетка"}
+            </p>
+
+            ${
+                certificate.file_url
+                ? `<p>
+                    <a
+                        href="${certificate.file_url}"
+                        target="_blank"
+                    >
+                        Відкрити сертифікат →
+                    </a>
+                   </p>`
+                : ""
+            }
+        `;
+
+        certificates.appendChild(item);
+
+    });
+}
 
 </script>
 

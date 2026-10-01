@@ -93,8 +93,9 @@
 
 
             if (!response.ok) {
-                throw new Error(
-                    "Не вдалося завантажити сертифікати"
+               throw new Error(
+                "Не вдалося завантажити сертифікати: " +
+                error.message
                 );
             }
 

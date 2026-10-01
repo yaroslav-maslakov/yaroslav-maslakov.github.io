@@ -415,6 +415,17 @@ const certificateFormContainer =
             "logoutButton"
         );
 
+    const exportXlsxButton =
+    document.getElementById(
+        "exportXlsxButton"
+    );
+
+
+const exportCount =
+    document.getElementById(
+        "exportCount"
+    );
+
 
     const currentFile =
         document.getElementById(
@@ -435,6 +446,8 @@ const certificateFormContainer =
 
     let editingCertificate =
         null;
+
+    let allCertificates = [];
 
 
 
@@ -508,6 +521,8 @@ const certificateFormContainer =
             return;
 
         }
+
+        allCertificates = data || [];
 
 
         if (
@@ -1620,6 +1635,108 @@ clearFormButton.addEventListener(
 
         }
     );
+
+    /*
+ * =========================
+ * ЕКСПОРТ XLSX
+ * =========================
+ */
+
+exportXlsxButton.addEventListener(
+    "click",
+    function() {
+
+        if (
+            !allCertificates ||
+            allCertificates.length === 0
+        ) {
+
+            alert(
+                "Немає сертифікатів для експорту."
+            );
+
+            return;
+
+        }
+
+
+        const exportData =
+            allCertificates.map(
+                function(certificate) {
+
+                    return {
+
+                        "ID":
+                            certificate.id,
+
+                        "Назва UA":
+                            certificate.title || "",
+
+                        "Організація UA":
+                            certificate.organization || "",
+
+                        "Дата":
+                            certificate.certificate_date || "",
+
+                        "Години":
+                            certificate.hours ?? "",
+
+                        "ЄКТС":
+                            certificate.ects ?? "",
+
+                        "Опис UA":
+                            certificate.description || "",
+
+                        "Назва EN":
+                            certificate.title_en || "",
+
+                        "Організація EN":
+                            certificate.organization_en || "",
+
+                        "Опис EN":
+                            certificate.description_en || "",
+
+                        "PDF":
+                            certificate.file_url || "",
+
+                        "Опубліковано":
+                            certificate.published
+                                ? "Так"
+                                : "Ні",
+
+                        "Створено":
+                            certificate.created_at || ""
+
+                    };
+
+                }
+            );
+
+
+        const worksheet =
+            XLSX.utils.json_to_sheet(
+                exportData
+            );
+
+
+        const workbook =
+            XLSX.utils.book_new();
+
+
+        XLSX.utils.book_append_sheet(
+            workbook,
+            worksheet,
+            "Сертифікати"
+        );
+
+
+        XLSX.writeFile(
+            workbook,
+            "certificates.xlsx"
+        );
+
+    }
+);
 
 
 

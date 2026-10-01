@@ -581,6 +581,71 @@ const exportCount =
         "exportCount"
     );
 
+    const filtersToggle =
+    document.getElementById(
+        "filtersToggle"
+    );
+
+
+const filtersPanel =
+    document.getElementById(
+        "filtersPanel"
+    );
+
+
+const filtersArrow =
+    document.getElementById(
+        "filtersArrow"
+    );
+
+
+const filterTitle =
+    document.getElementById(
+        "filterTitle"
+    );
+
+
+const filterOrganization =
+    document.getElementById(
+        "filterOrganization"
+    );
+
+
+const filterDateFrom =
+    document.getElementById(
+        "filterDateFrom"
+    );
+
+
+const filterDateTo =
+    document.getElementById(
+        "filterDateTo"
+    );
+
+
+const filterPublished =
+    document.getElementById(
+        "filterPublished"
+    );
+
+
+const filterHours =
+    document.getElementById(
+        "filterHours"
+    );
+
+
+const filterEcts =
+    document.getElementById(
+        "filterEcts"
+    );
+
+
+const clearFiltersButton =
+    document.getElementById(
+        "clearFiltersButton"
+    );
+
 
     const currentFile =
         document.getElementById(
@@ -636,6 +701,130 @@ const exportCount =
         loadCertificates();
 
     }
+
+    /*
+ * =========================
+ * ФІЛЬТРАЦІЯ
+ * =========================
+ */
+
+function getFilteredCertificates() {
+
+    return allCertificates.filter(
+        function(certificate) {
+
+            const title =
+                (
+                    certificate.title ||
+                    ""
+                ).toLowerCase();
+
+
+            const organization =
+                (
+                    certificate.organization ||
+                    ""
+                ).toLowerCase();
+
+
+            const searchTitle =
+                filterTitle.value
+                    .trim()
+                    .toLowerCase();
+
+
+            const searchOrganization =
+                filterOrganization.value
+                    .trim()
+                    .toLowerCase();
+
+
+            if (
+                searchTitle &&
+                !title.includes(
+                    searchTitle
+                )
+            ) {
+                return false;
+            }
+
+
+            if (
+                searchOrganization &&
+                !organization.includes(
+                    searchOrganization
+                )
+            ) {
+                return false;
+            }
+
+
+            if (
+                filterDateFrom.value &&
+                certificate.certificate_date <
+                filterDateFrom.value
+            ) {
+                return false;
+            }
+
+
+            if (
+                filterDateTo.value &&
+                certificate.certificate_date >
+                filterDateTo.value
+            ) {
+                return false;
+            }
+
+
+            if (
+                filterPublished.value ===
+                "published" &&
+                !certificate.published
+            ) {
+                return false;
+            }
+
+
+            if (
+                filterPublished.value ===
+                "draft" &&
+                certificate.published
+            ) {
+                return false;
+            }
+
+
+            if (
+                filterHours.value &&
+                (
+                    certificate.hours === null ||
+                    Number(certificate.hours) <
+                    Number(filterHours.value)
+                )
+            ) {
+                return false;
+            }
+
+
+            if (
+                filterEcts.value &&
+                (
+                    certificate.ects === null ||
+                    Number(certificate.ects) <
+                    Number(filterEcts.value)
+                )
+            ) {
+                return false;
+            }
+
+
+            return true;
+
+        }
+    );
+
+}
 
 
 
@@ -1892,6 +2081,8 @@ exportXlsxButton.addEventListener(
 
     }
 );
+
+    
 
 
 

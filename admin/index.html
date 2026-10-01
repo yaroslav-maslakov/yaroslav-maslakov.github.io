@@ -75,9 +75,134 @@
 
                 <h3>Сертифікати</h3>
 
+                <button
+                    type="button"
+                    id="addCertificateButton"
+                >
+                    ДОДАТИ СЕРТИФІКАТ
+                </button>
+
                 <div id="certificates">
                     Завантаження...
                 </div>
+
+                <div id="certificateForm" style="display: none;">
+
+    <h3>Новий сертифікат</h3>
+
+    <form id="newCertificateForm">
+
+        <h4>Українська версія</h4>
+
+        <input
+            type="text"
+            id="title"
+            placeholder="Назва сертифіката"
+            required
+        >
+
+        <input
+            type="text"
+            id="organization"
+            placeholder="Організація"
+            required
+        >
+
+        <label for="certificate_date">
+            Дата отримання
+        </label>
+
+        <input
+            type="date"
+            id="certificate_date"
+            required
+        >
+
+        <input
+            type="number"
+            id="hours"
+            placeholder="Кількість годин"
+            min="0"
+            step="0.5"
+        >
+
+        <input
+            type="number"
+            id="ects"
+            placeholder="Кредити ЄКТС"
+            min="0"
+            step="0.1"
+        >
+
+        <textarea
+            id="description"
+            placeholder="Опис сертифіката"
+            rows="5"
+        ></textarea>
+
+
+        <h4>English version</h4>
+
+        <input
+            type="text"
+            id="title_en"
+            placeholder="Certificate title"
+        >
+
+        <input
+            type="text"
+            id="organization_en"
+            placeholder="Organization"
+        >
+
+        <textarea
+            id="description_en"
+            placeholder="Certificate description"
+            rows="5"
+        ></textarea>
+
+
+        <h4>PDF-файл</h4>
+
+        <input
+            type="file"
+            id="certificateFile"
+            accept="application/pdf"
+        >
+
+
+        <label>
+            <input
+                type="checkbox"
+                id="published"
+            >
+
+            Опублікувати одразу
+        </label>
+
+
+        <div>
+
+            <button
+                type="submit"
+            >
+                ЗБЕРЕГТИ СЕРТИФІКАТ
+            </button>
+
+            <button
+                type="button"
+                id="cancelCertificateButton"
+            >
+                СКАСУВАТИ
+            </button>
+
+        </div>
+
+        <p id="certificateFormMessage"></p>
+
+    </form>
+
+</div>
 
                 <button id="logoutButton">
                     ВИЙТИ
@@ -269,6 +394,39 @@ resetPasswordButton.addEventListener(
 
         }
     );
+
+    const addCertificateButton =
+    document.getElementById("addCertificateButton");
+
+const certificateForm =
+    document.getElementById("certificateForm");
+
+const cancelCertificateButton =
+    document.getElementById("cancelCertificateButton");
+
+
+addCertificateButton.addEventListener(
+    "click",
+    function() {
+
+        certificateForm.style.display = "block";
+
+        addCertificateButton.style.display = "none";
+
+    }
+);
+
+
+cancelCertificateButton.addEventListener(
+    "click",
+    function() {
+
+        certificateForm.style.display = "none";
+
+        addCertificateButton.style.display = "inline-block";
+
+    }
+);
 
 
     checkSession();

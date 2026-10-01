@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Адмін-панель — Ярослав Маслаков</title>
+
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="header-inner">
+
+            <div class="logo">
+                ЯРОСЛАВ МАСЛАКОВ
+            </div>
+
+            <div class="language">
+                <a href="../uk/index.html">UA</a>
+                <span>|</span>
+                <a href="../en/index.html">EN</a>
+            </div>
+
+        </div>
+    </header>
+
+
+    <main>
+
+        <section class="latest">
+
+            <h2>Адмін-панель</h2>
+
+            <div id="auth">
+
+                <p>
+                    Увійдіть, щоб керувати матеріалами сайту.
+                </p>
+
+                <form id="loginForm">
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Email"
+                        required
+                    >
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Пароль"
+                        required
+                    >
+
+                    <button type="submit">
+                        УВІЙТИ
+                    </button>
+
+                </form>
+
+                <p id="message"></p>
+
+            </div>
+
+
+            <div id="adminPanel" style="display: none;">
+
+                <h3>Вітаю в адмін-панелі</h3>
+
+                <p>
+                    Авторизація успішна.
+                </p>
+
+                <button id="logoutButton">
+                    ВИЙТИ
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+        © 2026 Ярослав Маслаков
+    </footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+    const SUPABASE_URL =
+        "https://jtplvfweyguheyqyewal.supabase.co";
+
+    const SUPABASE_KEY =
+        "sb_publishable_jAg0mG8Pj30tCF7qND3ydQ_-WDv4EhP";
+
+
+    const { createClient } =
+        supabase;
+
+
+    const client =
+        createClient(
+            SUPABASE_URL,
+            SUPABASE_KEY
+        );
+
+
+    const loginForm =
+        document.getElementById("loginForm");
+
+    const auth =
+        document.getElementById("auth");
+
+    const adminPanel =
+        document.getElementById("adminPanel");
+
+    const message =
+        document.getElementById("message");
+
+    const logoutButton =
+        document.getElementById("logoutButton");
+
+
+    async function checkSession() {
+
+        const {
+            data: {
+                session
+            }
+        } = await client.auth.getSession();
+
+
+        if (session) {
+
+            auth.style.display = "none";
+
+            adminPanel.style.display = "block";
+
+        }
+
+    }
+
+
+    loginForm.addEventListener(
+        "submit",
+        async function(event) {
+
+            event.preventDefault();
+
+            message.textContent = "Вхід...";
+
+
+            const email =
+                document.getElementById("email").value;
+
+            const password =
+                document.getElementById("password").value;
+
+
+            const {
+                error
+            } = await client.auth.signInWithPassword({
+
+                email: email,
+
+                password: password
+
+            });
+
+
+            if (error) {
+
+                message.textContent =
+                    "Помилка входу: " +
+                    error.message;
+
+                return;
+
+            }
+
+
+            auth.style.display = "none";
+
+            adminPanel.style.display = "block";
+
+        }
+    );
+
+
+    logoutButton.addEventListener(
+        "click",
+        async function() {
+
+            await client.auth.signOut();
+
+            adminPanel.style.display = "none";
+
+            auth.style.display = "block";
+
+            loginForm.reset();
+
+            message.textContent = "";
+
+        }
+    );
+
+
+    checkSession();
+
+</script>
+
+</body>
+</html>

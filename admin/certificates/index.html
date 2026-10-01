@@ -1710,6 +1710,26 @@ clearFormButton.addEventListener(
 
     /*
  * =========================
+ * ЛІЧИЛЬНИК ЕКСПОРТУ
+ * =========================
+ */
+
+function updateExportCount() {
+
+    const filteredCertificates =
+        getFilteredCertificates();
+
+    if (exportCount) {
+
+        exportCount.textContent =
+            " (" + filteredCertificates.length + ")";
+
+    }
+
+}
+
+    /*
+ * =========================
  * ЕКСПОРТ XLSX
  * =========================
  */

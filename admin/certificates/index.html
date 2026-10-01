@@ -42,13 +42,26 @@
             </nav>
 
 
-            <div class="language">
+            <div class="admin-header-actions">
 
-                <a href="../../uk/index.html">
-                    САЙТ
-                </a>
+    <div class="language">
 
-            </div>
+        <a href="../../uk/index.html">
+            САЙТ
+        </a>
+
+    </div>
+
+
+    <button
+        type="button"
+        id="logoutButton"
+        class="admin-header-logout"
+    >
+        ВИЙТИ
+    </button>
+
+</div>
 
 
         </div>
@@ -74,15 +87,29 @@
 
             <div class="admin-certificates-toolbar">
 
-                <button
-                    type="button"
-                    id="addCertificateButton"
-                    class="admin-primary-button"
-                >
-                    ＋ ДОДАТИ СЕРТИФІКАТ
-                </button>
+    <div class="admin-toolbar-left">
 
-            </div>
+        <button
+            type="button"
+            id="addCertificateButton"
+            class="admin-primary-button"
+        >
+            ＋ ДОДАТИ СЕРТИФІКАТ
+        </button>
+
+
+        <button
+            type="button"
+            id="exportXlsxButton"
+            class="admin-export-button"
+        >
+            ↓ ЕКСПОРТ XLS
+            <span id="exportCount"></span>
+        </button>
+
+    </div>
+
+</div>
 
 
 
@@ -275,16 +302,6 @@
 
 
             </div>
-
-
-
-            <button
-                type="button"
-                id="logoutButton"
-            >
-                ВИЙТИ
-            </button>
-
 
         </section>
 

@@ -1757,40 +1757,7 @@ function applyFilters() {
 }
 
 
-filterTitle.addEventListener(
-    "input",
-    applyFilters
-);
-
-filterOrganization.addEventListener(
-    "input",
-    applyFilters
-);
-
-filterDateFrom.addEventListener(
-    "change",
-    applyFilters
-);
-
-filterDateTo.addEventListener(
-    "change",
-    applyFilters
-);
-
-filterPublished.addEventListener(
-    "change",
-    applyFilters
-);
-
-filterHours.addEventListener(
-    "input",
-    applyFilters
-);
-
-filterEcts.addEventListener(
-    "input",
-    applyFilters
-);
+applyFiltersButton.addEventListener("click", applyFilters);
 
 
 clearFiltersButton.addEventListener(

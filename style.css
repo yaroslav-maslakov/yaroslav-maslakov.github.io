@@ -734,6 +734,19 @@ footer {
     cursor: pointer;
 }
 
+.admin-primary-button,
+.admin-export-button {
+    box-sizing: border-box;
+    height: 40px;
+    min-width: 210px;
+}
+
+.admin-toolbar-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
 .admin-primary-button:hover,
 .admin-export-button:hover {
     background: #4A1725;
@@ -757,10 +770,31 @@ footer {
    ADMIN — HEADER ACTIONS
    ========================= */
 
+/* =========================
+   ADMIN — HEADER ACTIONS
+   ========================= */
+
 .admin-header-actions {
     display: flex;
     align-items: center;
     gap: 24px;
+}
+
+.admin-header-actions .language {
+    margin: 0;
+    padding: 0;
+}
+
+.admin-header-actions .language a {
+    color: #6E2235;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.admin-header-actions .language a:hover {
+    color: #4A1725;
+    text-decoration: underline;
 }
 
 .admin-header-logout {

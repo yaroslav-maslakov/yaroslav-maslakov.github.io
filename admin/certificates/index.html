@@ -981,12 +981,22 @@ editButton.addEventListener("click", function() {
         saveInlineButton.disabled = true;
         saveInlineButton.textContent = "ЗБЕРЕЖЕННЯ...";
 
-        const { error } = await client
-            .from("certificates")
-            .update({
-                title: newTitle
-            })
-            .eq("id", certificate.id);
+       const newOrganization = organizationInput.value.trim();
+
+if (!newOrganization) {
+    alert("Організація не може бути порожньою.");
+    saveInlineButton.disabled = false;
+    saveInlineButton.textContent = "ЗБЕРЕГТИ";
+    return;
+}
+
+const { error } = await client
+    .from("certificates")
+    .update({
+        title: newTitle,
+        organization: newOrganization
+    })
+    .eq("id", certificate.id);
 
         if (error) {
             alert("Не вдалося зберегти зміни: " + error.message);

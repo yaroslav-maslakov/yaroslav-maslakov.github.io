@@ -954,6 +954,11 @@ editButton.addEventListener("click", function() {
     titleInput.value = certificate.title || "";
     titleInput.className = "inline-edit-input";
 
+    const organizationInput = document.createElement("input");
+    organizationInput.type = "text";
+    organizationInput.value = certificate.organization || "";
+    organizationInput.className = "inline-edit-input";
+
     const saveInlineButton = document.createElement("button");
     saveInlineButton.type = "button";
     saveInlineButton.textContent = "ЗБЕРЕГТИ";
@@ -1013,8 +1018,9 @@ editButton.addEventListener("click", function() {
     inlineButtons.appendChild(cancelButton);
 
     card.appendChild(titleInput);
+    card.appendChild(organizationInput);
     card.appendChild(inlineButtons);
-});
+    });
     
         const deleteButton = document.createElement("button");
         deleteButton.type = "button";

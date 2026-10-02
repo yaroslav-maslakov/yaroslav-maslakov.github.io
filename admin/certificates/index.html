@@ -853,6 +853,16 @@ function getFilteredCertificates() {
         const title = document.createElement("h3");
         title.textContent = certificate.title;
 
+        if (item.classList.contains("editing")) {
+        const titleInput = document.createElement("input");
+
+        titleInput.type = "text";
+        titleInput.value = certificate.title || "";
+        titleInput.className = "inline-edit-input";
+
+        item.appendChild(titleInput);
+    }
+
         const organization = document.createElement("p");
         organization.textContent = certificate.organization;
 

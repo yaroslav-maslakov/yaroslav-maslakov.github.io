@@ -1215,6 +1215,51 @@ editButton.addEventListener("click", function() {
     inlineEditForm.appendChild(hoursInput);
     inlineEditForm.appendChild(ectsInput);
     inlineEditForm.appendChild(descriptionInput);
+
+    const translateButton = document.createElement("button");
+translateButton.type = "button";
+translateButton.textContent = "ЗАПРОПОНУВАТИ ПЕРЕКЛАД";
+translateButton.className = "admin-export-button";
+
+translateButton.addEventListener("click", async function() {
+    translateButton.disabled = true;
+    translateButton.textContent = "ПЕРЕКЛАДАЄМО...";
+
+    const { data, error } = await client.functions.invoke(
+        "rapid-function",
+        {
+            body: {
+                title: titleInput.value.trim(),
+                organization: organizationInput.value.trim(),
+                description: descriptionInput.value.trim()
+            }
+        }
+    );
+
+    if (error) {
+        alert("Не вдалося виконати переклад: " + error.message);
+        translateButton.disabled = false;
+        translateButton.textContent = "ЗАПРОПОНУВАТИ ПЕРЕКЛАД";
+        return;
+    }
+
+    if (!data) {
+        alert("Перекладач не повернув результат.");
+        translateButton.disabled = false;
+        translateButton.textContent = "ЗАПРОПОНУВАТИ ПЕРЕКЛАД";
+        return;
+    }
+
+    titleEnInput.value = data.title_en || "";
+    organizationEnInput.value = data.organization_en || "";
+    descriptionEnInput.value = data.description_en || "";
+
+    translateButton.disabled = false;
+    translateButton.textContent = "ЗАПРОПОНУВАТИ ПЕРЕКЛАД";
+});
+
+inlineEditForm.appendChild(translateButton);
+    
     inlineEditForm.appendChild(titleEnInput);
     inlineEditForm.appendChild(organizationEnInput);
     inlineEditForm.appendChild(descriptionEnInput);

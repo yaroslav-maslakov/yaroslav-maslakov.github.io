@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="uk">
 
 <head>
@@ -949,6 +949,19 @@ editButton.addEventListener("click", function() {
 
     card.classList.add("editing");
 
+    const editButton = document.createElement("button");
+editButton.type = "button";
+editButton.textContent = "РЕДАГУВАТИ";
+
+editButton.addEventListener("click", function() {
+    const card = editButton.closest(".certificate-card");
+
+    if (!card) return;
+
+    if (card.classList.contains("editing")) return;
+
+    card.classList.add("editing");
+
     const titleInput = document.createElement("input");
 
     titleInput.type = "text";
@@ -957,6 +970,10 @@ editButton.addEventListener("click", function() {
 
     card.appendChild(titleInput);
 
+    const saveInlineButton = document.createElement("button");
+    saveInlineButton.type = "button";
+    saveInlineButton.textContent = "ЗБЕРЕГТИ";
+
     const cancelButton = document.createElement("button");
     cancelButton.type = "button";
     cancelButton.textContent = "СКАСУВАТИ";
@@ -964,12 +981,13 @@ editButton.addEventListener("click", function() {
     cancelButton.addEventListener("click", function() {
         card.classList.remove("editing");
         titleInput.remove();
+        saveInlineButton.remove();
         cancelButton.remove();
     });
-    
-    card.appendChild(cancelButton);
 
-    });
+    card.appendChild(saveInlineButton);
+    card.appendChild(cancelButton);
+});
 
         const deleteButton = document.createElement("button");
         deleteButton.type = "button";

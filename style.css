@@ -838,7 +838,7 @@ footer {
     width: 100%;
     box-sizing: border-box;
     margin: 0 0 5px;
-    padding: 13px 14px;
+    padding: 9px 12px;
     border: 1px solid #6E2235;
     background: #FAF7F2;
     color: #4A1725;
@@ -848,6 +848,10 @@ footer {
     outline: none;
 }
 .certificate-card.editing .inline-edit-input {
+    margin-top: 10px;
+}
+
+.certificate-card.editing .inline-edit-input:first-child {
     margin-top: 40px;
 }
 

@@ -683,31 +683,23 @@ const clearFiltersButton =
      */
 
     async function checkSession() {
-
-        const { data: { session } } = await client.auth.getSession();
-        console.log("JWT:", session?.access_token);
-
-        const {
-            data: {
-                session
-            }
-        } =
-            await client.auth.getSession();
-
-
-        if (!session) {
-
-            window.location.href =
-                "../index.html";
-
-            return;
-
+    const {
+        data: {
+            session
         }
+    } = await client.auth.getSession();
 
+    console.log("JWT:", session?.access_token);
 
-        loadCertificates();
-
+    if (!session) {
+        window.location.href = "../index.html";
+        return;
     }
+
+    loadCertificates();
+}
+
+    
 
     /*
  * =========================

@@ -820,3 +820,12 @@ footer {
     }
 
 }
+/* =========================
+   ADMIN — INLINE EDITING
+   ========================= */
+
+.certificate-card.editing {
+    padding: 32px;
+    border: 1px solid #6E2235;
+    background: #F7F4EF;
+}

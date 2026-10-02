@@ -837,7 +837,7 @@ footer {
     display: block;
     width: 100%;
     box-sizing: border-box;
-    margin: 40 0 10px;
+    margin: 0 0 10px;
     padding: 13px 14px;
     border: 1px solid #6E2235;
     background: #FAF7F2;
@@ -846,6 +846,9 @@ footer {
     font-size: 20px;
     line-height: 1.4;
     outline: none;
+}
+.certificate-card.editing .inline-edit-input {
+    margin-top: 40px;
 }
 
 .inline-edit-input:focus {

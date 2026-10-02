@@ -829,3 +829,25 @@ footer {
     border: 1px solid #6E2235;
     background: #F7F4EF;
 }
+/* =========================
+   ADMIN — INLINE EDITING
+   ========================= */
+
+.inline-edit-input {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0 0 16px;
+    padding: 13px 14px;
+    border: 1px solid #6E2235;
+    background: #FAF7F2;
+    color: #4A1725;
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    line-height: 1.4;
+    outline: none;
+}
+
+.inline-edit-input:focus {
+    border-color: #4A1725;
+}

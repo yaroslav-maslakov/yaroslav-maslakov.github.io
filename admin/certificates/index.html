@@ -941,7 +941,11 @@ function getFilteredCertificates() {
         editButton.textContent = "РЕДАГУВАТИ";
 
         editButton.addEventListener("click", function() {
-            startEditing(certificate);
+        const card = editButton.closest(".certificate-card");
+
+        if (!card) return;
+
+        card.classList.add("editing");
         });
 
         const deleteButton = document.createElement("button");

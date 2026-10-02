@@ -684,6 +684,8 @@ const clearFiltersButton =
 
     async function checkSession() {
 
+        const { data: { session } } = await client.auth.getSession();
+        console.log("JWT:", session?.access_token);
 
         const {
             data: {

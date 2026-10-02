@@ -848,6 +848,7 @@ function getFilteredCertificates() {
     certificateList.forEach(function(certificate) {
         const item = document.createElement("div");
         item.className = "certificate-card";
+        item.dataset.certificateId = certificate.id;
 
         const title = document.createElement("h3");
         title.textContent = certificate.title;

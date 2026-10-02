@@ -949,6 +949,9 @@ editButton.addEventListener("click", function() {
 
     card.classList.add("editing");
 
+    const inlineEditForm = document.createElement("div");
+    inlineEditForm.className = "inline-edit-form";
+
     const titleInput = document.createElement("input");
     titleInput.type = "text";
     titleInput.value = certificate.title || "";
@@ -959,6 +962,9 @@ editButton.addEventListener("click", function() {
     organizationInput.value = certificate.organization || "";
     organizationInput.className = "inline-edit-input";
 
+    const inlineButtons = document.createElement("div");
+    inlineButtons.className = "admin-form-buttons";
+
     const saveInlineButton = document.createElement("button");
     saveInlineButton.type = "button";
     saveInlineButton.textContent = "ЗБЕРЕГТИ";
@@ -967,71 +973,72 @@ editButton.addEventListener("click", function() {
     cancelButton.type = "button";
     cancelButton.textContent = "СКАСУВАТИ";
 
-    const inlineButtons = document.createElement("div");
-    inlineButtons.className = "admin-form-buttons";
-
     saveInlineButton.addEventListener("click", async function() {
         const newTitle = titleInput.value.trim();
+        const newOrganization = organizationInput.value.trim();
 
         if (!newTitle) {
             alert("Назва сертифіката не може бути порожньою.");
             return;
         }
 
+        if (!newOrganization) {
+            alert("Організація не може бути порожньою.");
+            return;
+        }
+
         saveInlineButton.disabled = true;
+        cancelButton.disabled = true;
         saveInlineButton.textContent = "ЗБЕРЕЖЕННЯ...";
 
-       const newOrganization = organizationInput.value.trim();
-
-if (!newOrganization) {
-    alert("Організація не може бути порожньою.");
-    saveInlineButton.disabled = false;
-    saveInlineButton.textContent = "ЗБЕРЕГТИ";
-    return;
-}
-
-const { error } = await client
-    .from("certificates")
-    .update({
-        title: newTitle,
-        organization: newOrganization
-    })
-    .eq("id", certificate.id);
+        const { error } = await client
+            .from("certificates")
+            .update({
+                title: newTitle,
+                organization: newOrganization
+            })
+            .eq("id", certificate.id);
 
         if (error) {
             alert("Не вдалося зберегти зміни: " + error.message);
             saveInlineButton.disabled = false;
+            cancelButton.disabled = false;
             saveInlineButton.textContent = "ЗБЕРЕГТИ";
             return;
         }
 
         certificate.title = newTitle;
+        certificate.organization = newOrganization;
 
+        inlineEditForm.remove();
         card.classList.remove("editing");
-        titleInput.remove();
-        inlineButtons.remove();
 
         const titleElement = card.querySelector("h3");
-
         if (titleElement) {
             titleElement.textContent = newTitle;
+        }
+
+        const paragraphs = card.querySelectorAll("p");
+        if (paragraphs.length > 0) {
+            paragraphs[0].textContent = newOrganization;
         }
     });
 
     cancelButton.addEventListener("click", function() {
+        inlineEditForm.remove();
         card.classList.remove("editing");
-        titleInput.remove();
-        inlineButtons.remove();
     });
 
     inlineButtons.appendChild(saveInlineButton);
     inlineButtons.appendChild(cancelButton);
 
-    card.appendChild(titleInput);
-    card.appendChild(organizationInput);
-    card.appendChild(inlineButtons);
-    });
-    
+    inlineEditForm.appendChild(titleInput);
+    inlineEditForm.appendChild(organizationInput);
+    inlineEditForm.appendChild(inlineButtons);
+
+    card.appendChild(inlineEditForm);
+});
+        
         const deleteButton = document.createElement("button");
         deleteButton.type = "button";
         deleteButton.textContent = "ВИДАЛИТИ";

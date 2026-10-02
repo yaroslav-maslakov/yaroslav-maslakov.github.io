@@ -956,11 +956,89 @@ editButton.addEventListener("click", function() {
     titleInput.type = "text";
     titleInput.value = certificate.title || "";
     titleInput.className = "inline-edit-input";
+    titleInput.placeholder = "Назва українською";
 
     const organizationInput = document.createElement("input");
     organizationInput.type = "text";
     organizationInput.value = certificate.organization || "";
     organizationInput.className = "inline-edit-input";
+    organizationInput.placeholder = "Організація українською";
+
+    const dateInput = document.createElement("input");
+    dateInput.type = "date";
+    dateInput.value = certificate.certificate_date || "";
+    dateInput.className = "inline-edit-input";
+
+    const hoursInput = document.createElement("input");
+    hoursInput.type = "number";
+    hoursInput.value = certificate.hours ?? "";
+    hoursInput.className = "inline-edit-input";
+    hoursInput.placeholder = "Години";
+    hoursInput.min = "0";
+    hoursInput.step = "0.5";
+
+    const ectsInput = document.createElement("input");
+    ectsInput.type = "number";
+    ectsInput.value = certificate.ects ?? "";
+    ectsInput.className = "inline-edit-input";
+    ectsInput.placeholder = "ЄКТС";
+    ectsInput.min = "0";
+    ectsInput.step = "0.1";
+
+    const descriptionInput = document.createElement("textarea");
+    descriptionInput.value = certificate.description || "";
+    descriptionInput.className = "inline-edit-input";
+    descriptionInput.placeholder = "Опис українською";
+
+    const titleEnInput = document.createElement("input");
+    titleEnInput.type = "text";
+    titleEnInput.value = certificate.title_en || "";
+    titleEnInput.className = "inline-edit-input";
+    titleEnInput.placeholder = "Title English";
+
+    const organizationEnInput = document.createElement("input");
+    organizationEnInput.type = "text";
+    organizationEnInput.value = certificate.organization_en || "";
+    organizationEnInput.className = "inline-edit-input";
+    organizationEnInput.placeholder = "Organization English";
+
+    const descriptionEnInput = document.createElement("textarea");
+    descriptionEnInput.value = certificate.description_en || "";
+    descriptionEnInput.className = "inline-edit-input";
+    descriptionEnInput.placeholder = "Description English";
+
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.accept = "application/pdf";
+    fileInput.className = "inline-edit-input";
+
+    const fileInfo = document.createElement("div");
+    fileInfo.className = "inline-edit-file-info";
+
+    if (certificate.file_url) {
+        const currentFileLink = document.createElement("a");
+        currentFileLink.href = certificate.file_url;
+        currentFileLink.target = "_blank";
+        currentFileLink.rel = "noopener noreferrer";
+        currentFileLink.textContent = "Поточний PDF →";
+
+        fileInfo.appendChild(currentFileLink);
+    } else {
+        fileInfo.textContent = "PDF не завантажено.";
+    }
+
+    const publishLabel = document.createElement("label");
+    publishLabel.className = "checkbox-label";
+
+    const publishToggle = document.createElement("input");
+    publishToggle.type = "checkbox";
+    publishToggle.checked = certificate.published;
+
+    const publishText = document.createElement("span");
+    publishText.textContent = "Опубліковано";
+
+    publishLabel.appendChild(publishToggle);
+    publishLabel.appendChild(publishText);
 
     const inlineButtons = document.createElement("div");
     inlineButtons.className = "admin-form-buttons";
@@ -976,6 +1054,11 @@ editButton.addEventListener("click", function() {
     saveInlineButton.addEventListener("click", async function() {
         const newTitle = titleInput.value.trim();
         const newOrganization = organizationInput.value.trim();
+        const newDate = dateInput.value;
+        const newDescription = descriptionInput.value.trim();
+        const newTitleEn = titleEnInput.value.trim();
+        const newOrganizationEn = organizationEnInput.value.trim();
+        const newDescriptionEn = descriptionEnInput.value.trim();
 
         if (!newTitle) {
             alert("Назва сертифіката не може бути порожньою.");
@@ -987,15 +1070,75 @@ editButton.addEventListener("click", function() {
             return;
         }
 
+        if (!newDate) {
+            alert("Дата сертифіката не може бути порожньою.");
+            return;
+        }
+
         saveInlineButton.disabled = true;
         cancelButton.disabled = true;
         saveInlineButton.textContent = "ЗБЕРЕЖЕННЯ...";
+
+        let newFileUrl = certificate.file_url || null;
+
+        if (fileInput.files.length > 0) {
+            const file = fileInput.files[0];
+
+            if (file.type !== "application/pdf") {
+                alert("Можна завантажувати лише PDF-файли.");
+                saveInlineButton.disabled = false;
+                cancelButton.disabled = false;
+                saveInlineButton.textContent = "ЗБЕРЕГТИ";
+                return;
+            }
+
+            const filePath =
+                Date.now() + "-" +
+                file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+
+            const { error: uploadError } = await client
+                .storage
+                .from("certificates")
+                .upload(filePath, file);
+
+            if (uploadError) {
+                alert("Не вдалося завантажити PDF: " + uploadError.message);
+                saveInlineButton.disabled = false;
+                cancelButton.disabled = false;
+                saveInlineButton.textContent = "ЗБЕРЕГТИ";
+                return;
+            }
+
+            const { data: publicUrlData } = client
+                .storage
+                .from("certificates")
+                .getPublicUrl(filePath);
+
+            newFileUrl = publicUrlData.publicUrl;
+        }
+
+        const newHours = hoursInput.value === ""
+            ? null
+            : Number(hoursInput.value);
+
+        const newEcts = ectsInput.value === ""
+            ? null
+            : Number(ectsInput.value);
 
         const { error } = await client
             .from("certificates")
             .update({
                 title: newTitle,
-                organization: newOrganization
+                organization: newOrganization,
+                certificate_date: newDate,
+                hours: newHours,
+                ects: newEcts,
+                description: newDescription || null,
+                title_en: newTitleEn || null,
+                organization_en: newOrganizationEn || null,
+                description_en: newDescriptionEn || null,
+                file_url: newFileUrl,
+                published: publishToggle.checked
             })
             .eq("id", certificate.id);
 
@@ -1009,18 +1152,58 @@ editButton.addEventListener("click", function() {
 
         certificate.title = newTitle;
         certificate.organization = newOrganization;
+        certificate.certificate_date = newDate;
+        certificate.hours = newHours;
+        certificate.ects = newEcts;
+        certificate.description = newDescription || null;
+        certificate.title_en = newTitleEn || null;
+        certificate.organization_en = newOrganizationEn || null;
+        certificate.description_en = newDescriptionEn || null;
+        certificate.file_url = newFileUrl;
+        certificate.published = publishToggle.checked;
 
         inlineEditForm.remove();
         card.classList.remove("editing");
 
         const titleElement = card.querySelector("h3");
+
         if (titleElement) {
             titleElement.textContent = newTitle;
         }
 
         const paragraphs = card.querySelectorAll("p");
+
         if (paragraphs.length > 0) {
             paragraphs[0].textContent = newOrganization;
+        }
+
+        if (paragraphs.length > 1) {
+            const formattedDate = new Date(
+                newDate + "T00:00:00"
+            ).toLocaleDateString("uk-UA");
+
+            paragraphs[1].textContent = "Дата: " + formattedDate;
+        }
+
+        if (paragraphs.length > 2) {
+            const hoursText = newHours !== null
+                ? newHours + " год."
+                : "—";
+
+            const ectsText = newEcts !== null
+                ? newEcts + " ЄКТС"
+                : "—";
+
+            paragraphs[2].textContent =
+                "Обсяг: " + hoursText + " · " + ectsText;
+        }
+
+        if (paragraphs.length > 3) {
+            paragraphs[3].textContent =
+                "Статус: " +
+                (certificate.published
+                    ? "опубліковано"
+                    : "чернетка");
         }
     });
 
@@ -1034,11 +1217,20 @@ editButton.addEventListener("click", function() {
 
     inlineEditForm.appendChild(titleInput);
     inlineEditForm.appendChild(organizationInput);
+    inlineEditForm.appendChild(dateInput);
+    inlineEditForm.appendChild(hoursInput);
+    inlineEditForm.appendChild(ectsInput);
+    inlineEditForm.appendChild(descriptionInput);
+    inlineEditForm.appendChild(titleEnInput);
+    inlineEditForm.appendChild(organizationEnInput);
+    inlineEditForm.appendChild(descriptionEnInput);
+    inlineEditForm.appendChild(fileInput);
+    inlineEditForm.appendChild(fileInfo);
+    inlineEditForm.appendChild(publishLabel);
     inlineEditForm.appendChild(inlineButtons);
 
     card.appendChild(inlineEditForm);
 });
-        
         const deleteButton = document.createElement("button");
         deleteButton.type = "button";
         deleteButton.textContent = "ВИДАЛИТИ";

@@ -130,7 +130,18 @@
 
 </nav>
 
-
+<button
+    class="menu-toggle"
+    type="button"
+    aria-label="Відкрити меню"
+    onclick="
+        this.textContent = this.textContent === 'МЕНЮ' ? 'ЗАКРИТИ' : 'МЕНЮ';
+        document.querySelector('nav').classList.toggle('menu-open');
+    "
+>
+    МЕНЮ
+</button>
+            
             <div class="admin-header-actions">
 
     <div class="language">

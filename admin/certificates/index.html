@@ -945,6 +945,8 @@ function getFilteredCertificates() {
 
         if (!card) return;
 
+        if (card.classList.contains("editing")) return;   
+
         card.classList.add("editing");
 
         const titleInput = document.createElement("input");

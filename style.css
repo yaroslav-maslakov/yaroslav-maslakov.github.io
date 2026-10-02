@@ -855,3 +855,51 @@ footer {
 .inline-edit-input:focus {
     border-color: #4A1725;
 }
+/* =========================
+   ADMIN — NAVIGATION TREE
+   ========================= */
+
+.admin-nav-group {
+    position: relative;
+}
+
+.admin-nav-submenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 210px;
+    padding: 10px 0;
+    border: 1px solid #DED8D0;
+    background: #F7F4EF;
+    z-index: 100;
+}
+
+.admin-nav-group:hover .admin-nav-submenu {
+    display: block;
+}
+
+.admin-nav-submenu a {
+    display: block;
+    padding: 9px 16px;
+    color: #6F6A63;
+    font-size: 13px;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.admin-nav-submenu a:hover {
+    color: #6E2235;
+    background: #FAF7F2;
+}
+
+.admin-nav-group > a {
+    position: relative;
+}
+
+.admin-nav-group > a::after {
+    content: "＋";
+    margin-left: 5px;
+    color: #6E2235;
+    font-size: 11px;
+}

@@ -962,16 +962,58 @@ editButton.addEventListener("click", function() {
     cancelButton.type = "button";
     cancelButton.textContent = "СКАСУВАТИ";
 
+    const inlineButtons = document.createElement("div");
+    inlineButtons.className = "admin-form-buttons";
+
+    saveInlineButton.addEventListener("click", async function() {
+        const newTitle = titleInput.value.trim();
+
+        if (!newTitle) {
+            alert("Назва сертифіката не може бути порожньою.");
+            return;
+        }
+
+        saveInlineButton.disabled = true;
+        saveInlineButton.textContent = "ЗБЕРЕЖЕННЯ...";
+
+        const { error } = await client
+            .from("certificates")
+            .update({
+                title: newTitle
+            })
+            .eq("id", certificate.id);
+
+        if (error) {
+            alert("Не вдалося зберегти зміни: " + error.message);
+            saveInlineButton.disabled = false;
+            saveInlineButton.textContent = "ЗБЕРЕГТИ";
+            return;
+        }
+
+        certificate.title = newTitle;
+
+        card.classList.remove("editing");
+        titleInput.remove();
+        inlineButtons.remove();
+
+        const titleElement = card.querySelector("h3");
+
+        if (titleElement) {
+            titleElement.textContent = newTitle;
+        }
+    });
+
     cancelButton.addEventListener("click", function() {
         card.classList.remove("editing");
         titleInput.remove();
-        saveInlineButton.remove();
-        cancelButton.remove();
+        inlineButtons.remove();
     });
 
+    inlineButtons.appendChild(saveInlineButton);
+    inlineButtons.appendChild(cancelButton);
+
     card.appendChild(titleInput);
-    card.appendChild(saveInlineButton);
-    card.appendChild(cancelButton);
+    card.appendChild(inlineButtons);
 });
     
         const deleteButton = document.createElement("button");

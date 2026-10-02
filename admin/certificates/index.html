@@ -936,32 +936,32 @@ function getFilteredCertificates() {
             updateExportCount();
         });
 
-        const editButton = document.createElement("button");
-        editButton.type = "button";
-        editButton.textContent = "РЕДАГУВАТИ";
+       const editButton = document.createElement("button");
+editButton.type = "button";
+editButton.textContent = "РЕДАГУВАТИ";
 
-        editButton.addEventListener("click", function() {
-        const card = editButton.closest(".certificate-card");
+editButton.addEventListener("click", function() {
+    const card = editButton.closest(".certificate-card");
 
-        if (!card) return;
+    if (!card) return;
 
-        if (card.classList.contains("editing")) return;   
+    if (card.classList.contains("editing")) return;   
 
-        card.classList.add("editing");
+    card.classList.add("editing");
 
-        const titleInput = document.createElement("input");
+    const titleInput = document.createElement("input");
 
-        titleInput.type = "text";
-        titleInput.value = certificate.title || "";
-        titleInput.className = "inline-edit-input";
+    titleInput.type = "text";
+    titleInput.value = certificate.title || "";
+    titleInput.className = "inline-edit-input";
 
-       card.appendChild(titleInput);
+    card.appendChild(titleInput);
 
-        const cancelButton = document.createElement("button");
-        cancelButton.type = "button";
-        cancelButton.textContent = "СКАСУВАТИ";
+    const cancelButton = document.createElement("button");
+    cancelButton.type = "button";
+    cancelButton.textContent = "СКАСУВАТИ";
 
-        cancelButton.addEventListener("click", function() {
+    cancelButton.addEventListener("click", function() {
         card.classList.remove("editing");
         titleInput.remove();
         cancelButton.remove();

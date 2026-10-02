@@ -936,20 +936,7 @@ function getFilteredCertificates() {
             updateExportCount();
         });
 
-       const editButton = document.createElement("button");
-editButton.type = "button";
-editButton.textContent = "РЕДАГУВАТИ";
-
-editButton.addEventListener("click", function() {
-    const card = editButton.closest(".certificate-card");
-
-    if (!card) return;
-
-    if (card.classList.contains("editing")) return;   
-
-    card.classList.add("editing");
-
-    const editButton = document.createElement("button");
+const editButton = document.createElement("button");
 editButton.type = "button";
 editButton.textContent = "РЕДАГУВАТИ";
 
@@ -963,12 +950,9 @@ editButton.addEventListener("click", function() {
     card.classList.add("editing");
 
     const titleInput = document.createElement("input");
-
     titleInput.type = "text";
     titleInput.value = certificate.title || "";
     titleInput.className = "inline-edit-input";
-
-    card.appendChild(titleInput);
 
     const saveInlineButton = document.createElement("button");
     saveInlineButton.type = "button";
@@ -985,10 +969,11 @@ editButton.addEventListener("click", function() {
         cancelButton.remove();
     });
 
+    card.appendChild(titleInput);
     card.appendChild(saveInlineButton);
     card.appendChild(cancelButton);
 });
-
+    
         const deleteButton = document.createElement("button");
         deleteButton.type = "button";
         deleteButton.textContent = "ВИДАЛИТИ";

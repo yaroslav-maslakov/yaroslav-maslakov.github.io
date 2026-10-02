@@ -837,13 +837,13 @@ footer {
     display: block;
     width: 100%;
     box-sizing: border-box;
-    margin: 0 0 5px;
-    padding: 9px 12px;
+    margin: 0;
+    padding: 6px 10px;
     border: 1px solid #6E2235;
     background: #FAF7F2;
     color: #4A1725;
     font-family: Arial, sans-serif;
-    font-size: 20px;
+    font-size: 17px;
     line-height: 1.4;
     outline: none;
 }

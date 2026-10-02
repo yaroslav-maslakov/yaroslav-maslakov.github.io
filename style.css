@@ -903,3 +903,55 @@ footer {
     color: #6E2235;
     font-size: 11px;
 }
+@media (max-width: 900px) {
+
+    .header-inner {
+        position: relative;
+    }
+
+    .header-inner nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 16px 0;
+        border-top: 1px solid #DED8D0;
+        border-bottom: 1px solid #DED8D0;
+        background: #F7F4EF;
+        z-index: 100;
+    }
+
+    .header-inner nav.menu-open {
+        display: flex;
+    }
+
+    .header-inner nav > a,
+    .header-inner nav .admin-nav-group > a {
+        display: block;
+        padding: 10px 0;
+    }
+
+    .admin-nav-submenu {
+        position: static;
+        min-width: 0;
+        padding: 0 0 8px 18px;
+        border: 0;
+        background: transparent;
+    }
+
+    .admin-nav-group:hover .admin-nav-submenu {
+        display: none;
+    }
+
+    .admin-nav-group:focus-within .admin-nav-submenu,
+    .admin-nav-group.open .admin-nav-submenu {
+        display: block;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+}

@@ -26,105 +26,23 @@
             </div>
 
 
-            <nav>
+           <nav>
 
     <a href="/admin/index.html">
         Головна
     </a>
 
-   <div class="admin-nav-group">
-
-    <button
-        type="button"
-        class="admin-nav-parent"
-    >
+    <a href="/admin/articles/index.html">
         Статті
-        <span>＋</span>
-    </button>
+    </a>
 
-        <div class="admin-nav-submenu">
-            <a href="/admin/articles/index.html">
-                Усі статті
-            </a>
-
-            <a href="/admin/articles/reports/index.html">
-                Репортажі
-            </a>
-
-            <a href="/admin/articles/analytics/index.html">
-                Аналітика
-            </a>
-
-            <a href="/admin/articles/interviews/index.html">
-                Інтерв'ю
-            </a>
-
-            <a href="/admin/articles/columns/index.html">
-                Колонки
-            </a>
-        </div>
-    </div>
-
-
-    <div class="admin-nav-group">
-
-    <button
-        type="button"
-        class="admin-nav-parent"
-    >
+    <a href="/admin/research/index.html">
         Дослідження
-        <span>＋</span>
-    </button>
+    </a>
 
-        <div class="admin-nav-submenu">
-            <a href="/admin/research/index.html">
-                Усі дослідження
-            </a>
-
-            <a href="/admin/research/media-society/index.html">
-                Медіа і суспільство
-            </a>
-
-            <a href="/admin/research/academic-materials/index.html">
-                Академічні матеріали
-            </a>
-
-            <a href="/admin/research/media-research/index.html">
-                Медіадослідження
-            </a>
-
-            <a href="/admin/research/research-projects/index.html">
-                Дослідницькі проєкти
-            </a>
-        </div>
-    </div>
-
-
-   <div class="admin-nav-group">
-
-    <button
-        type="button"
-        class="admin-nav-parent"
-    >
+    <a href="/admin/publications/index.html">
         Публікації
-        <span>＋</span>
-    </button>
-
-        <div class="admin-nav-submenu">
-            <a href="/admin/publications/index.html">
-                Усі публікації
-            </a>
-
-            <a href="/admin/publications/academic/index.html">
-                Академічні
-            </a>
-
-            <a href="/admin/publications/media/index.html">
-                Медіа
-            </a>
-        </div>
-    </div>
-
+    </a>
 
     <a
         href="/admin/certificates/index.html"
@@ -133,11 +51,9 @@
         Сертифікати
     </a>
 
-
     <a href="/admin/about/index.html">
         Про мене
     </a>
-
 
     <a href="/admin/contacts/index.html">
         Контакти
@@ -2456,25 +2372,7 @@ filtersToggle.addEventListener(
             );
         });
     }
-    const adminNavParents = document.querySelectorAll(".admin-nav-parent");
-
-adminNavParents.forEach(function(parentButton) {
-    parentButton.addEventListener("click", function() {
-        const group = parentButton.closest(".admin-nav-group");
-
-        if (!group) return;
-
-        group.classList.toggle("open");
-
-        const arrow = parentButton.querySelector("span");
-
-        if (arrow) {
-            arrow.textContent = group.classList.contains("open")
-                ? "−"
-                : "＋";
-        }
-    });
-});
+   
 </script>
 
 

@@ -103,6 +103,10 @@
         Керування статтями сайту.
     </p>
 
+    <h3>Основний текст UA</h3>
+
+    <div id="articleEditorUA"></div>
+
 </section>
 
 
@@ -119,6 +123,15 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <link
+    href="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.snow.css"
+    rel="stylesheet"
+>
+
+<script
+    src="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.js">
+</script>
 
 <script>
 
@@ -253,12 +266,72 @@
     }
 
 
+const articleEditorUA =
+    document.getElementById(
+        "articleEditorUA"
+    );
+
+let articleQuillUA = null;
+
+if (articleEditorUA) {
+
+    articleQuillUA =
+        new Quill(
+            "#articleEditorUA",
+            {
+                theme: "snow",
+
+                modules: {
+                    toolbar: [
+                        [
+                            {
+                                header: [
+                                    1,
+                                    2,
+                                    3,
+                                    false
+                                ]
+                            }
+                        ],
+                        [
+                            "bold",
+                            "italic",
+                            "underline"
+                        ],
+                        [
+                            {
+                                list: "ordered"
+                            },
+                            {
+                                list: "bullet"
+                            }
+                        ],
+                        [
+                            "blockquote"
+                        ],
+                        [
+                            "link"
+                        ],
+                        [
+                            {
+                                align: []
+                            }
+                        ],
+                        [
+                            "clean"
+                        ]
+                    ]
+                }
+            }
+        );
+
+}
+    
     /*
      * =========================
      * ЗАПУСК
      * =========================
      */
-
     checkSession();
 
 </script>

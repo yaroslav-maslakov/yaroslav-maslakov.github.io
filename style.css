@@ -959,6 +959,31 @@ footer {
    ADMIN — MOBILE NAV PARENT
    ========================= */
 
+.admin-nav-parent {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #6E2235;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.admin-nav-parent:hover {
+    color: #4A1725;
+}
+
+.admin-nav-parent span {
+    color: #6E2235;
+    font-size: 11px;
+}
+
 @media (max-width: 700px) {
 
     .header-inner {

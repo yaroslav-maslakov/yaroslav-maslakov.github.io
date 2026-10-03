@@ -99,17 +99,236 @@
 
     <h2>Статті</h2>
 
-    <p>
-        Керування статтями сайту.
-    </p>
+    <h3>Основна інформація</h3>
+
+    <div class="form-group">
+
+        <label for="titleUA">
+            Назва UA *
+        </label>
+
+        <input
+            type="text"
+            id="titleUA"
+            required
+        >
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label for="titleEN">
+            Назва EN *
+        </label>
+
+        <input
+            type="text"
+            id="titleEN"
+            required
+        >
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label for="category">
+            Категорія *
+        </label>
+
+        <select
+            id="category"
+            required
+        >
+
+            <option value="">
+                Оберіть категорію
+            </option>
+
+            <option value="Репортаж">
+                Репортаж
+            </option>
+
+            <option value="Аналітика">
+                Аналітика
+            </option>
+
+            <option value="Інтерв’ю">
+                Інтерв'ю
+            </option>
+
+            <option value="Колонка">
+                Колонка
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label for="publicationDate">
+            Дата публікації *
+        </label>
+
+        <input
+            type="date"
+            id="publicationDate"
+            required
+        >
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label for="articleStatus">
+            Статус
+        </label>
+
+        <select id="articleStatus">
+
+            <option value="draft">
+                Чернетка
+            </option>
+
+            <option value="published">
+                Опубліковано
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <h3>Короткий опис</h3>
+
+
+    <div class="form-group">
+
+        <label for="excerptUA">
+            Анонс UA *
+        </label>
+
+        <textarea
+            id="excerptUA"
+            rows="4"
+            required
+        ></textarea>
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label for="excerptEN">
+            Анонс EN *
+        </label>
+
+        <textarea
+            id="excerptEN"
+            rows="4"
+            required
+        ></textarea>
+
+    </div>
+
 
     <h3>Основний текст UA</h3>
 
     <div id="articleEditorUA"></div>
 
+
     <h3>Основний текст EN</h3>
 
-<div id="articleEditorEN"></div>
+    <div id="articleEditorEN"></div>
+
+
+    <h3>Зображення</h3>
+
+
+    <div class="form-group">
+
+        <label for="mainImage">
+            Головне зображення
+        </label>
+
+        <input
+            type="file"
+            id="mainImage"
+            accept="image/jpeg,image/png,image/webp,image/svg+xml"
+        >
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label for="captionUA">
+            Підпис UA
+        </label>
+
+        <input
+            type="text"
+            id="captionUA"
+        >
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label for="captionEN">
+            Підпис EN
+        </label>
+
+        <input
+            type="text"
+            id="captionEN"
+        >
+
+    </div>
+
+
+    <h3>Додаткові дані</h3>
+
+
+    <div class="form-group">
+
+        <label for="author">
+            Автор
+        </label>
+
+        <input
+            type="text"
+            id="author"
+        >
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label for="slug">
+            Slug
+        </label>
+
+        <input
+            type="text"
+            id="slug"
+        >
+
+    </div>
+
+
+    <button
+        type="button"
+        id="saveArticleButton"
+    >
+        ЗБЕРЕГТИ СТАТТЮ
+    </button>
 
 </section>
 

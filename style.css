@@ -959,13 +959,36 @@ footer {
    ADMIN — MOBILE NAV PARENT
    ========================= */
 
-@media (max-width: 900px) {
+@media (max-width: 700px) {
 
-    .admin-nav-parent {
+    .header-inner {
+        position: relative;
+    }
+
+    .header-inner nav {
+        display: none;
+        position: absolute;
+        top: calc(100% + 1px);
+        right: 0;
+        left: auto;
+        width: 280px;
+        box-sizing: border-box;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 18px 20px 20px;
+        border: 1px solid #DED8D0;
+        background: #F7F4EF;
+        box-shadow: 0 8px 20px rgba(74, 23, 37, 0.06);
+        z-index: 100;
+    }
+
+    .header-inner nav.menu-open {
         display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        gap: 6px;
+    }
+
+    .header-inner nav > a,
+    .admin-nav-parent {
+        box-sizing: border-box;
         width: 100%;
         padding: 10px 0;
         border: 0;
@@ -973,9 +996,26 @@ footer {
         color: #4A1725;
         font-family: Arial, sans-serif;
         font-size: 14px;
-        font-weight: 600;
+        font-weight: 400;
         text-align: right;
+        text-decoration: none;
         cursor: pointer;
+    }
+
+    .header-inner nav > a:hover,
+    .admin-nav-parent:hover {
+        color: #6E2235;
+    }
+
+    .admin-nav-group {
+        width: 100%;
+    }
+
+    .admin-nav-parent {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 6px;
     }
 
     .admin-nav-parent span {
@@ -983,8 +1023,40 @@ footer {
         font-size: 12px;
     }
 
-    .admin-nav-parent:hover {
-        color: #6E2235;
+    .admin-nav-submenu {
+        display: none;
+        position: static;
+        width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+        padding: 0 14px 6px 0;
+        border: 0;
+        background: transparent;
     }
 
+    .admin-nav-group:hover .admin-nav-submenu {
+        display: none;
+    }
+
+    .admin-nav-group.open .admin-nav-submenu {
+        display: block;
+    }
+
+    .admin-nav-submenu a {
+        display: block;
+        padding: 7px 0;
+        color: #6F6A63;
+        font-size: 13px;
+        text-align: right;
+        text-decoration: none;
+    }
+
+    .admin-nav-submenu a:hover {
+        color: #6E2235;
+        background: transparent;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
 }

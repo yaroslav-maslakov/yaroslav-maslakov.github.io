@@ -107,6 +107,10 @@
 
     <div id="articleEditorUA"></div>
 
+    <h3>Основний текст EN</h3>
+
+<div id="articleEditorEN"></div>
+
 </section>
 
 
@@ -278,6 +282,67 @@ if (articleEditorUA) {
     articleQuillUA =
         new Quill(
             "#articleEditorUA",
+            {
+                theme: "snow",
+
+                modules: {
+                    toolbar: [
+                        [
+                            {
+                                header: [
+                                    1,
+                                    2,
+                                    3,
+                                    false
+                                ]
+                            }
+                        ],
+                        [
+                            "bold",
+                            "italic",
+                            "underline"
+                        ],
+                        [
+                            {
+                                list: "ordered"
+                            },
+                            {
+                                list: "bullet"
+                            }
+                        ],
+                        [
+                            "blockquote"
+                        ],
+                        [
+                            "link"
+                        ],
+                        [
+                            {
+                                align: []
+                            }
+                        ],
+                        [
+                            "clean"
+                        ]
+                    ]
+                }
+            }
+        );
+
+}
+
+const articleEditorEN =
+    document.getElementById(
+        "articleEditorEN"
+    );
+
+let articleQuillEN = null;
+
+if (articleEditorEN) {
+
+    articleQuillEN =
+        new Quill(
+            "#articleEditorEN",
             {
                 theme: "snow",
 

@@ -310,14 +310,21 @@ async function uploadArticleImage(
                 `articles/${fileName}`;
 
             const {
-                error: uploadError
-            } =
-                await client.storage
-                    .from("article-images")
-                    .upload(
-                        filePath,
-                        file
-                    );
+    error: uploadError
+} =
+    await client.storage
+        .from("article-images")
+        .upload(
+            filePath,
+            file,
+            {
+                contentType:
+                    file.type,
+                cacheControl:
+                    "3600",
+                upsert: false
+            }
+        );
 
             if (uploadError) {
 

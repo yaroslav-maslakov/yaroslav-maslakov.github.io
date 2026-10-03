@@ -502,6 +502,22 @@ if (articleEditorEN) {
             }
         );
 
+    const toolbarEN =
+    articleQuillEN.getModule(
+        "toolbar"
+    );
+
+toolbarEN.addHandler(
+    "image",
+    function() {
+
+        uploadArticleImage(
+            articleQuillEN
+        );
+
+    }
+);
+
 }
     
     /*

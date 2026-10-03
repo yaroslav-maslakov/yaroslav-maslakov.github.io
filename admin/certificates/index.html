@@ -2371,6 +2371,25 @@ filtersToggle.addEventListener(
             );
         });
     }
+    const adminNavParents = document.querySelectorAll(".admin-nav-parent");
+
+adminNavParents.forEach(function(parentButton) {
+    parentButton.addEventListener("click", function() {
+        const group = parentButton.closest(".admin-nav-group");
+
+        if (!group) return;
+
+        group.classList.toggle("open");
+
+        const arrow = parentButton.querySelector("span");
+
+        if (arrow) {
+            arrow.textContent = group.classList.contains("open")
+                ? "−"
+                : "＋";
+        }
+    });
+});
 </script>
 
 

@@ -1,0 +1,1967 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Сертифікати — Адмін-панель</title>
+
+    <link rel="stylesheet" href="../../style.css">
+
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+</head>
+
+
+<body>
+
+
+    <header>
+
+        <div class="header-inner">
+
+
+            <div class="logo">
+                ЯРОСЛАВ МАСЛАКОВ
+            </div>
+
+
+          <nav>
+
+    <a href="/admin/index.html">
+        Головна
+    </a>
+
+    <a href="/admin/articles/index.html" class="active">
+        Статті
+    </a>
+
+    <a href="/admin/research/index.html">
+        Дослідження
+    </a>
+
+    <a href="/admin/publications/index.html">
+        Публікації
+    </a>
+
+    <a href="/admin/certificates/index.html">
+        Сертифікати
+    </a>
+
+    <a href="/admin/about/index.html">
+        Про мене
+    </a>
+
+    <a href="/admin/contacts/index.html">
+        Контакти
+    </a>
+
+</nav>
+
+<button
+    class="menu-toggle"
+    type="button"
+    aria-label="Відкрити меню"
+>
+    МЕНЮ
+</button>
+            
+            <div class="admin-header-actions">
+
+    <div class="language">
+
+        <a href="../../uk/index.html">
+            САЙТ
+        </a>
+
+    </div>
+
+
+    <button
+        type="button"
+        id="logoutButton"
+        class="admin-header-logout"
+    >
+        ВИЙТИ
+    </button>
+
+</div>
+
+
+        </div>
+
+    </header>
+
+
+
+    <main>
+
+<section class="latest">
+
+    <h2>Статті</h2>
+
+    <p>
+        Керування статтями сайту.
+    </p>
+
+</section>
+
+
+    </main>
+
+
+
+    <footer>
+
+        © 2026 Ярослав Маслаков
+
+    </footer>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<script>
+
+
+    /*
+     * =========================
+     * SUPABASE
+     * =========================
+     */
+
+    const SUPABASE_URL =
+        "https://jtplvfweyguheyqyewal.supabase.co";
+
+
+    const SUPABASE_KEY =
+        "sb_publishable_jAg0mG8Pj30tCF7qND3ydQ_-WDv4EhP";
+
+
+
+    const { createClient } =
+        supabase;
+
+
+    const client =
+        createClient(
+            SUPABASE_URL,
+            SUPABASE_KEY,
+            {
+                auth: {
+                    flowType: "pkce",
+                    detectSessionInUrl: true,
+                    persistSession: true
+                }
+            }
+        );
+
+
+
+    /*
+     * =========================
+     * ЕЛЕМЕНТИ
+     * =========================
+     */
+
+    const certificateForm =
+        document.getElementById(
+            "certificateForm"
+        );
+
+
+    const formTitle =
+        document.getElementById(
+            "formTitle"
+        );
+
+
+    const saveButton =
+        document.getElementById(
+            "saveButton"
+        );
+
+
+    const clearFormButton =
+        document.getElementById(
+            "clearFormButton"
+        );
+    const addCertificateButton =
+    document.getElementById(
+        "addCertificateButton"
+    );
+
+
+const certificateFormContainer =
+    document.getElementById(
+        "certificateFormContainer"
+    );
+
+
+    const formMessage =
+        document.getElementById(
+            "formMessage"
+        );
+
+
+    const certificates =
+        document.getElementById(
+            "certificates"
+        );
+
+
+    const logoutButton =
+        document.getElementById(
+            "logoutButton"
+        );
+
+    const exportXlsxButton =
+    document.getElementById(
+        "exportXlsxButton"
+    );
+
+
+const exportCount =
+    document.getElementById(
+        "exportCount"
+    );
+
+    const filtersToggle =
+    document.getElementById(
+        "filtersToggle"
+    );
+
+
+const filtersPanel =
+    document.getElementById(
+        "filtersPanel"
+    );
+
+
+const filtersArrow =
+    document.getElementById(
+        "filtersArrow"
+    );
+
+
+const filterTitle =
+    document.getElementById(
+        "filterTitle"
+    );
+
+   const filterTitleEn =
+    document.getElementById(
+        "filterTitleEn"
+    );
+
+
+const filterOrganizationEn =
+    document.getElementById(
+        "filterOrganizationEn"
+    ); 
+
+const filterOrganization =
+    document.getElementById(
+        "filterOrganization"
+    );
+
+
+const filterDateFrom =
+    document.getElementById(
+        "filterDateFrom"
+    );
+
+
+const filterDateTo =
+    document.getElementById(
+        "filterDateTo"
+    );
+
+
+const filterPublished =
+    document.getElementById(
+        "filterPublished"
+    );
+
+
+const filterHours =
+    document.getElementById(
+        "filterHours"
+    );
+
+
+const filterEcts =
+    document.getElementById(
+        "filterEcts"
+    );
+
+
+const clearFiltersButton =
+    document.getElementById(
+        "clearFiltersButton"
+    );
+
+    const applyFiltersButton = document.getElementById("applyFiltersButton");
+
+
+    const currentFile =
+        document.getElementById(
+            "currentFile"
+        );
+
+
+
+    /*
+     * =========================
+     * РЕДАГУВАННЯ
+     * =========================
+     */
+
+    let editingCertificateId =
+        null;
+
+
+    let editingCertificate =
+        null;
+
+    let allCertificates = [];
+
+
+
+    /*
+     * =========================
+     * ПЕРЕВІРКА АВТОРИЗАЦІЇ
+     * =========================
+     */
+
+    async function checkSession() {
+    const {
+        data: {
+            session
+        }
+    } = await client.auth.getSession();
+
+    console.log("JWT:", session?.access_token);
+
+    if (!session) {
+        window.location.href = "../index.html";
+        return;
+    }
+
+    loadCertificates();
+}
+
+    
+
+    /*
+ * =========================
+ * ФІЛЬТРАЦІЯ
+ * =========================
+ */
+
+function getFilteredCertificates() {
+
+    return allCertificates.filter(
+        function(certificate) {
+
+const title =
+    (
+        certificate.title ||
+        ""
+    ).toLowerCase();
+
+
+const titleEn =
+    (
+        certificate.title_en ||
+        ""
+    ).toLowerCase();
+
+
+const organization =
+    (
+        certificate.organization ||
+        ""
+    ).toLowerCase();
+
+
+const organizationEn =
+    (
+        certificate.organization_en ||
+        ""
+    ).toLowerCase();
+
+
+            const searchTitle =
+    filterTitle.value
+        .trim()
+        .toLowerCase();
+
+
+const searchTitleEn =
+    filterTitleEn.value
+        .trim()
+        .toLowerCase();
+
+
+const searchOrganization =
+    filterOrganization.value
+        .trim()
+        .toLowerCase();
+
+
+const searchOrganizationEn =
+    filterOrganizationEn.value
+        .trim()
+        .toLowerCase();
+
+            if (
+                searchTitle &&
+                !title.includes(
+                    searchTitle
+                )
+            ) {
+                return false;
+            }
+
+            if (
+    searchTitleEn &&
+    !titleEn.includes(
+        searchTitleEn
+    )
+) {
+    return false;
+}
+
+
+            if (
+                searchOrganization &&
+                !organization.includes(
+                    searchOrganization
+                )
+            ) {
+                return false;
+            }
+
+            if (
+    searchOrganizationEn &&
+    !organizationEn.includes(
+        searchOrganizationEn
+    )
+) {
+    return false;
+}
+
+
+            if (
+                filterDateFrom.value &&
+                certificate.certificate_date <
+                filterDateFrom.value
+            ) {
+                return false;
+            }
+
+
+            if (
+                filterDateTo.value &&
+                certificate.certificate_date >
+                filterDateTo.value
+            ) {
+                return false;
+            }
+
+
+            if (
+                filterPublished.value ===
+                "published" &&
+                !certificate.published
+            ) {
+                return false;
+            }
+
+
+            if (
+                filterPublished.value ===
+                "draft" &&
+                certificate.published
+            ) {
+                return false;
+            }
+
+
+            if (
+                filterHours.value &&
+                (
+                    certificate.hours === null ||
+                    Number(certificate.hours) <
+                    Number(filterHours.value)
+                )
+            ) {
+                return false;
+            }
+
+
+            if (
+                filterEcts.value &&
+                (
+                    certificate.ects === null ||
+                    Number(certificate.ects) <
+                    Number(filterEcts.value)
+                )
+            ) {
+                return false;
+            }
+
+
+            return true;
+
+        }
+    );
+
+}
+
+
+    function renderCertificates(certificateList) {
+    certificates.innerHTML = "";
+
+    if (!certificateList || certificateList.length === 0) {
+        certificates.textContent = "За заданими фільтрами сертифікатів не знайдено.";
+
+        if (exportCount) {
+            exportCount.textContent = " (0)";
+        }
+
+        return;
+    }
+
+    certificateList.forEach(function(certificate) {
+        const item = document.createElement("div");
+        item.className = "certificate-card";
+        item.dataset.certificateId = certificate.id;
+
+        const title = document.createElement("h3");
+        title.textContent = certificate.title;
+
+        const organization = document.createElement("p");
+        organization.textContent = certificate.organization;
+
+        const date = document.createElement("p");
+
+        if (certificate.certificate_date) {
+            const formattedDate = new Date(
+                certificate.certificate_date + "T00:00:00"
+            ).toLocaleDateString("uk-UA");
+
+            date.textContent = "Дата: " + formattedDate;
+        } else {
+            date.textContent = "Дата: —";
+        }
+
+        const details = document.createElement("p");
+
+        const hoursText =
+            certificate.hours !== null &&
+            certificate.hours !== undefined
+                ? certificate.hours + " год."
+                : "—";
+
+        const ectsText =
+            certificate.ects !== null &&
+            certificate.ects !== undefined
+                ? certificate.ects + " ЄКТС"
+                : "—";
+
+        details.textContent =
+            "Обсяг: " + hoursText + " · " + ectsText;
+
+        const status = document.createElement("p");
+        status.className = "certificate-status";
+        status.textContent = certificate.published
+            ? "Статус: опубліковано"
+            : "Статус: чернетка";
+
+        if (certificate.file_url) {
+            const fileLink = document.createElement("a");
+            fileLink.href = certificate.file_url;
+            fileLink.target = "_blank";
+            fileLink.rel = "noopener noreferrer";
+            fileLink.textContent = "ВІДКРИТИ PDF →";
+
+            item.appendChild(fileLink);
+        }
+
+        const publishLabel = document.createElement("label");
+        publishLabel.className = "checkbox-label";
+
+        const publishToggle = document.createElement("input");
+        publishToggle.type = "checkbox";
+        publishToggle.checked = certificate.published;
+
+        const publishText = document.createElement("span");
+        publishText.textContent = "Опубліковано";
+
+        publishLabel.appendChild(publishToggle);
+        publishLabel.appendChild(publishText);
+
+        publishToggle.addEventListener("change", async function() {
+            const { error } = await client
+                .from("certificates")
+                .update({
+                    published: publishToggle.checked
+                })
+                .eq("id", certificate.id);
+
+            if (error) {
+                alert("Не вдалося змінити статус: " + error.message);
+                publishToggle.checked = certificate.published;
+                return;
+            }
+
+            certificate.published = publishToggle.checked;
+            status.textContent = certificate.published
+                ? "Статус: опубліковано"
+                : "Статус: чернетка";
+
+            updateExportCount();
+        });
+
+const editButton = document.createElement("button");
+editButton.type = "button";
+editButton.textContent = "РЕДАГУВАТИ";
+
+editButton.addEventListener("click", function() {
+    const card = editButton.closest(".certificate-card");
+
+    if (!card) return;
+
+    if (card.classList.contains("editing")) return;
+
+    card.classList.add("editing");
+
+    const inlineEditForm = document.createElement("div");
+    inlineEditForm.className = "inline-edit-form";
+
+    const titleInput = document.createElement("input");
+    titleInput.type = "text";
+    titleInput.value = certificate.title || "";
+    titleInput.className = "inline-edit-input";
+    titleInput.placeholder = "Назва українською";
+
+    const organizationInput = document.createElement("input");
+    organizationInput.type = "text";
+    organizationInput.value = certificate.organization || "";
+    organizationInput.className = "inline-edit-input";
+    organizationInput.placeholder = "Організація українською";
+
+    const dateInput = document.createElement("input");
+    dateInput.type = "date";
+    dateInput.value = certificate.certificate_date || "";
+    dateInput.className = "inline-edit-input";
+
+    const hoursInput = document.createElement("input");
+    hoursInput.type = "number";
+    hoursInput.value = certificate.hours ?? "";
+    hoursInput.className = "inline-edit-input";
+    hoursInput.placeholder = "Години";
+    hoursInput.min = "0";
+    hoursInput.step = "0.5";
+
+    const ectsInput = document.createElement("input");
+    ectsInput.type = "number";
+    ectsInput.value = certificate.ects ?? "";
+    ectsInput.className = "inline-edit-input";
+    ectsInput.placeholder = "ЄКТС";
+    ectsInput.min = "0";
+    ectsInput.step = "0.1";
+
+    const descriptionInput = document.createElement("textarea");
+    descriptionInput.value = certificate.description || "";
+    descriptionInput.className = "inline-edit-input";
+    descriptionInput.placeholder = "Опис українською";
+
+    const titleEnInput = document.createElement("input");
+    titleEnInput.type = "text";
+    titleEnInput.value = certificate.title_en || "";
+    titleEnInput.className = "inline-edit-input";
+    titleEnInput.placeholder = "Title English";
+
+    const organizationEnInput = document.createElement("input");
+    organizationEnInput.type = "text";
+    organizationEnInput.value = certificate.organization_en || "";
+    organizationEnInput.className = "inline-edit-input";
+    organizationEnInput.placeholder = "Organization English";
+
+    const descriptionEnInput = document.createElement("textarea");
+    descriptionEnInput.value = certificate.description_en || "";
+    descriptionEnInput.className = "inline-edit-input";
+    descriptionEnInput.placeholder = "Description English";
+
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.accept = "application/pdf";
+    fileInput.className = "inline-edit-input";
+
+    const fileInfo = document.createElement("div");
+    fileInfo.className = "inline-edit-file-info";
+
+    if (certificate.file_url) {
+        const currentFileLink = document.createElement("a");
+        currentFileLink.href = certificate.file_url;
+        currentFileLink.target = "_blank";
+        currentFileLink.rel = "noopener noreferrer";
+        currentFileLink.textContent = "Поточний PDF →";
+
+        fileInfo.appendChild(currentFileLink);
+    } else {
+        fileInfo.textContent = "PDF не завантажено.";
+    }
+
+    const publishLabel = document.createElement("label");
+    publishLabel.className = "checkbox-label";
+
+    const publishToggle = document.createElement("input");
+    publishToggle.type = "checkbox";
+    publishToggle.checked = certificate.published;
+
+    const publishText = document.createElement("span");
+    publishText.textContent = "Опубліковано";
+
+    publishLabel.appendChild(publishToggle);
+    publishLabel.appendChild(publishText);
+
+    const inlineButtons = document.createElement("div");
+    inlineButtons.className = "admin-form-buttons";
+
+    const saveInlineButton = document.createElement("button");
+    saveInlineButton.type = "button";
+    saveInlineButton.textContent = "ЗБЕРЕГТИ";
+
+    const cancelButton = document.createElement("button");
+    cancelButton.type = "button";
+    cancelButton.textContent = "СКАСУВАТИ";
+
+    saveInlineButton.addEventListener("click", async function() {
+        const newTitle = titleInput.value.trim();
+        const newOrganization = organizationInput.value.trim();
+        const newDate = dateInput.value;
+        const newDescription = descriptionInput.value.trim();
+        const newTitleEn = titleEnInput.value.trim();
+        const newOrganizationEn = organizationEnInput.value.trim();
+        const newDescriptionEn = descriptionEnInput.value.trim();
+
+        if (!newTitle) {
+            alert("Назва сертифіката не може бути порожньою.");
+            return;
+        }
+
+        if (!newOrganization) {
+            alert("Організація не може бути порожньою.");
+            return;
+        }
+
+        if (!newDate) {
+            alert("Дата сертифіката не може бути порожньою.");
+            return;
+        }
+
+        saveInlineButton.disabled = true;
+        cancelButton.disabled = true;
+        saveInlineButton.textContent = "ЗБЕРЕЖЕННЯ...";
+
+        let newFileUrl = certificate.file_url || null;
+
+        if (fileInput.files.length > 0) {
+            const file = fileInput.files[0];
+
+            if (file.type !== "application/pdf") {
+                alert("Можна завантажувати лише PDF-файли.");
+                saveInlineButton.disabled = false;
+                cancelButton.disabled = false;
+                saveInlineButton.textContent = "ЗБЕРЕГТИ";
+                return;
+            }
+
+            const filePath =
+                Date.now() + "-" +
+                file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+
+            const { error: uploadError } = await client
+                .storage
+                .from("certificates")
+                .upload(filePath, file);
+
+            if (uploadError) {
+                alert("Не вдалося завантажити PDF: " + uploadError.message);
+                saveInlineButton.disabled = false;
+                cancelButton.disabled = false;
+                saveInlineButton.textContent = "ЗБЕРЕГТИ";
+                return;
+            }
+
+            const { data: publicUrlData } = client
+                .storage
+                .from("certificates")
+                .getPublicUrl(filePath);
+
+            newFileUrl = publicUrlData.publicUrl;
+        }
+
+        const newHours = hoursInput.value === ""
+            ? null
+            : Number(hoursInput.value);
+
+        const newEcts = ectsInput.value === ""
+            ? null
+            : Number(ectsInput.value);
+
+        const { error } = await client
+            .from("certificates")
+            .update({
+                title: newTitle,
+                organization: newOrganization,
+                certificate_date: newDate,
+                hours: newHours,
+                ects: newEcts,
+                description: newDescription || null,
+                title_en: newTitleEn || null,
+                organization_en: newOrganizationEn || null,
+                description_en: newDescriptionEn || null,
+                file_url: newFileUrl,
+                published: publishToggle.checked
+            })
+            .eq("id", certificate.id);
+
+        if (error) {
+            alert("Не вдалося зберегти зміни: " + error.message);
+            saveInlineButton.disabled = false;
+            cancelButton.disabled = false;
+            saveInlineButton.textContent = "ЗБЕРЕГТИ";
+            return;
+        }
+
+        certificate.title = newTitle;
+        certificate.organization = newOrganization;
+        certificate.certificate_date = newDate;
+        certificate.hours = newHours;
+        certificate.ects = newEcts;
+        certificate.description = newDescription || null;
+        certificate.title_en = newTitleEn || null;
+        certificate.organization_en = newOrganizationEn || null;
+        certificate.description_en = newDescriptionEn || null;
+        certificate.file_url = newFileUrl;
+        certificate.published = publishToggle.checked;
+
+        inlineEditForm.remove();
+        card.classList.remove("editing");
+
+        const titleElement = card.querySelector("h3");
+
+        if (titleElement) {
+            titleElement.textContent = newTitle;
+        }
+
+        const paragraphs = card.querySelectorAll("p");
+
+        if (paragraphs.length > 0) {
+            paragraphs[0].textContent = newOrganization;
+        }
+
+        if (paragraphs.length > 1) {
+            const formattedDate = new Date(
+                newDate + "T00:00:00"
+            ).toLocaleDateString("uk-UA");
+
+            paragraphs[1].textContent = "Дата: " + formattedDate;
+        }
+
+        if (paragraphs.length > 2) {
+            const hoursText = newHours !== null
+                ? newHours + " год."
+                : "—";
+
+            const ectsText = newEcts !== null
+                ? newEcts + " ЄКТС"
+                : "—";
+
+            paragraphs[2].textContent =
+                "Обсяг: " + hoursText + " · " + ectsText;
+        }
+
+        if (paragraphs.length > 3) {
+            paragraphs[3].textContent =
+                "Статус: " +
+                (certificate.published
+                    ? "опубліковано"
+                    : "чернетка");
+        }
+    });
+
+    cancelButton.addEventListener("click", function() {
+        inlineEditForm.remove();
+        card.classList.remove("editing");
+    });
+
+    inlineButtons.appendChild(saveInlineButton);
+    inlineButtons.appendChild(cancelButton);
+
+    inlineEditForm.appendChild(titleInput);
+    inlineEditForm.appendChild(organizationInput);
+    inlineEditForm.appendChild(dateInput);
+    inlineEditForm.appendChild(hoursInput);
+    inlineEditForm.appendChild(ectsInput);
+    inlineEditForm.appendChild(descriptionInput);
+
+    const translateButton = document.createElement("button");
+translateButton.type = "button";
+translateButton.textContent = "ЗАПРОПОНУВАТИ ПЕРЕКЛАД";
+translateButton.className = "admin-export-button";
+
+translateButton.addEventListener("click", async function() {
+    translateButton.disabled = true;
+    translateButton.textContent = "ПЕРЕКЛАДАЄМО...";
+
+    const { data, error } = await client.functions.invoke(
+        "rapid-function",
+        {
+            body: {
+                title: titleInput.value.trim(),
+                organization: organizationInput.value.trim(),
+                description: descriptionInput.value.trim()
+            }
+        }
+    );
+
+    if (error) {
+        alert("Не вдалося виконати переклад: " + error.message);
+        translateButton.disabled = false;
+        translateButton.textContent = "ЗАПРОПОНУВАТИ ПЕРЕКЛАД";
+        return;
+    }
+
+    if (!data) {
+        alert("Перекладач не повернув результат.");
+        translateButton.disabled = false;
+        translateButton.textContent = "ЗАПРОПОНУВАТИ ПЕРЕКЛАД";
+        return;
+    }
+
+    titleEnInput.value = data.title_en || "";
+    organizationEnInput.value = data.organization_en || "";
+    descriptionEnInput.value = data.description_en || "";
+
+    translateButton.disabled = false;
+    translateButton.textContent = "ЗАПРОПОНУВАТИ ПЕРЕКЛАД";
+});
+
+inlineEditForm.appendChild(translateButton);
+    
+    inlineEditForm.appendChild(titleEnInput);
+    inlineEditForm.appendChild(organizationEnInput);
+    inlineEditForm.appendChild(descriptionEnInput);
+    inlineEditForm.appendChild(fileInput);
+    inlineEditForm.appendChild(fileInfo);
+    inlineEditForm.appendChild(publishLabel);
+    inlineEditForm.appendChild(inlineButtons);
+
+    card.appendChild(inlineEditForm);
+});
+        const deleteButton = document.createElement("button");
+        deleteButton.type = "button";
+        deleteButton.textContent = "ВИДАЛИТИ";
+
+        deleteButton.addEventListener("click", async function() {
+            const confirmed = confirm(
+                "Видалити цей сертифікат?"
+            );
+
+            if (!confirmed) {
+                return;
+            }
+
+            const { error } = await client
+                .from("certificates")
+                .delete()
+                .eq("id", certificate.id);
+
+            if (error) {
+                alert(
+                    "Не вдалося видалити сертифікат: " +
+                    error.message
+                );
+                return;
+            }
+
+            if (editingCertificateId === certificate.id) {
+                clearForm();
+                certificateFormContainer.style.display = "none";
+            }
+
+            await loadCertificates();
+        });
+
+        item.appendChild(title);
+        item.appendChild(organization);
+        item.appendChild(date);
+        item.appendChild(details);
+        item.appendChild(status);
+        item.appendChild(publishLabel);
+
+        const buttons = document.createElement("div");
+        buttons.className = "admin-form-buttons";
+
+        buttons.appendChild(editButton);
+        buttons.appendChild(deleteButton);
+
+        item.appendChild(buttons);
+
+        certificates.appendChild(item);
+    });
+
+    updateExportCount();
+}
+
+    /*
+     * =========================
+     * ЗАВАНТАЖЕННЯ
+     * =========================
+     */
+
+    async function loadCertificates() {
+
+
+        certificates.textContent =
+            "Завантаження...";
+
+
+        const {
+            data,
+            error
+        } =
+            await client
+                .from("certificates")
+                .select("*")
+                .order(
+                    "certificate_date",
+                    {
+                        ascending: false
+                    }
+                );
+
+
+        if (error) {
+
+            certificates.textContent =
+                "Помилка завантаження: " +
+                error.message;
+
+            return;
+
+        }
+
+        allCertificates = data || [];
+
+
+if (
+    !data ||
+    data.length === 0
+) {
+
+    certificates.textContent =
+        "Сертифікатів поки немає.";
+
+    return;
+
+}
+
+
+renderCertificates(
+    allCertificates
+);
+}
+
+
+    /*
+     * =========================
+     * ПОЧАТОК РЕДАГУВАННЯ
+     * =========================
+     */
+
+    function startEditing(
+        certificate
+    ) {
+
+
+        editingCertificateId =
+            certificate.id;
+
+
+        editingCertificate =
+            certificate;
+
+
+
+        formTitle.textContent =
+            "Редагувати сертифікат";
+
+
+        saveButton.textContent =
+            "ЗБЕРЕГТИ ЗМІНИ";
+
+
+
+        document.getElementById(
+            "title"
+        ).value =
+            certificate.title || "";
+
+
+        document.getElementById(
+            "organization"
+        ).value =
+            certificate.organization || "";
+
+
+        document.getElementById(
+            "certificate_date"
+        ).value =
+            certificate.certificate_date || "";
+
+
+        document.getElementById(
+            "hours"
+        ).value =
+            certificate.hours ?? "";
+
+
+        document.getElementById(
+            "ects"
+        ).value =
+            certificate.ects ?? "";
+
+
+        document.getElementById(
+            "description"
+        ).value =
+            certificate.description || "";
+
+
+        document.getElementById(
+            "title_en"
+        ).value =
+            certificate.title_en || "";
+
+
+        document.getElementById(
+            "organization_en"
+        ).value =
+            certificate.organization_en || "";
+
+
+        document.getElementById(
+            "description_en"
+        ).value =
+            certificate.description_en || "";
+
+
+        document.getElementById(
+            "published"
+        ).checked =
+            certificate.published;
+
+
+
+        if (
+            certificate.file_url
+        ) {
+
+            currentFile.style.display =
+                "block";
+
+
+            currentFile.innerHTML =
+                `
+                    Поточний файл:
+                    <a
+                        href="${certificate.file_url}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        переглянути PDF →
+                    </a>
+                `;
+
+        } else {
+
+            currentFile.style.display =
+                "none";
+
+        }
+
+
+
+        formMessage.textContent =
+            "Редагування сертифіката.";
+
+
+        window.scrollTo(
+            {
+                top: 0,
+                behavior: "smooth"
+            }
+        );
+
+    }
+
+
+
+    /*
+     * =========================
+     * ЗБЕРЕЖЕННЯ
+     * =========================
+     */
+
+    certificateForm.addEventListener(
+        "submit",
+        async function(event) {
+
+
+            event.preventDefault();
+
+
+            formMessage.textContent =
+                "Збереження...";
+
+
+            const title =
+                document.getElementById(
+                    "title"
+                ).value.trim();
+
+
+            const organization =
+                document.getElementById(
+                    "organization"
+                ).value.trim();
+
+
+            const certificateDate =
+                document.getElementById(
+                    "certificate_date"
+                ).value;
+
+
+            const hours =
+                document.getElementById(
+                    "hours"
+                ).value;
+
+
+            const ects =
+                document.getElementById(
+                    "ects"
+                ).value;
+
+
+            const description =
+                document.getElementById(
+                    "description"
+                ).value.trim();
+
+
+            const titleEn =
+                document.getElementById(
+                    "title_en"
+                ).value.trim();
+
+
+            const organizationEn =
+                document.getElementById(
+                    "organization_en"
+                ).value.trim();
+
+
+            const descriptionEn =
+                document.getElementById(
+                    "description_en"
+                ).value.trim();
+
+
+            const published =
+                document.getElementById(
+                    "published"
+                ).checked;
+
+
+            const file =
+                document.getElementById(
+                    "certificateFile"
+                ).files[0];
+
+
+
+            /*
+             * =========================
+             * РЕЖИМ РЕДАГУВАННЯ
+             * =========================
+             */
+
+            if (
+                editingCertificateId
+            ) {
+
+
+                let fileUrl =
+                    editingCertificate.file_url ||
+                    null;
+
+
+
+                /*
+                 * ЯКЩО ВИБРАНО НОВИЙ PDF
+                 */
+
+                if (file) {
+
+
+                    formMessage.textContent =
+                        "Завантаження нового PDF...";
+
+
+                    const fileName =
+                        Date.now() +
+                        "-" +
+                        file.name;
+
+
+                    const {
+                        error: uploadError
+                    } =
+                        await client
+                            .storage
+                            .from(
+                                "certificates"
+                            )
+                            .upload(
+                                fileName,
+                                file
+                            );
+
+
+                    if (uploadError) {
+
+
+                        formMessage.textContent =
+                            "Помилка завантаження PDF: " +
+                            uploadError.message;
+
+
+                        return;
+
+                    }
+
+
+                    const {
+                        data:
+                            publicUrlData
+                    } =
+                        client
+                            .storage
+                            .from(
+                                "certificates"
+                            )
+                            .getPublicUrl(
+                                fileName
+                            );
+
+
+                    fileUrl =
+                        publicUrlData.publicUrl;
+
+                }
+
+
+
+                /*
+                 * ОНОВЛЕННЯ ЗАПИСУ
+                 */
+
+                const {
+                    error
+                } =
+                    await client
+                        .from(
+                            "certificates"
+                        )
+                        .update(
+                            {
+
+                                title:
+                                    title,
+
+                                organization:
+                                    organization,
+
+                                certificate_date:
+                                    certificateDate,
+
+                                hours:
+                                    hours
+                                    ? Number(hours)
+                                    : null,
+
+                                ects:
+                                    ects
+                                    ? Number(ects)
+                                    : null,
+
+                                description:
+                                    description ||
+                                    null,
+
+                                title_en:
+                                    titleEn ||
+                                    null,
+
+                                organization_en:
+                                    organizationEn ||
+                                    null,
+
+                                description_en:
+                                    descriptionEn ||
+                                    null,
+
+                                file_url:
+                                    fileUrl,
+
+                                published:
+                                    published
+
+                            }
+                        )
+                        .eq(
+                            "id",
+                            editingCertificateId
+                        );
+
+
+
+                if (error) {
+
+
+                    formMessage.textContent =
+                        "Помилка збереження: " +
+                        error.message;
+
+
+                    return;
+
+                }
+
+
+
+                formMessage.textContent =
+                    "Зміни збережено.";
+
+
+                clearForm();
+
+
+                loadCertificates();
+
+
+                return;
+
+            }
+
+
+
+            /*
+             * =========================
+             * НОВИЙ СЕРТИФІКАТ
+             * =========================
+             */
+
+            if (!file) {
+
+
+                formMessage.textContent =
+                    "Оберіть PDF-файл.";
+
+
+                return;
+
+            }
+
+
+
+            formMessage.textContent =
+                "Завантаження PDF...";
+
+
+            const fileName =
+                Date.now() +
+                "-" +
+                file.name;
+
+
+
+            const {
+                error: uploadError
+            } =
+                await client
+                    .storage
+                    .from(
+                        "certificates"
+                    )
+                    .upload(
+                        fileName,
+                        file
+                    );
+
+
+            if (uploadError) {
+
+
+                formMessage.textContent =
+                    "Помилка завантаження PDF: " +
+                    uploadError.message;
+
+
+                return;
+
+            }
+
+
+
+            const {
+                data:
+                    publicUrlData
+            } =
+                client
+                    .storage
+                    .from(
+                        "certificates"
+                    )
+                    .getPublicUrl(
+                        fileName
+                    );
+
+
+            const fileUrl =
+                publicUrlData.publicUrl;
+
+
+
+            formMessage.textContent =
+                "Збереження сертифіката...";
+
+
+
+            const {
+                error
+            } =
+                await client
+                    .from(
+                        "certificates"
+                    )
+                    .insert(
+                        {
+
+                            title:
+                                title,
+
+                            organization:
+                                organization,
+
+                            certificate_date:
+                                certificateDate,
+
+                            hours:
+                                hours
+                                ? Number(hours)
+                                : null,
+
+                            ects:
+                                ects
+                                ? Number(ects)
+                                : null,
+
+                            description:
+                                description ||
+                                null,
+
+                            title_en:
+                                titleEn ||
+                                null,
+
+                            organization_en:
+                                organizationEn ||
+                                null,
+
+                            description_en:
+                                descriptionEn ||
+                                null,
+
+                            file_url:
+                                fileUrl,
+
+                            published:
+                                published
+
+                        }
+                    );
+
+
+
+            if (error) {
+
+
+                formMessage.textContent =
+                    "Помилка збереження: " +
+                    error.message;
+
+
+                return;
+
+            }
+
+
+
+            formMessage.textContent =
+                "Сертифікат успішно додано.";
+
+
+            clearForm();
+
+
+            loadCertificates();
+
+        }
+    );
+
+
+
+    /*
+     * =========================
+     * ОЧИСТИТИ ФОРМУ
+     * =========================
+     */
+
+    addCertificateButton.addEventListener(
+    "click",
+    function() {
+
+        certificateFormContainer.style.display =
+            "block";
+
+        clearForm();
+
+        certificateFormContainer.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+
+    }
+);
+
+
+clearFormButton.addEventListener(
+    "click",
+    function() {
+
+        clearForm();
+
+        certificateFormContainer.style.display =
+            "none";
+
+    }
+);
+
+
+    function clearForm() {
+
+
+        certificateForm.reset();
+
+
+        editingCertificateId =
+            null;
+
+
+        editingCertificate =
+            null;
+
+
+        formTitle.textContent =
+            "Додати сертифікат";
+
+
+        saveButton.textContent =
+            "ЗБЕРЕГТИ СЕРТИФІКАТ";
+
+
+        currentFile.style.display =
+            "none";
+
+
+        currentFile.innerHTML =
+            "";
+
+
+        formMessage.textContent =
+            "";
+
+    }
+
+
+
+    /*
+     * =========================
+     * ВИХІД
+     * =========================
+     */
+
+    logoutButton.addEventListener(
+        "click",
+        async function() {
+
+
+            await client.auth.signOut();
+
+
+            window.location.href =
+                "../index.html";
+
+        }
+    );
+
+   /*
+ * =========================
+ * ЛІЧИЛЬНИК ЕКСПОРТУ
+ * =========================
+ */
+
+function updateExportCount() {
+
+    const filteredCertificates =
+        getFilteredCertificates();
+
+    if (exportCount) {
+
+        exportCount.textContent =
+            " (" + filteredCertificates.length + ")";
+
+    }
+
+}
+
+
+/*
+ * =========================
+ * ЗАСТОСУВАННЯ ФІЛЬТРІВ
+ * =========================
+ */
+
+function applyFilters() {
+
+    const filteredCertificates =
+        getFilteredCertificates();
+
+    renderCertificates(
+        filteredCertificates
+    );
+
+}
+
+
+applyFiltersButton.addEventListener("click", applyFilters);
+
+
+clearFiltersButton.addEventListener(
+    "click",
+    function() {
+
+        filterTitle.value = "";
+        filterTitleEn.value = "";
+        filterOrganization.value = "";
+        filterOrganizationEn.value = "";
+        filterDateFrom.value = "";
+        filterDateTo.value = "";
+        filterPublished.value = "";
+        filterHours.value = "";
+        filterEcts.value = "";
+
+        applyFilters();
+
+    }
+);
+
+
+/*
+ * =========================
+ * ЕКСПОРТ XLSX
+ * =========================
+ */
+
+exportXlsxButton.addEventListener(
+    "click",
+    function() {
+
+        const certificatesToExport =
+            getFilteredCertificates();
+
+        if (
+            !certificatesToExport ||
+            certificatesToExport.length === 0
+        ) {
+
+            alert(
+                "Немає сертифікатів для експорту."
+            );
+
+            return;
+
+        }
+
+
+        const exportData =
+            certificatesToExport.map(
+                function(certificate) {
+
+                    return {
+
+                        "ID":
+                            certificate.id,
+
+                        "Назва UA":
+                            certificate.title || "",
+
+                        "Організація UA":
+                            certificate.organization || "",
+
+                        "Дата":
+                            certificate.certificate_date || "",
+
+                        "Години":
+                            certificate.hours ?? "",
+
+                        "ЄКТС":
+                            certificate.ects ?? "",
+
+                        "Опис UA":
+                            certificate.description || "",
+
+                        "Назва EN":
+                            certificate.title_en || "",
+
+                        "Організація EN":
+                            certificate.organization_en || "",
+
+                        "Опис EN":
+                            certificate.description_en || "",
+
+                        "PDF":
+                            certificate.file_url || "",
+
+                        "Опубліковано":
+                            certificate.published
+                                ? "Так"
+                                : "Ні",
+
+                        "Створено":
+                            certificate.created_at || ""
+
+                    };
+
+                }
+            );
+
+
+        const worksheet =
+            XLSX.utils.json_to_sheet(
+                exportData
+            );
+
+
+        const workbook =
+            XLSX.utils.book_new();
+
+
+        XLSX.utils.book_append_sheet(
+            workbook,
+            worksheet,
+            "Сертифікати"
+        );
+
+
+        XLSX.writeFile(
+            workbook,
+            "certificates.xlsx"
+        );
+
+    }
+);
+
+
+/*
+ * =========================
+ * ФІЛЬТРИ
+ * =========================
+ */
+
+filtersToggle.addEventListener(
+    "click",
+    function() {
+
+        const isOpen =
+            filtersPanel.style.display === "block";
+
+        if (isOpen) {
+
+            filtersPanel.style.display = "none";
+            filtersArrow.textContent = "＋";
+
+        } else {
+
+            filtersPanel.style.display = "block";
+            filtersArrow.textContent = "−";
+
+        }
+
+    }
+);
+
+
+/*
+ * =========================
+ * ЗАПУСК
+ * =========================
+ */
+
+    checkSession();
+
+    const adminMenuButton = document.querySelector(".menu-toggle");
+    const adminMenu = document.querySelector("nav");
+
+    if (adminMenuButton && adminMenu) {
+        adminMenuButton.addEventListener("click", function() {
+            const isOpen = adminMenu.classList.toggle("menu-open");
+
+            adminMenuButton.textContent = isOpen
+                ? "ЗАКРИТИ"
+                : "МЕНЮ";
+
+            adminMenuButton.setAttribute(
+                "aria-label",
+                isOpen ? "Закрити меню" : "Відкрити меню"
+            );
+        });
+    }
+   
+</script>
+
+
+</body>
+
+</html>

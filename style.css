@@ -1190,3 +1190,116 @@ footer {
         display: block;
     }
 }
+/* =========================
+   ADMIN — ARTICLES FORM
+   ========================= */
+
+.form-group {
+    width: 100%;
+    margin-bottom: 24px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #6F6A63;
+    font-size: 14px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group input[type="file"],
+.form-group select,
+.form-group textarea {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 13px 14px;
+    border: 1px solid #DED8D0;
+    background: #FAF7F2;
+    color: #4A1725;
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    outline: none;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="date"]:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #6E2235;
+}
+
+.form-group textarea {
+    min-height: 140px;
+    resize: vertical;
+    line-height: 1.6;
+}
+
+
+/* QUILL */
+
+#articleEditorUA,
+#articleEditorEN {
+    width: 100%;
+    margin-bottom: 35px;
+}
+
+#articleEditorUA .ql-editor,
+#articleEditorEN .ql-editor {
+    min-height: 400px;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+#articleEditorUA .ql-container,
+#articleEditorEN .ql-container {
+    font-family: Arial, sans-serif;
+}
+
+#articleEditorUA .ql-toolbar,
+#articleEditorEN .ql-toolbar {
+    background: #F7F4EF;
+}
+
+
+/* КНОПКА ЗБЕРЕЖЕННЯ */
+
+#saveArticleButton {
+    margin-top: 10px;
+    padding: 13px 22px;
+    border: 1px solid #6E2235;
+    background: #6E2235;
+    color: #FFFFFF;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+}
+
+#saveArticleButton:hover {
+    background: #4A1725;
+    border-color: #4A1725;
+}
+
+
+/* МОБІЛЬНА ВЕРСІЯ */
+
+@media (max-width: 700px) {
+
+    .form-group input[type="text"],
+    .form-group input[type="date"],
+    .form-group input[type="file"],
+    .form-group select,
+    .form-group textarea {
+        font-size: 16px;
+    }
+
+    #articleEditorUA .ql-editor,
+    #articleEditorEN .ql-editor {
+        min-height: 300px;
+    }
+
+}

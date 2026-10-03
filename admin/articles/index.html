@@ -309,6 +309,15 @@ async function uploadArticleImage(
             const filePath =
                 `articles/${fileName}`;
 
+console.log(
+    "Файл:",
+    file.name,
+    "Тип:",
+    file.type,
+    "Розмір:",
+    file.size
+);
+            
             const {
     error: uploadError
 } =
@@ -316,14 +325,7 @@ async function uploadArticleImage(
         .from("article-images")
         .upload(
             filePath,
-            file,
-            {
-                contentType:
-                    file.type,
-                cacheControl:
-                    "3600",
-                upsert: false
-            }
+            file
         );
 
             if (uploadError) {

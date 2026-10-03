@@ -955,3 +955,36 @@ footer {
         display: block;
     }
 }
+/* =========================
+   ADMIN — MOBILE NAV PARENT
+   ========================= */
+
+@media (max-width: 900px) {
+
+    .admin-nav-parent {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 6px;
+        width: 100%;
+        padding: 10px 0;
+        border: 0;
+        background: transparent;
+        color: #4A1725;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        text-align: right;
+        cursor: pointer;
+    }
+
+    .admin-nav-parent span {
+        color: #6E2235;
+        font-size: 12px;
+    }
+
+    .admin-nav-parent:hover {
+        color: #6E2235;
+    }
+
+}

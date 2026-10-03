@@ -748,6 +748,16 @@ const filterTitle =
         "filterTitle"
     );
 
+   const filterTitleEn =
+    document.getElementById(
+        "filterTitleEn"
+    );
+
+
+const filterOrganizationEn =
+    document.getElementById(
+        "filterOrganizationEn"
+    ); 
 
 const filterOrganization =
     document.getElementById(
@@ -853,31 +863,56 @@ function getFilteredCertificates() {
     return allCertificates.filter(
         function(certificate) {
 
-            const title =
-                (
-                    certificate.title ||
-                    ""
-                ).toLowerCase();
+const title =
+    (
+        certificate.title ||
+        ""
+    ).toLowerCase();
 
 
-            const organization =
-                (
-                    certificate.organization ||
-                    ""
-                ).toLowerCase();
+const titleEn =
+    (
+        certificate.title_en ||
+        ""
+    ).toLowerCase();
+
+
+const organization =
+    (
+        certificate.organization ||
+        ""
+    ).toLowerCase();
+
+
+const organizationEn =
+    (
+        certificate.organization_en ||
+        ""
+    ).toLowerCase();
 
 
             const searchTitle =
-                filterTitle.value
-                    .trim()
-                    .toLowerCase();
+    filterTitle.value
+        .trim()
+        .toLowerCase();
 
 
-            const searchOrganization =
-                filterOrganization.value
-                    .trim()
-                    .toLowerCase();
+const searchTitleEn =
+    filterTitleEn.value
+        .trim()
+        .toLowerCase();
 
+
+const searchOrganization =
+    filterOrganization.value
+        .trim()
+        .toLowerCase();
+
+
+const searchOrganizationEn =
+    filterOrganizationEn.value
+        .trim()
+        .toLowerCase();
 
             if (
                 searchTitle &&
@@ -888,6 +923,15 @@ function getFilteredCertificates() {
                 return false;
             }
 
+            if (
+    searchTitleEn &&
+    !titleEn.includes(
+        searchTitleEn
+    )
+) {
+    return false;
+}
+
 
             if (
                 searchOrganization &&
@@ -897,6 +941,15 @@ function getFilteredCertificates() {
             ) {
                 return false;
             }
+
+            if (
+    searchOrganizationEn &&
+    !organizationEn.includes(
+        searchOrganizationEn
+    )
+) {
+    return false;
+}
 
 
             if (
@@ -2228,7 +2281,9 @@ clearFiltersButton.addEventListener(
     function() {
 
         filterTitle.value = "";
+        filterTitleEn.value = "";
         filterOrganization.value = "";
+        filterOrganizationEn.value = "";
         filterDateFrom.value = "";
         filterDateTo.value = "";
         filterPublished.value = "";

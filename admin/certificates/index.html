@@ -100,36 +100,34 @@
     <main>
 
 
-        <section class="latest">
+       <section class="latest admin-page">
 
 
-            <h2>
-                Сертифікати
-            </h2>
+            <h2 class="admin-page-title">Сертифікати</h2>
 
 
             <p>
                 Керування сертифікатами сайту.
             </p>
 
-            <div class="admin-certificates-toolbar">
+            <div class="admin-toolbar">
 
     <div class="admin-toolbar-left">
 
         <button
             type="button"
             id="addCertificateButton"
-            class="admin-primary-button"
+           class="admin-button admin-button-primary"
         >
             ＋ ДОДАТИ СЕРТИФІКАТ
         </button>
 
 
-        <button
-            type="button"
-            id="exportXlsxButton"
-            class="admin-export-button"
-        >
+       <button
+    type="button"
+    id="exportXlsxButton"
+    class="admin-button"
+>
             ЕКСПОРТ XLS
             <span id="exportCount"></span>
         </button>
@@ -144,7 +142,7 @@
                  ФОРМА
                  ========================= -->
 
-               <div class="certificate-admin-form" id="certificateFormContainer" style="display: none;">
+               <div class="admin-form" id="certificateFormContainer" style="display: none;">
 
 
                 <h3 id="formTitle">
@@ -160,57 +158,100 @@
                     </h4>
 
 
-                    <input
-                        type="text"
-                        id="title"
-                        placeholder="Назва сертифіката"
-                        required
-                    >
+                   <div class="admin-form-group">
+
+    <label for="title">
+        Назва сертифіката
+    </label>
+
+    <input
+        type="text"
+        id="title"
+        placeholder="Назва сертифіката"
+        required
+    >
+
+</div>
 
 
-                    <input
-                        type="text"
-                        id="organization"
-                        placeholder="Організація"
-                        required
-                    >
+                   <div class="admin-form-group">
+
+    <label for="organization">
+        Організація
+    </label>
+
+    <input
+        type="text"
+        id="organization"
+        placeholder="Організація"
+        required
+    >
+
+</div>
 
 
-                    <label for="certificate_date">
-                        Дата отримання
-                    </label>
+                  <div class="admin-form-group">
+
+    <label for="certificate_date">
+        Дата отримання
+    </label>
+
+    <input
+        type="date"
+        id="certificate_date"
+        required
+    >
+
+</div>
 
 
-                    <input
-                        type="date"
-                        id="certificate_date"
-                        required
-                    >
+                   <div class="admin-form-group">
+
+    <label for="hours">
+        Кількість годин
+    </label>
+
+    <input
+        type="number"
+        id="hours"
+        placeholder="Кількість годин"
+        min="0"
+        step="0.5"
+    >
+
+</div>
 
 
-                    <input
-                        type="number"
-                        id="hours"
-                        placeholder="Кількість годин"
-                        min="0"
-                        step="0.5"
-                    >
+                   <div class="admin-form-group">
+
+    <label for="ects">
+        Кредити ЄКТС
+    </label>
+
+    <input
+        type="number"
+        id="ects"
+        placeholder="Кредити ЄКТС"
+        min="0"
+        step="0.1"
+    >
+
+</div>
 
 
-                    <input
-                        type="number"
-                        id="ects"
-                        placeholder="Кредити ЄКТС"
-                        min="0"
-                        step="0.1"
-                    >
+                   <div class="admin-form-group">
 
+    <label for="description">
+        Опис сертифіката
+    </label>
 
-                    <textarea
-                        id="description"
-                        placeholder="Опис сертифіката"
-                        rows="5"
-                    ></textarea>
+    <textarea
+        id="description"
+        placeholder="Опис сертифіката"
+        rows="5"
+    ></textarea>
+
+</div>
 
 
 
@@ -219,25 +260,49 @@
                     </h4>
 
 
-                    <input
-                        type="text"
-                        id="title_en"
-                        placeholder="Certificate title"
-                    >
+                   <div class="admin-form-group">
+
+    <label for="title_en">
+        Certificate title
+    </label>
+
+    <input
+        type="text"
+        id="title_en"
+        placeholder="Certificate title"
+    >
+
+</div>
 
 
-                    <input
-                        type="text"
-                        id="organization_en"
-                        placeholder="Organization"
-                    >
+                   <div class="admin-form-group">
+
+    <label for="organization_en">
+        Organization
+    </label>
+
+    <input
+        type="text"
+        id="organization_en"
+        placeholder="Organization"
+    >
+
+</div>
 
 
-                    <textarea
-                        id="description_en"
-                        placeholder="Certificate description"
-                        rows="5"
-                    ></textarea>
+                   <div class="admin-form-group">
+
+    <label for="description_en">
+        Certificate description
+    </label>
+
+    <textarea
+        id="description_en"
+        placeholder="Certificate description"
+        rows="5"
+    ></textarea>
+
+</div>
 
 
 
@@ -246,11 +311,19 @@
                     </h4>
 
 
-                    <input
-                        type="file"
-                        id="certificateFile"
-                        accept="application/pdf"
-                    >
+                   <div class="admin-form-group">
+
+    <label for="certificateFile">
+        PDF-файл
+    </label>
+
+    <input
+        type="file"
+        id="certificateFile"
+        accept="application/pdf"
+    >
+
+</div>
 
 
                     <p
@@ -262,7 +335,7 @@
 
                     <!-- ПУБЛІКАЦІЯ -->
 
-                    <label class="checkbox-label">
+                   <label class="admin-checkbox">
 
                         <input
                             type="checkbox"
@@ -279,23 +352,25 @@
 
                     <!-- КНОПКИ -->
 
-                    <div class="admin-form-buttons">
+                    <label class="admin-checkbox">
 
 
                         <button
-                            type="submit"
-                            id="saveButton"
-                        >
-                            ЗБЕРЕГТИ СЕРТИФІКАТ
-                        </button>
+    type="submit"
+    id="saveButton"
+    class="admin-button admin-button-primary"
+>
+    ЗБЕРЕГТИ СЕРТИФІКАТ
+</button>
 
 
                         <button
-                            type="button"
-                            id="clearFormButton"
-                        >
-                            ОЧИСТИТИ
-                        </button>
+    type="button"
+    id="clearFormButton"
+    class="admin-button"
+>
+    ОЧИСТИТИ
+</button>
 
 
                     </div>
@@ -330,14 +405,14 @@
 
 
     <div
-        id="filtersPanel"
-        class="filters-panel"
-        style="display: none;"
-    >
+    id="filtersPanel"
+    class="filters-panel admin-filters"
+    style="display: none;"
+>
 
 <div class="filters-grid">
 
-    <div class="filter-field">
+    <div class="admin-filter-group">
 
         <label for="filterTitle">
             Назва
@@ -352,7 +427,7 @@
     </div>
 
 
-    <div class="filter-field">
+    <div class="admin-filter-group">
 
         <label for="filterTitleEn">
             Назва EN
@@ -367,7 +442,7 @@
     </div>
 
 
-    <div class="filter-field">
+    <div class="admin-filter-group">
 
         <label for="filterOrganization">
             Організація
@@ -382,7 +457,7 @@
     </div>
 
 
-    <div class="filter-field">
+    <div class="admin-filter-group">
 
         <label for="filterOrganizationEn">
             Організація EN
@@ -397,7 +472,7 @@
     </div>
 
 
-    <div class="filter-field">
+    <div class="admin-filter-group">
 
         <label for="filterDateFrom">
             Дата від
@@ -411,7 +486,7 @@
     </div>
 
 
-    <div class="filter-field">
+    <div class="admin-filter-group">
 
         <label for="filterDateTo">
             Дата до
@@ -425,7 +500,7 @@
     </div>
 
 
-    <div class="filter-field">
+    <div class="admin-filter-group">
 
         <label for="filterPublished">
             Статус
@@ -450,7 +525,7 @@
     </div>
 
 
-    <div class="filter-field">
+    <div class="admin-filter-group">
 
         <label for="filterHours">
             Години
@@ -467,7 +542,7 @@
     </div>
 
 
-    <div class="filter-field">
+    <div class="admin-filter-group">
 
         <label for="filterEcts">
             ЄКТС
@@ -486,23 +561,23 @@
 </div>
 
 
-<div class="filters-actions">
+<div class="admin-filter-actions">
+
+   <button
+    type="button"
+    id="applyFiltersButton"
+    class="admin-button admin-button-primary"
+>
+    ЗАСТОСУВАТИ ФІЛЬТРИ
+</button>
 
     <button
-        type="button"
-        id="applyFiltersButton"
-        class="filters-apply-button"
-    >
-        ЗАСТОСУВАТИ ФІЛЬТРИ
-    </button>
-
-    <button
-        type="button"
-        id="clearFiltersButton"
-        class="filters-clear-button"
-    >
-        ОЧИСТИТИ ФІЛЬТРИ
-    </button>
+    type="button"
+    id="clearFiltersButton"
+    class="admin-button"
+>
+    ОЧИСТИТИ ФІЛЬТРИ
+</button>
 
 </div>
 
@@ -511,9 +586,12 @@
 </div>
 
 
-                <div id="certificates">
-                    Завантаження...
-                </div>
+                <div
+    id="certificates"
+    class="admin-list"
+>
+    Завантаження...
+</div>
 
 
             </div>

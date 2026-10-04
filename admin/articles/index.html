@@ -319,21 +319,6 @@
 
         <h3>Додаткові дані</h3>
 
-
-        <div class="form-group">
-
-            <label for="author">
-                Автор
-            </label>
-
-            <input
-                type="text"
-                id="author"
-            >
-
-        </div>
-
-
         <div class="form-group">
 
             <label for="slug">
@@ -936,11 +921,6 @@ if (saveArticleButton) {
                     "captionEN"
                 ).value.trim();
 
-            const author =
-                document.getElementById(
-                    "author"
-                ).value.trim();
-
             const slug =
                 document.getElementById(
                     "slug"
@@ -1136,10 +1116,6 @@ if (saveArticleButton) {
                                 captionEN ||
                                 null,
 
-                            author:
-                                author ||
-                                null,
-
                             slug:
                                 slug ||
                                 null
@@ -1216,10 +1192,6 @@ if (saveArticleButton) {
 
                 document.getElementById(
                     "captionEN"
-                ).value = "";
-
-                document.getElementById(
-                    "author"
                 ).value = "";
 
                 document.getElementById(
@@ -1624,16 +1596,6 @@ async function loadArticles() {
 
             additionalData.innerHTML = `
                 <h5>Додаткові дані</h5>
-
-                <p>
-                    <strong>Автор:</strong>
-                    ${
-                        escapeArticleHtml(
-                            article.author ||
-                            "—"
-                        )
-                    }
-                </p>
 
                 <p>
                     <strong>Slug:</strong>

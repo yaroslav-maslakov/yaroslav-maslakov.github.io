@@ -2166,24 +2166,7 @@ function startArticleEditing(
 
             </div>
 
-
-            <div class="admin-form-group">
-
-                <label>
-                    Основний текст UA *
-                </label>
-
-                <textarea
-                    class="edit-content-ua"
-                    rows="12"
-                >${escapeArticleHtml(
-                    article.content_ua || ""
-                )}</textarea>
-
-            </div>
-
-
-           <div class="admin-form-group">
+<div class="admin-form-group">
 
     <label>
         Основний текст UA *
@@ -2203,7 +2186,6 @@ function startArticleEditing(
     <div class="edit-content-en"></div>
 
 </div>
-
 
             <div class="admin-form-group">
 
@@ -2423,17 +2405,10 @@ editQuillEN.root.innerHTML =
     article.content_en || "";
 
 
-articleItem.appendChild(
-    editForm
-);
-
-
 const cancelButton =
-    
-    const cancelButton =
-        editForm.querySelector(
-            ".edit-cancel-button"
-        );
+    editForm.querySelector(
+        ".edit-cancel-button"
+    );
 
 
     cancelButton.addEventListener(

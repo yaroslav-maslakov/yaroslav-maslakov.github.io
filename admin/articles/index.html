@@ -1173,6 +1173,154 @@ if (saveArticleButton) {
 
 }
 
+
+    /*
+ * =========================
+ * ЗАВАНТАЖЕННЯ СТАТЕЙ
+ * =========================
+ */
+
+const articlesList =
+    document.getElementById(
+        "articlesList"
+    );
+
+
+async function loadArticles() {
+
+    if (!articlesList) {
+        return;
+    }
+
+
+    articlesList.innerHTML =
+        "<p>Завантаження статей...</p>";
+
+
+    const {
+        data,
+        error
+    } =
+        await client
+            .from("articles")
+            .select("*")
+            .order(
+                "publication_date",
+                {
+                    ascending: false
+                }
+            );
+
+
+    if (error) {
+
+        console.error(
+            "Помилка завантаження статей:",
+            error
+        );
+
+        articlesList.innerHTML =
+            "<p>Не вдалося завантажити статті.</p>";
+
+        return;
+
+    }
+
+
+    if (!data || data.length === 0) {
+
+        articlesList.innerHTML =
+            "<p>Статей поки немає.</p>";
+
+        return;
+
+    }
+
+
+    articlesList.innerHTML = "";
+
+
+    data.forEach(
+        function(article) {
+
+            const articleItem =
+                document.createElement(
+                    "div"
+                );
+
+            articleItem.className =
+                "admin-article-item";
+
+
+            const title =
+                document.createElement(
+                    "h4"
+                );
+
+            title.textContent =
+                article.title_ua;
+
+
+            const category =
+                document.createElement(
+                    "p"
+                );
+
+            category.textContent =
+                "Категорія: " +
+                article.category;
+
+
+            const date =
+                document.createElement(
+                    "p"
+                );
+
+            date.textContent =
+                "Дата: " +
+                article.publication_date;
+
+
+            const status =
+                document.createElement(
+                    "p"
+                );
+
+            status.textContent =
+                "Статус: " +
+                (
+                    article.status ===
+                    "published"
+                        ? "Опубліковано"
+                        : "Чернетка"
+                );
+
+
+            articleItem.appendChild(
+                title
+            );
+
+            articleItem.appendChild(
+                category
+            );
+
+            articleItem.appendChild(
+                date
+            );
+
+            articleItem.appendChild(
+                status
+            );
+
+
+            articlesList.appendChild(
+                articleItem
+            );
+
+        }
+    );
+
+}
     
     /*
      * =========================
@@ -1180,6 +1328,8 @@ if (saveArticleButton) {
      * =========================
      */
     checkSession();
+
+    loadArticles();
 
 </script>
 

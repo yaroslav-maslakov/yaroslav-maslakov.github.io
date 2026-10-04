@@ -1950,6 +1950,88 @@ function renderArticles() {
             deleteButton.textContent =
                 "ВИДАЛИТИ";
 
+            deleteButton.addEventListener(
+    "click",
+    async function() {
+
+        const confirmed =
+            confirm(
+                "Ви впевнені, що хочете видалити цю статтю?"
+            );
+
+        if (!confirmed) {
+            return;
+        }
+
+
+        deleteButton.disabled =
+            true;
+
+        deleteButton.textContent =
+            "ВИДАЛЯЄМО...";
+
+
+        try {
+
+            const {
+                error
+            } =
+                await client
+                    .from("articles")
+                    .delete()
+                    .eq(
+                        "id",
+                        article.id
+                    );
+
+
+            if (error) {
+
+                console.error(
+                    "Помилка видалення статті:",
+                    error
+                );
+
+                alert(
+                    "Не вдалося видалити статтю."
+                );
+
+                return;
+            }
+
+
+            alert(
+                "Статтю успішно видалено."
+            );
+
+
+            await loadArticles();
+
+
+        } catch (error) {
+
+            console.error(
+                "Непередбачена помилка:",
+                error
+            );
+
+            alert(
+                "Сталася помилка під час видалення статті."
+            );
+
+
+        } finally {
+
+            deleteButton.disabled =
+                false;
+
+            deleteButton.textContent =
+                "ВИДАЛИТИ";
+
+        }
+
+    }
+);
 
             actions.appendChild(
                 editButton

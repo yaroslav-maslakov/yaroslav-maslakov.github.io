@@ -2410,6 +2410,204 @@ const cancelButton =
         ".edit-cancel-button"
     );
 
+   const saveEditButton =
+    editForm.querySelector(
+        ".edit-save-button"
+    );
+
+saveEditButton.addEventListener(
+    "click",
+    async function() {
+
+        const titleUA =
+            editForm.querySelector(
+                ".edit-title-ua"
+            ).value.trim();
+
+        const titleEN =
+            editForm.querySelector(
+                ".edit-title-en"
+            ).value.trim();
+
+        const category =
+            editForm.querySelector(
+                ".edit-category"
+            ).value;
+
+        const publicationDate =
+            editForm.querySelector(
+                ".edit-publication-date"
+            ).value;
+
+        const status =
+            editForm.querySelector(
+                ".edit-status"
+            ).value;
+
+        const excerptUA =
+            editForm.querySelector(
+                ".edit-excerpt-ua"
+            ).value.trim();
+
+        const excerptEN =
+            editForm.querySelector(
+                ".edit-excerpt-en"
+            ).value.trim();
+
+        const captionUA =
+            editForm.querySelector(
+                ".edit-caption-ua"
+            ).value.trim();
+
+        const captionEN =
+            editForm.querySelector(
+                ".edit-caption-en"
+            ).value.trim();
+
+        const slug =
+            editForm.querySelector(
+                ".edit-slug"
+            ).value.trim();
+
+        const contentUA =
+            editQuillUA.root.innerHTML;
+
+        const contentEN =
+            editQuillEN.root.innerHTML;
+
+
+        if (
+            !titleUA ||
+            !titleEN ||
+            !category ||
+            !publicationDate ||
+            !excerptUA ||
+            !excerptEN ||
+            !contentUA ||
+            !contentEN
+        ) {
+
+            alert(
+                "Заповніть усі обов'язкові поля."
+            );
+
+            return;
+        }
+
+
+        saveEditButton.disabled =
+            true;
+
+        saveEditButton.textContent =
+            "ЗБЕРІГАЄМО...";
+
+
+        try {
+
+            const {
+                error
+            } =
+                await client
+                    .from("articles")
+                    .update({
+
+                        title_ua:
+                            titleUA,
+
+                        title_en:
+                            titleEN,
+
+                        category:
+                            category,
+
+                        publication_date:
+                            publicationDate,
+
+                        status:
+                            status,
+
+                        excerpt_ua:
+                            excerptUA,
+
+                        excerpt_en:
+                            excerptEN,
+
+                        content_ua:
+                            contentUA,
+
+                        content_en:
+                            contentEN,
+
+                        caption_ua:
+                            captionUA ||
+                            null,
+
+                        caption_en:
+                            captionEN ||
+                            null,
+
+                        slug:
+                            slug ||
+                            null
+
+                    })
+                    .eq(
+                        "id",
+                        article.id
+                    );
+
+
+            if (error) {
+
+                console.error(
+                    "Помилка оновлення статті:",
+                    error
+                );
+
+                alert(
+                    "Не вдалося зберегти зміни."
+                );
+
+                return;
+            }
+
+
+            alert(
+                "Зміни успішно збережено."
+            );
+
+
+            editForm.remove();
+
+            editingArticleId =
+                null;
+
+            await loadArticles();
+
+
+        } catch (error) {
+
+            console.error(
+                "Непередбачена помилка:",
+                error
+            );
+
+            alert(
+                "Сталася помилка під час збереження змін."
+            );
+
+        } finally {
+
+            saveEditButton.disabled =
+                false;
+
+            saveEditButton.textContent =
+                "ЗБЕРЕГТИ ЗМІНИ";
+
+        }
+
+    }
+); 
 
     cancelButton.addEventListener(
         "click",

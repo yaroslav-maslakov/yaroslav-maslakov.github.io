@@ -873,7 +873,7 @@ toolbarEN.addHandler(
 
     }
 
-    /*
+/*
  * =========================
  * ЗБЕРЕЖЕННЯ СТАТТІ
  * =========================
@@ -947,6 +947,12 @@ if (saveArticleButton) {
                 ).value.trim();
 
 
+            const mainImageInput =
+                document.getElementById(
+                    "mainImage"
+                );
+
+
             const contentUA =
                 articleQuillUA
                     ? articleQuillUA.root.innerHTML
@@ -982,10 +988,6 @@ if (saveArticleButton) {
             }
 
 
-            /*
-             * БЛОКУЄМО КНОПКУ НА ЧАС ЗБЕРЕЖЕННЯ
-             */
-
             saveArticleButton.disabled =
                 true;
 
@@ -996,7 +998,96 @@ if (saveArticleButton) {
             try {
 
                 /*
-                 * ЗБЕРЕЖЕННЯ ОСНОВНОЇ СТАТТІ
+                 * =========================
+                 * ЗАВАНТАЖЕННЯ ГОЛОВНОГО ЗОБРАЖЕННЯ
+                 * =========================
+                 */
+
+                let mainImageUrl = null;
+
+
+                if (
+                    mainImageInput &&
+                    mainImageInput.files &&
+                    mainImageInput.files.length > 0
+                ) {
+
+                    const file =
+                        mainImageInput.files[0];
+
+
+                    const fileExtension =
+                        file.name
+                            .split(".")
+                            .pop()
+                            .toLowerCase();
+
+
+                    const fileName =
+                        `${Date.now()}-${Math.random()
+                            .toString(36)
+                            .substring(2)}.${fileExtension}`;
+
+
+                    const filePath =
+                        `articles/${fileName}`;
+
+
+                    const {
+                        error:
+                            imageUploadError
+                    } =
+                        await client.storage
+                            .from(
+                                "article-images"
+                            )
+                            .upload(
+                                filePath,
+                                file
+                            );
+
+
+                    if (
+                        imageUploadError
+                    ) {
+
+                        console.error(
+                            "Помилка завантаження головного зображення:",
+                            imageUploadError
+                        );
+
+                        alert(
+                            "Не вдалося завантажити головне зображення."
+                        );
+
+                        return;
+
+                    }
+
+
+                    const {
+                        data:
+                            imageData
+                    } =
+                        client.storage
+                            .from(
+                                "article-images"
+                            )
+                            .getPublicUrl(
+                                filePath
+                            );
+
+
+                    mainImageUrl =
+                        imageData.publicUrl;
+
+                }
+
+
+                /*
+                 * =========================
+                 * ЗБЕРЕЖЕННЯ СТАТТІ
+                 * =========================
                  */
 
                 const {
@@ -1006,6 +1097,7 @@ if (saveArticleButton) {
                     await client
                         .from("articles")
                         .insert({
+
                             title_ua:
                                 titleUA,
 
@@ -1033,6 +1125,9 @@ if (saveArticleButton) {
                             content_en:
                                 contentEN,
 
+                            main_image:
+                                mainImageUrl,
+
                             caption_ua:
                                 captionUA ||
                                 null,
@@ -1048,6 +1143,7 @@ if (saveArticleButton) {
                             slug:
                                 slug ||
                                 null
+
                         })
                         .select()
                         .single();
@@ -1081,7 +1177,9 @@ if (saveArticleButton) {
 
 
                 /*
+                 * =========================
                  * ОЧИЩЕННЯ ФОРМИ
+                 * =========================
                  */
 
                 document.getElementById(
@@ -1147,6 +1245,13 @@ if (saveArticleButton) {
                 }
 
 
+                /*
+                 * ОНОВЛЮЄМО СПИСОК
+                 */
+
+                loadArticles();
+
+
             } catch (error) {
 
                 console.error(
@@ -1173,8 +1278,7 @@ if (saveArticleButton) {
 
 }
 
-
-    /*
+/*
  * =========================
  * ЗАВАНТАЖЕННЯ СТАТЕЙ
  * =========================
@@ -1227,7 +1331,10 @@ async function loadArticles() {
     }
 
 
-    if (!data || data.length === 0) {
+    if (
+        !data ||
+        data.length === 0
+    ) {
 
         articlesList.innerHTML =
             "<p>Статей поки немає.</p>";
@@ -1245,12 +1352,18 @@ async function loadArticles() {
 
             const articleItem =
                 document.createElement(
-                    "div"
+                    "article"
                 );
 
             articleItem.className =
                 "admin-article-item";
 
+
+            /*
+             * =========================
+             * ЗАГОЛОВОК
+             * =========================
+             */
 
             const title =
                 document.createElement(
@@ -1258,58 +1371,328 @@ async function loadArticles() {
                 );
 
             title.textContent =
-                article.title_ua;
-
-
-            const category =
-                document.createElement(
-                    "p"
-                );
-
-            category.textContent =
-                "Категорія: " +
-                article.category;
-
-
-            const date =
-                document.createElement(
-                    "p"
-                );
-
-            date.textContent =
-                "Дата: " +
-                article.publication_date;
-
-
-            const status =
-                document.createElement(
-                    "p"
-                );
-
-            status.textContent =
-                "Статус: " +
-                (
-                    article.status ===
-                    "published"
-                        ? "Опубліковано"
-                        : "Чернетка"
-                );
+                article.title_ua ||
+                "Без назви";
 
 
             articleItem.appendChild(
                 title
             );
 
-            articleItem.appendChild(
-                category
-            );
+
+            /*
+             * =========================
+             * ОСНОВНА ІНФОРМАЦІЯ
+             * =========================
+             */
+
+            const mainInfo =
+                document.createElement(
+                    "div"
+                );
+
+            mainInfo.className =
+                "admin-article-section";
+
+
+            mainInfo.innerHTML = `
+                <h5>Основна інформація</h5>
+
+                <p>
+                    <strong>Назва UA:</strong>
+                    ${escapeArticleHtml(
+                        article.title_ua
+                    )}
+                </p>
+
+                <p>
+                    <strong>Назва EN:</strong>
+                    ${escapeArticleHtml(
+                        article.title_en
+                    )}
+                </p>
+
+                <p>
+                    <strong>Категорія:</strong>
+                    ${escapeArticleHtml(
+                        article.category
+                    )}
+                </p>
+
+                <p>
+                    <strong>Дата публікації:</strong>
+                    ${escapeArticleHtml(
+                        article.publication_date
+                    )}
+                </p>
+
+                <p>
+                    <strong>Статус:</strong>
+                    ${
+                        article.status ===
+                        "published"
+                            ? "Опубліковано"
+                            : "Чернетка"
+                    }
+                </p>
+            `;
+
 
             articleItem.appendChild(
-                date
+                mainInfo
             );
 
+
+            /*
+             * =========================
+             * КОРОТКИЙ ОПИС
+             * =========================
+             */
+
+            const excerpts =
+                document.createElement(
+                    "div"
+                );
+
+            excerpts.className =
+                "admin-article-section";
+
+
+            excerpts.innerHTML = `
+                <h5>Короткий опис</h5>
+
+                <p>
+                    <strong>Анонс UA:</strong>
+                </p>
+
+                <div class="admin-article-text">
+                    ${escapeArticleHtml(
+                        article.excerpt_ua
+                    )}
+                </div>
+
+                <p>
+                    <strong>Анонс EN:</strong>
+                </p>
+
+                <div class="admin-article-text">
+                    ${escapeArticleHtml(
+                        article.excerpt_en
+                    )}
+                </div>
+            `;
+
+
             articleItem.appendChild(
-                status
+                excerpts
+            );
+
+
+            /*
+             * =========================
+             * ОСНОВНИЙ ТЕКСТ
+             * =========================
+             */
+
+            const contents =
+                document.createElement(
+                    "div"
+                );
+
+            contents.className =
+                "admin-article-section";
+
+
+            contents.innerHTML = `
+                <h5>Основний текст UA</h5>
+
+                <div class="admin-article-content">
+                    ${
+                        article.content_ua ||
+                        ""
+                    }
+                </div>
+
+                <h5>Основний текст EN</h5>
+
+                <div class="admin-article-content">
+                    ${
+                        article.content_en ||
+                        ""
+                    }
+                </div>
+            `;
+
+
+            articleItem.appendChild(
+                contents
+            );
+
+
+            /*
+             * =========================
+             * ЗОБРАЖЕННЯ
+             * =========================
+             */
+
+            const imageSection =
+                document.createElement(
+                    "div"
+                );
+
+            imageSection.className =
+                "admin-article-section";
+
+
+            let imageHtml =
+                "<p><strong>Головне зображення:</strong> не завантажено</p>";
+
+
+            if (
+                article.main_image
+            ) {
+
+                imageHtml = `
+                    <p>
+                        <strong>
+                            Головне зображення:
+                        </strong>
+                    </p>
+
+                    <img
+                        src="${escapeArticleAttribute(
+                            article.main_image
+                        )}"
+                        alt="${escapeArticleAttribute(
+                            article.caption_ua ||
+                            article.title_ua ||
+                            ""
+                        )}"
+                        class="admin-article-main-image"
+                    >
+                `;
+
+            }
+
+
+            imageSection.innerHTML = `
+                <h5>Зображення</h5>
+
+                ${imageHtml}
+
+                <p>
+                    <strong>Підпис UA:</strong>
+                    ${
+                        escapeArticleHtml(
+                            article.caption_ua ||
+                            "—"
+                        )
+                    }
+                </p>
+
+                <p>
+                    <strong>Підпис EN:</strong>
+                    ${
+                        escapeArticleHtml(
+                            article.caption_en ||
+                            "—"
+                        )
+                    }
+                </p>
+            `;
+
+
+            articleItem.appendChild(
+                imageSection
+            );
+
+
+            /*
+             * =========================
+             * ДОДАТКОВІ ДАНІ
+             * =========================
+             */
+
+            const additionalData =
+                document.createElement(
+                    "div"
+                );
+
+            additionalData.className =
+                "admin-article-section";
+
+
+            additionalData.innerHTML = `
+                <h5>Додаткові дані</h5>
+
+                <p>
+                    <strong>Автор:</strong>
+                    ${
+                        escapeArticleHtml(
+                            article.author ||
+                            "—"
+                        )
+                    }
+                </p>
+
+                <p>
+                    <strong>Slug:</strong>
+                    ${
+                        escapeArticleHtml(
+                            article.slug ||
+                            "—"
+                        )
+                    }
+                </p>
+            `;
+
+
+            articleItem.appendChild(
+                additionalData
+            );
+
+
+            /*
+             * =========================
+             * СЛУЖБОВІ ДАНІ
+             * =========================
+             */
+
+            const systemData =
+                document.createElement(
+                    "div"
+                );
+
+            systemData.className =
+                "admin-article-system";
+
+
+            systemData.innerHTML = `
+                <p>
+                    <strong>ID:</strong>
+                    ${escapeArticleHtml(
+                        article.id
+                    )}
+                </p>
+
+                <p>
+                    <strong>Створено:</strong>
+                    ${formatArticleDateTime(
+                        article.created_at
+                    )}
+                </p>
+
+                <p>
+                    <strong>Оновлено:</strong>
+                    ${formatArticleDateTime(
+                        article.updated_at
+                    )}
+                </p>
+            `;
+
+
+            articleItem.appendChild(
+                systemData
             );
 
 
@@ -1318,6 +1701,93 @@ async function loadArticles() {
             );
 
         }
+    );
+
+}
+
+
+/*
+ * =========================
+ * ДОПОМІЖНІ ФУНКЦІЇ
+ * =========================
+ */
+
+function escapeArticleHtml(
+    value
+) {
+
+    if (
+        value === null ||
+        value === undefined
+    ) {
+
+        return "";
+
+    }
+
+
+    return String(value)
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+function escapeArticleAttribute(
+    value
+) {
+
+    return escapeArticleHtml(
+        value
+    );
+
+}
+
+
+function formatArticleDateTime(
+    value
+) {
+
+    if (!value) {
+        return "—";
+    }
+
+
+    const date =
+        new Date(value);
+
+
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+
+        return value;
+
+    }
+
+
+    return date.toLocaleString(
+        "uk-UA"
     );
 
 }

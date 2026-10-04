@@ -1,0 +1,3619 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Публікації — Адмін-панель</title>
+
+    <link
+        rel="stylesheet"
+        href="../../style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="header-inner">
+
+
+        <div class="logo">
+            ЯРОСЛАВ МАСЛАКОВ
+        </div>
+
+
+        <nav>
+
+            <a href="/admin/index.html">
+                Головна
+            </a>
+
+            <a href="/admin/articles/index.html">
+                Статті
+            </a>
+
+            <a href="/admin/research/index.html">
+                Дослідження
+            </a>
+
+            <a
+                href="/admin/publications/index.html"
+                class="active"
+            >
+                Публікації
+            </a>
+
+            <a href="/admin/certificates/index.html">
+                Сертифікати
+            </a>
+
+            <a href="/admin/about/index.html">
+                Про мене
+            </a>
+
+            <a href="/admin/contacts/index.html">
+                Контакти
+            </a>
+
+        </nav>
+
+
+        <button
+            class="menu-toggle"
+            type="button"
+            aria-label="Відкрити меню"
+        >
+            МЕНЮ
+        </button>
+
+
+        <div class="admin-header-actions">
+
+            <div class="language">
+
+                <a href="../../uk/index.html">
+                    САЙТ
+                </a>
+
+            </div>
+
+
+            <button
+                type="button"
+                id="logoutButton"
+                class="admin-header-logout"
+            >
+                ВИЙТИ
+            </button>
+
+        </div>
+
+
+    </div>
+
+</header>
+
+
+
+<main>
+
+<section class="latest admin-page">
+
+
+    <h2 class="admin-page-title">
+        Публікації
+    </h2>
+
+
+    <!-- =========================
+         КНОПКИ
+         ========================= -->
+
+    <div class="admin-toolbar">
+
+        <div class="admin-toolbar-left">
+
+            <button
+                type="button"
+                id="createPublicationButton"
+                class="admin-button admin-button-primary"
+            >
+                СТВОРИТИ ПУБЛІКАЦІЮ
+            </button>
+
+
+            <button
+                type="button"
+                id="togglePublicationFilters"
+                class="admin-button"
+            >
+                ФІЛЬТРИ
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================
+         ФОРМА СТВОРЕННЯ
+         ========================= -->
+
+    <div
+        id="publicationForm"
+        class="admin-form"
+        style="display: none;"
+    >
+
+
+        <h3>
+            Основна інформація
+        </h3>
+
+
+        <div class="admin-form-group">
+
+            <label for="titleUA">
+                Назва UA *
+            </label>
+
+            <input
+                type="text"
+                id="titleUA"
+                required
+            >
+
+        </div>
+
+
+        <div class="admin-form-group">
+
+            <label for="titleEN">
+                Назва EN *
+            </label>
+
+            <input
+                type="text"
+                id="titleEN"
+                required
+            >
+
+        </div>
+
+
+        <div class="admin-form-group">
+
+            <label for="publicationType">
+                Тип публікації *
+            </label>
+
+            <select
+                id="publicationType"
+                required
+            >
+
+                <option value="">
+                    Оберіть тип
+                </option>
+
+                <option value="academic">
+                    Академічна
+                </option>
+
+                <option value="media">
+                    Медійна
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="admin-form-group">
+
+            <label for="publicationNameUA">
+                Назва видання UA *
+            </label>
+
+            <input
+                type="text"
+                id="publicationNameUA"
+                required
+            >
+
+        </div>
+
+
+        <div class="admin-form-group">
+
+            <label for="publicationNameEN">
+                Назва видання EN *
+            </label>
+
+            <input
+                type="text"
+                id="publicationNameEN"
+                required
+            >
+
+        </div>
+
+
+        <div class="admin-form-group">
+
+            <label for="publicationDate">
+                Дата публікації *
+            </label>
+
+            <input
+                type="date"
+                id="publicationDate"
+                required
+            >
+
+        </div>
+
+
+        <div class="admin-form-group">
+
+            <label for="publicationStatus">
+                Статус
+            </label>
+
+            <select id="publicationStatus">
+
+                <option value="draft">
+                    Чернетка
+                </option>
+
+                <option value="published">
+                    Опубліковано
+                </option>
+
+            </select>
+
+        </div>
+
+
+
+        <!-- =========================
+             КОРОТКИЙ ОПИС
+             ========================= -->
+
+        <h3>
+            Короткий опис
+        </h3>
+
+
+        <div class="admin-form-group">
+
+            <label for="excerptUA">
+                Опис UA *
+            </label>
+
+            <textarea
+                id="excerptUA"
+                rows="6"
+                required
+            ></textarea>
+
+        </div>
+
+
+        <div class="admin-form-group">
+
+            <label for="excerptEN">
+                Опис EN *
+            </label>
+
+            <textarea
+                id="excerptEN"
+                rows="6"
+                required
+            ></textarea>
+
+        </div>
+
+
+
+        <!-- =========================
+             ОСНОВНИЙ ТЕКСТ
+             ========================= -->
+
+        <h3>
+            Основний текст UA
+        </h3>
+
+        <div id="publicationEditorUA"></div>
+
+
+        <h3>
+            Основний текст EN
+        </h3>
+
+        <div id="publicationEditorEN"></div>
+
+
+
+        <!-- =========================
+             ЗОБРАЖЕННЯ
+             ========================= -->
+
+        <h3>
+            Зображення
+        </h3>
+
+
+        <div class="admin-form-group">
+
+            <label for="mainImage">
+                Головне зображення
+            </label>
+
+            <input
+                type="file"
+                id="mainImage"
+                accept="image/jpeg,image/png,image/webp,image/svg+xml"
+            >
+
+        </div>
+
+
+        <div class="admin-form-group">
+
+            <label for="captionUA">
+                Підпис UA
+            </label>
+
+            <input
+                type="text"
+                id="captionUA"
+            >
+
+        </div>
+
+
+        <div class="admin-form-group">
+
+            <label for="captionEN">
+                Підпис EN
+            </label>
+
+            <input
+                type="text"
+                id="captionEN"
+            >
+
+        </div>
+
+
+
+        <!-- =========================
+             ПОСИЛАННЯ
+             ========================= -->
+
+        <h3>
+            Додаткові дані
+        </h3>
+
+
+        <div class="admin-form-group">
+
+            <label for="publicationUrl">
+                Посилання на публікацію
+            </label>
+
+            <input
+                type="url"
+                id="publicationUrl"
+                placeholder="https://..."
+            >
+
+        </div>
+
+
+        <div class="admin-form-group">
+
+            <label for="slug">
+                Slug
+            </label>
+
+            <input
+                type="text"
+                id="slug"
+            >
+
+        </div>
+
+
+        <div class="admin-form-actions">
+
+            <button
+                type="button"
+                id="savePublicationButton"
+                class="admin-button admin-button-primary"
+            >
+                ЗБЕРЕГТИ ПУБЛІКАЦІЮ
+            </button>
+
+
+            <button
+                type="button"
+                id="cancelPublicationButton"
+                class="admin-button"
+            >
+                СКАСУВАТИ
+            </button>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =========================
+         ФІЛЬТРИ
+         ========================= -->
+
+    <div
+        id="publicationFiltersPanel"
+        class="admin-filters"
+        style="display: none;"
+    >
+
+        <h3>
+            Фільтри
+        </h3>
+
+
+        <div class="research-filters">
+
+
+            <div class="admin-filter-group">
+
+                <label for="filterTitleUA">
+                    Назва UA
+                </label>
+
+                <input
+                    type="text"
+                    id="filterTitleUA"
+                    placeholder="Пошук за назвою UA"
+                >
+
+            </div>
+
+
+            <div class="admin-filter-group">
+
+                <label for="filterTitleEN">
+                    Назва EN
+                </label>
+
+                <input
+                    type="text"
+                    id="filterTitleEN"
+                    placeholder="Пошук за назвою EN"
+                >
+
+            </div>
+
+
+            <div class="admin-filter-group">
+
+                <label for="filterPublicationType">
+                    Тип публікації
+                </label>
+
+                <select id="filterPublicationType">
+
+                    <option value="">
+                        Усі типи
+                    </option>
+
+                    <option value="academic">
+                        Академічна
+                    </option>
+
+                    <option value="media">
+                        Медійна
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="admin-filter-group">
+
+                <label for="filterPublicationName">
+                    Назва видання
+                </label>
+
+                <input
+                    type="text"
+                    id="filterPublicationName"
+                    placeholder="Пошук за назвою видання"
+                >
+
+            </div>
+
+
+            <div class="admin-filter-group">
+
+                <label for="filterDateFrom">
+                    Дата від
+                </label>
+
+                <input
+                    type="date"
+                    id="filterDateFrom"
+                >
+
+            </div>
+
+
+            <div class="admin-filter-group">
+
+                <label for="filterDateTo">
+                    Дата до
+                </label>
+
+                <input
+                    type="date"
+                    id="filterDateTo"
+                >
+
+            </div>
+
+
+            <div class="admin-filter-group">
+
+                <label for="filterStatus">
+                    Статус
+                </label>
+
+                <select id="filterStatus">
+
+                    <option value="">
+                        Усі статуси
+                    </option>
+
+                    <option value="published">
+                        Опубліковано
+                    </option>
+
+                    <option value="draft">
+                        Чернетка
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="admin-filter-actions">
+
+                <button
+                    type="button"
+                    id="applyPublicationFilters"
+                    class="admin-button admin-button-primary"
+                >
+                    ЗАСТОСУВАТИ ФІЛЬТРИ
+                </button>
+
+
+                <button
+                    type="button"
+                    id="resetPublicationFilters"
+                    class="admin-button"
+                >
+                    СКИНУТИ ФІЛЬТРИ
+                </button>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================
+         СПИСОК
+         ========================= -->
+
+    <div class="admin-list-header">
+
+        <h3>
+            Список публікацій
+        </h3>
+
+
+        <div
+            id="publicationCount"
+            class="admin-list-count"
+        >
+            Знайдено: 0
+        </div>
+
+    </div>
+
+
+    <div
+        id="publicationList"
+        class="admin-list"
+    >
+
+        <p>
+            Завантаження публікацій...
+        </p>
+
+    </div>
+
+
+</section>
+
+</main>
+
+
+
+<footer>
+
+    © 2026 Ярослав Маслаков
+
+</footer>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<link
+    href="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.snow.css"
+    rel="stylesheet"
+>
+
+
+<script
+    src="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.js"
+></script>
+
+
+
+<script>
+
+
+/*
+ * =========================
+ * SUPABASE
+ * =========================
+ */
+
+const SUPABASE_URL =
+    "https://jtplvfweyguheyqyewal.supabase.co";
+
+const SUPABASE_KEY =
+    "скрито";
+
+
+const { createClient } =
+    supabase;
+
+
+const client =
+    createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY,
+        {
+            auth: {
+                flowType: "pkce",
+                detectSessionInUrl: true,
+                persistSession: true
+            }
+        }
+    );
+
+
+
+/*
+ * =========================
+ * ПЕРЕВІРКА АВТОРИЗАЦІЇ
+ * =========================
+ */
+
+async function checkSession() {
+
+    const {
+        data: {
+            session
+        }
+    } =
+        await client.auth.getSession();
+
+
+    if (!session) {
+
+        window.location.href =
+            "../index.html";
+
+        return;
+
+    }
+
+}
+
+
+
+/*
+ * =========================
+ * ВИХІД
+ * =========================
+ */
+
+const logoutButton =
+    document.getElementById(
+        "logoutButton"
+    );
+
+
+if (logoutButton) {
+
+    logoutButton.addEventListener(
+        "click",
+        async function() {
+
+            await client.auth.signOut();
+
+            window.location.href =
+                "../index.html";
+
+        }
+    );
+
+}
+
+
+
+/*
+ * =========================
+ * МОБІЛЬНЕ МЕНЮ
+ * =========================
+ */
+
+const adminMenuButton =
+    document.querySelector(
+        ".menu-toggle"
+    );
+
+
+const adminMenu =
+    document.querySelector(
+        "nav"
+    );
+
+
+if (
+    adminMenuButton &&
+    adminMenu
+) {
+
+    adminMenuButton.addEventListener(
+        "click",
+        function() {
+
+            const isOpen =
+                adminMenu.classList.toggle(
+                    "menu-open"
+                );
+
+
+            adminMenuButton.textContent =
+                isOpen
+                    ? "ЗАКРИТИ"
+                    : "МЕНЮ";
+
+
+            adminMenuButton.setAttribute(
+                "aria-label",
+                isOpen
+                    ? "Закрити меню"
+                    : "Відкрити меню"
+            );
+
+        }
+    );
+
+}
+
+
+
+/*
+ * =========================
+ * ЗАВАНТАЖЕННЯ ЗОБРАЖЕННЯ
+ * У QUILL
+ * =========================
+ */
+
+async function uploadPublicationImage(
+    quillEditor
+) {
+
+    const input =
+        document.createElement(
+            "input"
+        );
+
+
+    input.type = "file";
+
+    input.accept =
+        "image/jpeg,image/png,image/webp,image/svg+xml";
+
+
+    input.click();
+
+
+    input.addEventListener(
+        "change",
+        async function() {
+
+            const file =
+                input.files[0];
+
+
+            if (!file) {
+                return;
+            }
+
+
+            const fileExtension =
+                file.name
+                    .split(".")
+                    .pop()
+                    .toLowerCase();
+
+
+            const fileName =
+                `${Date.now()}-${Math.random()
+                    .toString(36)
+                    .substring(2)}.${fileExtension}`;
+
+
+            const filePath =
+                `publications/${fileName}`;
+
+
+            const {
+                error: uploadError
+            } =
+                await client.storage
+                    .from("publication-images")
+                    .upload(
+                        filePath,
+                        file
+                    );
+
+
+            if (uploadError) {
+
+                console.error(
+                    "Помилка завантаження зображення:",
+                    uploadError
+                );
+
+                alert(
+                    "Не вдалося завантажити зображення."
+                );
+
+                return;
+            }
+
+
+            const {
+                data
+            } =
+                client.storage
+                    .from("publication-images")
+                    .getPublicUrl(
+                        filePath
+                    );
+
+
+            const imageUrl =
+                data.publicUrl;
+
+
+            const range =
+                quillEditor.getSelection(
+                    true
+                );
+
+
+            quillEditor.insertEmbed(
+                range.index,
+                "image",
+                imageUrl
+            );
+
+
+            quillEditor.setSelection(
+                range.index + 1
+            );
+
+        }
+    );
+
+}
+
+
+
+/*
+ * =========================
+ * НАЛАШТУВАННЯ QUILL
+ * =========================
+ */
+
+function createPublicationQuill(
+    element
+) {
+
+    return new Quill(
+        element,
+        {
+            theme: "snow",
+
+            modules: {
+
+                toolbar: [
+
+                    [
+                        {
+                            header: [
+                                1,
+                                2,
+                                3,
+                                false
+                            ]
+                        }
+                    ],
+
+                    [
+                        "bold",
+                        "italic",
+                        "underline"
+                    ],
+
+                    [
+                        {
+                            list: "ordered"
+                        },
+
+                        {
+                            list: "bullet"
+                        }
+                    ],
+
+                    [
+                        "blockquote"
+                    ],
+
+                    [
+                        "link",
+                        "image"
+                    ],
+
+                    [
+                        {
+                            align: []
+                        }
+                    ],
+
+                    [
+                        "clean"
+                    ]
+
+                ]
+
+            }
+
+        }
+    );
+
+}
+
+
+
+/*
+ * =========================
+ * QUILL — UA
+ * =========================
+ */
+
+const publicationEditorUA =
+    document.getElementById(
+        "publicationEditorUA"
+    );
+
+
+let publicationQuillUA =
+    null;
+
+
+if (publicationEditorUA) {
+
+    publicationQuillUA =
+        createPublicationQuill(
+            publicationEditorUA
+        );
+
+
+    publicationQuillUA
+        .getModule("toolbar")
+        .addHandler(
+            "image",
+            function() {
+
+                uploadPublicationImage(
+                    publicationQuillUA
+                );
+
+            }
+        );
+
+}
+
+
+
+/*
+ * =========================
+ * QUILL — EN
+ * =========================
+ */
+
+const publicationEditorEN =
+    document.getElementById(
+        "publicationEditorEN"
+    );
+
+
+let publicationQuillEN =
+    null;
+
+
+if (publicationEditorEN) {
+
+    publicationQuillEN =
+        createPublicationQuill(
+            publicationEditorEN
+        );
+
+
+    publicationQuillEN
+        .getModule("toolbar")
+        .addHandler(
+            "image",
+            function() {
+
+                uploadPublicationImage(
+                    publicationQuillEN
+                );
+
+            }
+        );
+
+}
+
+
+
+/*
+ * =========================
+ * СТВОРЕННЯ ПУБЛІКАЦІЇ
+ * =========================
+ */
+
+const createPublicationButton =
+    document.getElementById(
+        "createPublicationButton"
+    );
+
+
+const cancelPublicationButton =
+    document.getElementById(
+        "cancelPublicationButton"
+    );
+
+
+const publicationForm =
+    document.getElementById(
+        "publicationForm"
+    );
+
+
+if (
+    createPublicationButton &&
+    publicationForm
+) {
+
+    createPublicationButton.addEventListener(
+        "click",
+        function() {
+
+            publicationForm.style.display =
+                "block";
+
+
+            createPublicationButton.style.display =
+                "none";
+
+
+            window.scrollTo({
+
+                top:
+                    publicationForm.offsetTop - 30,
+
+                behavior:
+                    "smooth"
+
+            });
+
+        }
+    );
+
+}
+
+
+
+if (
+    cancelPublicationButton &&
+    publicationForm
+) {
+
+    cancelPublicationButton.addEventListener(
+        "click",
+        function() {
+
+            publicationForm.style.display =
+                "none";
+
+
+            createPublicationButton.style.display =
+                "block";
+
+        }
+    );
+
+}
+
+
+
+/*
+ * =========================
+ * ЗБЕРЕЖЕННЯ ПУБЛІКАЦІЇ
+ * =========================
+ */
+
+const savePublicationButton =
+    document.getElementById(
+        "savePublicationButton"
+    );
+
+
+if (savePublicationButton) {
+
+    savePublicationButton.addEventListener(
+        "click",
+        async function() {
+
+            const titleUA =
+                document.getElementById(
+                    "titleUA"
+                ).value.trim();
+
+
+            const titleEN =
+                document.getElementById(
+                    "titleEN"
+                ).value.trim();
+
+
+            const publicationType =
+                document.getElementById(
+                    "publicationType"
+                ).value;
+
+
+            const publicationNameUA =
+                document.getElementById(
+                    "publicationNameUA"
+                ).value.trim();
+
+
+            const publicationNameEN =
+                document.getElementById(
+                    "publicationNameEN"
+                ).value.trim();
+
+
+            const publicationDate =
+                document.getElementById(
+                    "publicationDate"
+                ).value;
+
+
+            const status =
+                document.getElementById(
+                    "publicationStatus"
+                ).value;
+
+
+            const excerptUA =
+                document.getElementById(
+                    "excerptUA"
+                ).value.trim();
+
+
+            const excerptEN =
+                document.getElementById(
+                    "excerptEN"
+                ).value.trim();
+
+
+            const captionUA =
+                document.getElementById(
+                    "captionUA"
+                ).value.trim();
+
+
+            const captionEN =
+                document.getElementById(
+                    "captionEN"
+                ).value.trim();
+
+
+            const publicationUrl =
+                document.getElementById(
+                    "publicationUrl"
+                ).value.trim();
+
+
+            const slug =
+                document.getElementById(
+                    "slug"
+                ).value.trim();
+
+
+            const mainImageInput =
+                document.getElementById(
+                    "mainImage"
+                );
+
+
+            const contentUA =
+                publicationQuillUA
+                    ? publicationQuillUA.root.innerHTML
+                    : "";
+
+
+            const contentEN =
+                publicationQuillEN
+                    ? publicationQuillEN.root.innerHTML
+                    : "";
+
+
+            if (
+                !titleUA ||
+                !titleEN ||
+                !publicationType ||
+                !publicationNameUA ||
+                !publicationNameEN ||
+                !publicationDate ||
+                !excerptUA ||
+                !excerptEN ||
+                !contentUA ||
+                !contentEN
+            ) {
+
+                alert(
+                    "Заповніть усі обов'язкові поля."
+                );
+
+                return;
+
+            }
+
+
+            savePublicationButton.disabled =
+                true;
+
+
+            savePublicationButton.textContent =
+                "ЗБЕРІГАЄМО...";
+
+
+            try {
+
+                let mainImageUrl =
+                    null;
+
+
+                /*
+                 * ГОЛОВНЕ ЗОБРАЖЕННЯ
+                 */
+
+                if (
+                    mainImageInput &&
+                    mainImageInput.files &&
+                    mainImageInput.files.length > 0
+                ) {
+
+                    const file =
+                        mainImageInput.files[0];
+
+
+                    const fileExtension =
+                        file.name
+                            .split(".")
+                            .pop()
+                            .toLowerCase();
+
+
+                    const fileName =
+                        `${Date.now()}-${Math.random()
+                            .toString(36)
+                            .substring(2)}.${fileExtension}`;
+
+
+                    const filePath =
+                        `publications/${fileName}`;
+
+
+                    const {
+                        error:
+                            imageUploadError
+                    } =
+                        await client.storage
+                            .from(
+                                "publication-images"
+                            )
+                            .upload(
+                                filePath,
+                                file
+                            );
+
+
+                    if (
+                        imageUploadError
+                    ) {
+
+                        console.error(
+                            "Помилка завантаження головного зображення:",
+                            imageUploadError
+                        );
+
+                        alert(
+                            "Не вдалося завантажити головне зображення."
+                        );
+
+                        return;
+
+                    }
+
+
+                    const {
+                        data:
+                            imageData
+                    } =
+                        client.storage
+                            .from(
+                                "publication-images"
+                            )
+                            .getPublicUrl(
+                                filePath
+                            );
+
+
+                    mainImageUrl =
+                        imageData.publicUrl;
+
+                }
+
+
+                /*
+                 * БД
+                 */
+
+                const {
+                    data,
+                    error
+                } =
+                    await client
+                        .from("publications")
+                        .insert({
+
+                            title_ua:
+                                titleUA,
+
+                            title_en:
+                                titleEN,
+
+                            publication_type:
+                                publicationType,
+
+                            publication_name_ua:
+                                publicationNameUA,
+
+                            publication_name_en:
+                                publicationNameEN,
+
+                            publication_date:
+                                publicationDate,
+
+                            status:
+                                status,
+
+                            excerpt_ua:
+                                excerptUA,
+
+                            excerpt_en:
+                                excerptEN,
+
+                            content_ua:
+                                contentUA,
+
+                            content_en:
+                                contentEN,
+
+                            main_image:
+                                mainImageUrl,
+
+                            caption_ua:
+                                captionUA || null,
+
+                            caption_en:
+                                captionEN || null,
+
+                            publication_url:
+                                publicationUrl || null,
+
+                            slug:
+                                slug || null
+
+                        })
+                        .select()
+                        .single();
+
+
+                if (error) {
+
+                    console.error(
+                        "Помилка збереження публікації:",
+                        error
+                    );
+
+                    alert(
+                        "Не вдалося зберегти публікацію."
+                    );
+
+                    return;
+
+                }
+
+
+                console.log(
+                    "Публікацію створено:",
+                    data
+                );
+
+
+                alert(
+                    "Публікацію успішно збережено."
+                );
+
+
+                clearPublicationForm();
+
+                await loadPublications();
+
+            } catch (error) {
+
+                console.error(
+                    "Непередбачена помилка:",
+                    error
+                );
+
+                alert(
+                    "Сталася помилка під час збереження публікації."
+                );
+
+            } finally {
+
+                savePublicationButton.disabled =
+                    false;
+
+
+                savePublicationButton.textContent =
+                    "ЗБЕРЕГТИ ПУБЛІКАЦІЮ";
+
+            }
+
+        }
+    );
+
+}
+
+
+
+/*
+ * =========================
+ * ОЧИЩЕННЯ ФОРМИ
+ * =========================
+ */
+
+function clearPublicationForm() {
+
+    document.getElementById(
+        "titleUA"
+    ).value = "";
+
+
+    document.getElementById(
+        "titleEN"
+    ).value = "";
+
+
+    document.getElementById(
+        "publicationType"
+    ).value = "";
+
+
+    document.getElementById(
+        "publicationNameUA"
+    ).value = "";
+
+
+    document.getElementById(
+        "publicationNameEN"
+    ).value = "";
+
+
+    document.getElementById(
+        "publicationDate"
+    ).value = "";
+
+
+    document.getElementById(
+        "publicationStatus"
+    ).value = "draft";
+
+
+    document.getElementById(
+        "excerptUA"
+    ).value = "";
+
+
+    document.getElementById(
+        "excerptEN"
+    ).value = "";
+
+
+    document.getElementById(
+        "captionUA"
+    ).value = "";
+
+
+    document.getElementById(
+        "captionEN"
+    ).value = "";
+
+
+    document.getElementById(
+        "publicationUrl"
+    ).value = "";
+
+
+    document.getElementById(
+        "slug"
+    ).value = "";
+
+
+    document.getElementById(
+        "mainImage"
+    ).value = "";
+
+
+    if (publicationQuillUA) {
+
+        publicationQuillUA.setContents([]);
+
+    }
+
+
+    if (publicationQuillEN) {
+
+        publicationQuillEN.setContents([]);
+
+    }
+
+}
+
+
+
+/*
+ * =========================
+ * ЗАВАНТАЖЕННЯ ПУБЛІКАЦІЙ
+ * =========================
+ */
+
+let allPublications =
+    [];
+
+
+let editingPublicationId =
+    null;
+
+
+const publicationList =
+    document.getElementById(
+        "publicationList"
+    );
+
+
+const publicationCount =
+    document.getElementById(
+        "publicationCount"
+    );
+
+
+async function loadPublications() {
+
+    if (!publicationList) {
+        return;
+    }
+
+
+    publicationList.innerHTML =
+        "<p>Завантаження публікацій...</p>";
+
+
+    const {
+        data,
+        error
+    } =
+        await client
+            .from("publications")
+            .select("*")
+            .order(
+                "publication_date",
+                {
+                    ascending: false
+                }
+            );
+
+
+    if (error) {
+
+        console.error(
+            "Помилка завантаження публікацій:",
+            error
+        );
+
+
+        publicationList.innerHTML =
+            "<p>Не вдалося завантажити публікації.</p>";
+
+
+        return;
+
+    }
+
+
+    allPublications =
+        data || [];
+
+
+    renderPublications();
+
+}
+
+
+
+/*
+ * =========================
+ * ВІДОБРАЖЕННЯ
+ * =========================
+ */
+
+function renderPublications() {
+
+    if (!publicationList) {
+        return;
+    }
+
+
+    const titleUA =
+        document.getElementById(
+            "filterTitleUA"
+        ).value
+            .trim()
+            .toLowerCase();
+
+
+    const titleEN =
+        document.getElementById(
+            "filterTitleEN"
+        ).value
+            .trim()
+            .toLowerCase();
+
+
+    const publicationType =
+        document.getElementById(
+            "filterPublicationType"
+        ).value;
+
+
+    const publicationName =
+        document.getElementById(
+            "filterPublicationName"
+        ).value
+            .trim()
+            .toLowerCase();
+
+
+    const dateFrom =
+        document.getElementById(
+            "filterDateFrom"
+        ).value;
+
+
+    const dateTo =
+        document.getElementById(
+            "filterDateTo"
+        ).value;
+
+
+    const status =
+        document.getElementById(
+            "filterStatus"
+        ).value;
+
+
+    const filteredPublications =
+        allPublications.filter(
+            function(publication) {
+
+                const publicationTitleUA =
+                    String(
+                        publication.title_ua || ""
+                    ).toLowerCase();
+
+
+                const publicationTitleEN =
+                    String(
+                        publication.title_en || ""
+                    ).toLowerCase();
+
+
+                const publicationNameUA =
+                    String(
+                        publication.publication_name_ua || ""
+                    ).toLowerCase();
+
+
+                const publicationNameEN =
+                    String(
+                        publication.publication_name_en || ""
+                    ).toLowerCase();
+
+
+                if (
+                    titleUA &&
+                    !publicationTitleUA.includes(
+                        titleUA
+                    )
+                ) {
+                    return false;
+                }
+
+
+                if (
+                    titleEN &&
+                    !publicationTitleEN.includes(
+                        titleEN
+                    )
+                ) {
+                    return false;
+                }
+
+
+                if (
+                    publicationType &&
+                    publication.publication_type !==
+                        publicationType
+                ) {
+                    return false;
+                }
+
+
+                if (
+                    publicationName &&
+                    !publicationNameUA.includes(
+                        publicationName
+                    ) &&
+                    !publicationNameEN.includes(
+                        publicationName
+                    )
+                ) {
+                    return false;
+                }
+
+
+                if (
+                    dateFrom &&
+                    publication.publication_date <
+                        dateFrom
+                ) {
+                    return false;
+                }
+
+
+                if (
+                    dateTo &&
+                    publication.publication_date >
+                        dateTo
+                ) {
+                    return false;
+                }
+
+
+                if (
+                    status &&
+                    publication.status !==
+                        status
+                ) {
+                    return false;
+                }
+
+
+                return true;
+
+            }
+        );
+
+
+    publicationCount.textContent =
+        "Знайдено: " +
+        filteredPublications.length;
+
+
+    if (
+        filteredPublications.length === 0
+    ) {
+
+        publicationList.innerHTML =
+            "<p>За заданими фільтрами публікацій не знайдено.</p>";
+
+        return;
+
+    }
+
+
+    publicationList.innerHTML =
+        "";
+
+
+    filteredPublications.forEach(
+        function(publication) {
+
+            const publicationItem =
+                document.createElement(
+                    "article"
+                );
+
+
+            publicationItem.className =
+                "admin-item";
+
+
+            const title =
+                document.createElement(
+                    "h4"
+                );
+
+
+            title.textContent =
+                publication.title_ua ||
+                "Без назви";
+
+
+            title.style.cursor =
+                "pointer";
+
+
+            const details =
+                document.createElement(
+                    "div"
+                );
+
+
+            details.style.display =
+                "none";
+
+
+            /*
+             * ОСНОВНА ІНФОРМАЦІЯ
+             */
+
+            const mainInfo =
+                document.createElement(
+                    "div"
+                );
+
+
+            mainInfo.className =
+                "admin-item-section";
+
+
+            mainInfo.innerHTML = `
+
+                <h5>
+                    Основна інформація
+                </h5>
+
+                <p>
+                    <strong>Назва UA:</strong>
+                    ${escapePublicationHtml(
+                        publication.title_ua
+                    )}
+                </p>
+
+                <p>
+                    <strong>Назва EN:</strong>
+                    ${escapePublicationHtml(
+                        publication.title_en
+                    )}
+                </p>
+
+                <p>
+                    <strong>Тип:</strong>
+                    ${
+                        publication.publication_type ===
+                        "academic"
+                            ? "Академічна"
+                            : "Медійна"
+                    }
+                </p>
+
+                <p>
+                    <strong>Видання UA:</strong>
+                    ${escapePublicationHtml(
+                        publication.publication_name_ua
+                    )}
+                </p>
+
+                <p>
+                    <strong>Видання EN:</strong>
+                    ${escapePublicationHtml(
+                        publication.publication_name_en
+                    )}
+                </p>
+
+                <p>
+                    <strong>Дата публікації:</strong>
+                    ${escapePublicationHtml(
+                        publication.publication_date
+                    )}
+                </p>
+
+                <p>
+                    <strong>Статус:</strong>
+                    ${
+                        publication.status ===
+                        "published"
+                            ? "Опубліковано"
+                            : "Чернетка"
+                    }
+                </p>
+
+            `;
+
+
+            details.appendChild(
+                mainInfo
+            );
+
+
+
+            /*
+             * ОПИС
+             */
+
+            const excerpts =
+                document.createElement(
+                    "div"
+                );
+
+
+            excerpts.className =
+                "admin-item-section";
+
+
+            excerpts.innerHTML = `
+
+                <h5>
+                    Короткий опис
+                </h5>
+
+                <p>
+                    <strong>Опис UA:</strong>
+                </p>
+
+                <div class="admin-article-text">
+                    ${escapePublicationHtml(
+                        publication.excerpt_ua
+                    )}
+                </div>
+
+                <p>
+                    <strong>Опис EN:</strong>
+                </p>
+
+                <div class="admin-article-text">
+                    ${escapePublicationHtml(
+                        publication.excerpt_en
+                    )}
+                </div>
+
+            `;
+
+
+            details.appendChild(
+                excerpts
+            );
+
+
+
+            /*
+             * ОСНОВНИЙ ТЕКСТ
+             */
+
+            const contents =
+                document.createElement(
+                    "div"
+                );
+
+
+            contents.className =
+                "admin-item-section";
+
+
+            contents.innerHTML = `
+
+                <h5>
+                    Основний текст UA
+                </h5>
+
+                <div class="admin-article-content">
+                    ${
+                        publication.content_ua || ""
+                    }
+                </div>
+
+                <h5>
+                    Основний текст EN
+                </h5>
+
+                <div class="admin-content">
+                    ${
+                        publication.content_en || ""
+                    }
+                </div>
+
+            `;
+
+
+            details.appendChild(
+                contents
+            );
+
+
+
+            /*
+             * ЗОБРАЖЕННЯ
+             */
+
+            const imageSection =
+                document.createElement(
+                    "div"
+                );
+
+
+            imageSection.className =
+                "admin-item-section";
+
+
+            let imageHtml =
+                "<p><strong>Головне зображення:</strong> не завантажено</p>";
+
+
+            if (
+                publication.main_image
+            ) {
+
+                imageHtml = `
+
+                    <p>
+                        <strong>
+                            Головне зображення:
+                        </strong>
+                    </p>
+
+                    <img
+                        src="${escapePublicationAttribute(
+                            publication.main_image
+                        )}"
+                        alt="${escapePublicationAttribute(
+                            publication.caption_ua ||
+                            publication.title_ua ||
+                            ""
+                        )}"
+                        class="admin-image"
+                    >
+
+                `;
+
+            }
+
+
+            imageSection.innerHTML = `
+
+                <h5>
+                    Зображення
+                </h5>
+
+                ${imageHtml}
+
+                <p>
+                    <strong>
+                        Підпис UA:
+                    </strong>
+                    ${
+                        escapePublicationHtml(
+                            publication.caption_ua ||
+                            "—"
+                        )
+                    }
+                </p>
+
+                <p>
+                    <strong>
+                        Підпис EN:
+                    </strong>
+                    ${
+                        escapePublicationHtml(
+                            publication.caption_en ||
+                            "—"
+                        )
+                    }
+                </p>
+
+            `;
+
+
+            details.appendChild(
+                imageSection
+            );
+
+
+
+            /*
+             * ДОДАТКОВІ ДАНІ
+             */
+
+            const additionalData =
+                document.createElement(
+                    "div"
+                );
+
+
+            additionalData.className =
+                "admin-item-section";
+
+
+            additionalData.innerHTML = `
+
+                <h5>
+                    Додаткові дані
+                </h5>
+
+                <p>
+                    <strong>
+                        Посилання:
+                    </strong>
+
+                    ${
+                        publication.publication_url
+                            ? `<a
+                                href="${escapePublicationAttribute(
+                                    publication.publication_url
+                                )}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Відкрити публікацію
+                            </a>`
+                            : "—"
+                    }
+
+                </p>
+
+                <p>
+                    <strong>
+                        Slug:
+                    </strong>
+                    ${
+                        escapePublicationHtml(
+                            publication.slug ||
+                            "—"
+                        )
+                    }
+                </p>
+
+            `;
+
+
+            details.appendChild(
+                additionalData
+            );
+
+
+
+            /*
+             * СИСТЕМНА ІНФОРМАЦІЯ
+             */
+
+            const systemData =
+                document.createElement(
+                    "div"
+                );
+
+
+            systemData.className =
+                "admin-system-info";
+
+
+            systemData.innerHTML = `
+
+                <p>
+                    <strong>
+                        ID:
+                    </strong>
+                    ${escapePublicationHtml(
+                        publication.id
+                    )}
+                </p>
+
+                <p>
+                    <strong>
+                        Створено:
+                    </strong>
+                    ${formatPublicationDateTime(
+                        publication.created_at
+                    )}
+                </p>
+
+                <p>
+                    <strong>
+                        Оновлено:
+                    </strong>
+                    ${formatPublicationDateTime(
+                        publication.updated_at
+                    )}
+                </p>
+
+            `;
+
+
+            details.appendChild(
+                systemData
+            );
+
+
+
+            /*
+             * КНОПКИ
+             */
+
+            const actions =
+                document.createElement(
+                    "div"
+                );
+
+
+            actions.className =
+                "admin-item-actions";
+
+
+            /*
+             * РЕДАГУВАТИ
+             */
+
+            const editButton =
+                document.createElement(
+                    "button"
+                );
+
+
+            editButton.type =
+                "button";
+
+
+            editButton.className =
+                "admin-button";
+
+
+            editButton.textContent =
+                "РЕДАГУВАТИ";
+
+
+            editButton.addEventListener(
+                "click",
+                function() {
+
+                    startPublicationEditing(
+                        publication,
+                        publicationItem
+                    );
+
+                }
+            );
+
+
+            /*
+             * ВИДАЛИТИ
+             */
+
+            const deleteButton =
+                document.createElement(
+                    "button"
+                );
+
+
+            deleteButton.type =
+                "button";
+
+
+            deleteButton.className =
+                "admin-button admin-button-danger";
+
+
+            deleteButton.textContent =
+                "ВИДАЛИТИ";
+
+
+            deleteButton.addEventListener(
+                "click",
+                async function() {
+
+                    const confirmed =
+                        confirm(
+                            "Ви впевнені, що хочете видалити цю публікацію?"
+                        );
+
+
+                    if (!confirmed) {
+                        return;
+                    }
+
+
+                    deleteButton.disabled =
+                        true;
+
+
+                    deleteButton.textContent =
+                        "ВИДАЛЯЄМО...";
+
+
+                    try {
+
+                        const {
+                            error
+                        } =
+                            await client
+                                .from(
+                                    "publications"
+                                )
+                                .delete()
+                                .eq(
+                                    "id",
+                                    publication.id
+                                );
+
+
+                        if (error) {
+
+                            console.error(
+                                "Помилка видалення публікації:",
+                                error
+                            );
+
+
+                            alert(
+                                "Не вдалося видалити публікацію."
+                            );
+
+
+                            return;
+
+                        }
+
+
+                        alert(
+                            "Публікацію успішно видалено."
+                        );
+
+
+                        await loadPublications();
+
+                    } catch (error) {
+
+                        console.error(
+                            "Непередбачена помилка:",
+                            error
+                        );
+
+
+                        alert(
+                            "Сталася помилка під час видалення публікації."
+                        );
+
+                    } finally {
+
+                        deleteButton.disabled =
+                            false;
+
+
+                        deleteButton.textContent =
+                            "ВИДАЛИТИ";
+
+                    }
+
+                }
+            );
+
+
+            actions.appendChild(
+                editButton
+            );
+
+
+            actions.appendChild(
+                deleteButton
+            );
+
+
+            details.appendChild(
+                actions
+            );
+
+
+
+            /*
+             * РОЗКРИТТЯ
+             */
+
+            title.addEventListener(
+                "click",
+                function() {
+
+                    const isOpen =
+                        details.style.display ===
+                        "block";
+
+
+                    details.style.display =
+                        isOpen
+                            ? "none"
+                            : "block";
+
+                }
+            );
+
+
+            publicationItem.appendChild(
+                title
+            );
+
+
+            publicationItem.appendChild(
+                details
+            );
+
+
+            publicationList.appendChild(
+                publicationItem
+            );
+
+        }
+    );
+
+}
+
+
+
+/*
+ * =========================
+ * РЕДАГУВАННЯ
+ * =========================
+ */
+
+function startPublicationEditing(
+    publication,
+    publicationItem
+) {
+
+    if (editingPublicationId) {
+        return;
+    }
+
+
+    editingPublicationId =
+        publication.id;
+
+
+    const editForm =
+        document.createElement(
+            "div"
+        );
+
+
+    editForm.className =
+        "admin-form";
+
+
+    editForm.innerHTML = `
+
+        <div class="admin-form-section">
+
+            <h3>
+                Редагування публікації
+            </h3>
+
+
+            <div class="admin-form-group">
+
+                <label>
+                    Назва UA *
+                </label>
+
+                <input
+                    type="text"
+                    class="edit-title-ua"
+                    value="${escapePublicationAttribute(
+                        publication.title_ua || ""
+                    )}"
+                >
+
+            </div>
+
+
+            <div class="admin-form-group">
+
+                <label>
+                    Назва EN *
+                </label>
+
+                <input
+                    type="text"
+                    class="edit-title-en"
+                    value="${escapePublicationAttribute(
+                        publication.title_en || ""
+                    )}"
+                >
+
+            </div>
+
+
+            <div class="admin-form-group">
+
+                <label>
+                    Тип публікації *
+                </label>
+
+                <select class="edit-publication-type">
+
+                    <option value="academic">
+                        Академічна
+                    </option>
+
+                    <option value="media">
+                        Медійна
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="admin-form-group">
+
+                <label>
+                    Назва видання UA *
+                </label>
+
+                <input
+                    type="text"
+                    class="edit-publication-name-ua"
+                    value="${escapePublicationAttribute(
+                        publication.publication_name_ua || ""
+                    )}"
+                >
+
+            </div>
+
+
+            <div class="admin-form-group">
+
+                <label>
+                    Назва видання EN *
+                </label>
+
+                <input
+                    type="text"
+                    class="edit-publication-name-en"
+                    value="${escapePublicationAttribute(
+                        publication.publication_name_en || ""
+                    )}"
+                >
+
+            </div>
+
+
+            <div class="admin-form-group">
+
+                <label>
+                    Дата публікації *
+                </label>
+
+                <input
+                    type="date"
+                    class="edit-publication-date"
+                    value="${escapePublicationAttribute(
+                        publication.publication_date || ""
+                    )}"
+                >
+
+            </div>
+
+
+            <div class="admin-form-group">
+
+                <label>
+                    Статус
+                </label>
+
+                <select class="edit-status">
+
+                    <option value="draft">
+                        Чернетка
+                    </option>
+
+                    <option value="published">
+                        Опубліковано
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="admin-form-group">
+
+                <label>
+                    Опис UA *
+                </label>
+
+                <textarea
+                    class="edit-excerpt-ua"
+                    rows="6"
+                >${escapePublicationHtml(
+                    publication.excerpt_ua || ""
+                )}</textarea>
+
+            </div>
+
+
+            <div class="admin-form-group">
+
+                <label>
+                    Опис EN *
+                </label>
+
+                <textarea
+                    class="edit-excerpt-en"
+                    rows="6"
+                >${escapePublicationHtml(
+                    publication.excerpt_en || ""
+                )}</textarea>
+
+            </div>
+
+
+            <div class="admin-form-group">
+
+                <label>
+                    Основний текст UA *
+                </label>
+
+                <div class="edit-content-ua"></div>
+
+            </div>
+
+
+            <div class="admin-form-group">
+
+                <label>
+                    Основний текст EN *
+                </label>
+
+                <div class="edit-content-en"></div>
+
+            </div>
+
+
+            <div class="admin-form-group">
+
+                <label>
+                    Головне зображення
+                </label>
+
+                <input
+                    type="file"
+                    class="edit-main-image"
+                    accept="image/jpeg,image/png,image/webp,image/svg+xml"
+                >
+
+            </div>
+
+
+            <div class="admin-form-group">
+
+                <label>
+                    Підпис UA
+                </label>
+
+                <input
+                    type="text"
+                    class="edit-caption-ua"
+                    value="${escapePublicationAttribute(
+                        publication.caption_ua || ""
+                    )}"
+                >
+
+            </div>
+
+
+            <div class="admin-form-group">
+
+                <label>
+                    Підпис EN
+                </label>
+
+                <input
+                    type="text"
+                    class="edit-caption-en"
+                    value="${escapePublicationAttribute(
+                        publication.caption_en || ""
+                    )}"
+                >
+
+            </div>
+
+
+            <div class="admin-form-group">
+
+                <label>
+                    Посилання на публікацію
+                </label>
+
+                <input
+                    type="url"
+                    class="edit-publication-url"
+                    value="${escapePublicationAttribute(
+                        publication.publication_url || ""
+                    )}"
+                >
+
+            </div>
+
+
+            <div class="admin-form-group">
+
+                <label>
+                    Slug
+                </label>
+
+                <input
+                    type="text"
+                    class="edit-slug"
+                    value="${escapePublicationAttribute(
+                        publication.slug || ""
+                    )}"
+                >
+
+            </div>
+
+
+            <div class="admin-form-actions">
+
+                <button
+                    type="button"
+                    class="admin-button admin-button-primary edit-save-button"
+                >
+                    ЗБЕРЕГТИ ЗМІНИ
+                </button>
+
+
+                <button
+                    type="button"
+                    class="admin-button edit-cancel-button"
+                >
+                    СКАСУВАТИ
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    const typeSelect =
+        editForm.querySelector(
+            ".edit-publication-type"
+        );
+
+
+    typeSelect.value =
+        publication.publication_type ||
+        "";
+
+
+    const statusSelect =
+        editForm.querySelector(
+            ".edit-status"
+        );
+
+
+    statusSelect.value =
+        publication.status ||
+        "draft";
+
+
+    publicationItem.appendChild(
+        editForm
+    );
+
+
+    /*
+     * QUILL UA
+     */
+
+    const editContentUA =
+        editForm.querySelector(
+            ".edit-content-ua"
+        );
+
+
+    const editQuillUA =
+        createPublicationQuill(
+            editContentUA
+        );
+
+
+    editQuillUA.root.innerHTML =
+        publication.content_ua ||
+        "";
+
+
+    editQuillUA
+        .getModule("toolbar")
+        .addHandler(
+            "image",
+            function() {
+
+                uploadPublicationImage(
+                    editQuillUA
+                );
+
+            }
+        );
+
+
+
+    /*
+     * QUILL EN
+     */
+
+    const editContentEN =
+        editForm.querySelector(
+            ".edit-content-en"
+        );
+
+
+    const editQuillEN =
+        createPublicationQuill(
+            editContentEN
+        );
+
+
+    editQuillEN.root.innerHTML =
+        publication.content_en ||
+        "";
+
+
+    editQuillEN
+        .getModule("toolbar")
+        .addHandler(
+            "image",
+            function() {
+
+                uploadPublicationImage(
+                    editQuillEN
+                );
+
+            }
+        );
+
+
+
+    /*
+     * КНОПКИ
+     */
+
+    const cancelButton =
+        editForm.querySelector(
+            ".edit-cancel-button"
+        );
+
+
+    const saveEditButton =
+        editForm.querySelector(
+            ".edit-save-button"
+        );
+
+
+
+    /*
+     * ЗБЕРЕЖЕННЯ РЕДАГУВАННЯ
+     */
+
+    saveEditButton.addEventListener(
+        "click",
+        async function() {
+
+            const titleUA =
+                editForm.querySelector(
+                    ".edit-title-ua"
+                ).value.trim();
+
+
+            const titleEN =
+                editForm.querySelector(
+                    ".edit-title-en"
+                ).value.trim();
+
+
+            const publicationType =
+                editForm.querySelector(
+                    ".edit-publication-type"
+                ).value;
+
+
+            const publicationNameUA =
+                editForm.querySelector(
+                    ".edit-publication-name-ua"
+                ).value.trim();
+
+
+            const publicationNameEN =
+                editForm.querySelector(
+                    ".edit-publication-name-en"
+                ).value.trim();
+
+
+            const publicationDate =
+                editForm.querySelector(
+                    ".edit-publication-date"
+                ).value;
+
+
+            const status =
+                editForm.querySelector(
+                    ".edit-status"
+                ).value;
+
+
+            const excerptUA =
+                editForm.querySelector(
+                    ".edit-excerpt-ua"
+                ).value.trim();
+
+
+            const excerptEN =
+                editForm.querySelector(
+                    ".edit-excerpt-en"
+                ).value.trim();
+
+
+            const captionUA =
+                editForm.querySelector(
+                    ".edit-caption-ua"
+                ).value.trim();
+
+
+            const captionEN =
+                editForm.querySelector(
+                    ".edit-caption-en"
+                ).value.trim();
+
+
+            const publicationUrl =
+                editForm.querySelector(
+                    ".edit-publication-url"
+                ).value.trim();
+
+
+            const slug =
+                editForm.querySelector(
+                    ".edit-slug"
+                ).value.trim();
+
+
+            const mainImageInput =
+                editForm.querySelector(
+                    ".edit-main-image"
+                );
+
+
+            const contentUA =
+                editQuillUA.root.innerHTML;
+
+
+            const contentEN =
+                editQuillEN.root.innerHTML;
+
+
+            if (
+                !titleUA ||
+                !titleEN ||
+                !publicationType ||
+                !publicationNameUA ||
+                !publicationNameEN ||
+                !publicationDate ||
+                !excerptUA ||
+                !excerptEN ||
+                !contentUA ||
+                !contentEN
+            ) {
+
+                alert(
+                    "Заповніть усі обов'язкові поля."
+                );
+
+                return;
+
+            }
+
+
+            saveEditButton.disabled =
+                true;
+
+
+            saveEditButton.textContent =
+                "ЗБЕРІГАЄМО...";
+
+
+            try {
+
+                let mainImageUrl =
+                    publication.main_image ||
+                    null;
+
+
+                if (
+                    mainImageInput &&
+                    mainImageInput.files &&
+                    mainImageInput.files.length > 0
+                ) {
+
+                    const file =
+                        mainImageInput.files[0];
+
+
+                    const fileExtension =
+                        file.name
+                            .split(".")
+                            .pop()
+                            .toLowerCase();
+
+
+                    const fileName =
+                        `${Date.now()}-${Math.random()
+                            .toString(36)
+                            .substring(2)}.${fileExtension}`;
+
+
+                    const filePath =
+                        `publications/${fileName}`;
+
+
+                    const {
+                        error:
+                            imageUploadError
+                    } =
+                        await client.storage
+                            .from(
+                                "publication-images"
+                            )
+                            .upload(
+                                filePath,
+                                file
+                            );
+
+
+                    if (
+                        imageUploadError
+                    ) {
+
+                        console.error(
+                            "Помилка завантаження головного зображення:",
+                            imageUploadError
+                        );
+
+
+                        alert(
+                            "Не вдалося завантажити головне зображення."
+                        );
+
+
+                        return;
+
+                    }
+
+
+                    const {
+                        data:
+                            imageData
+                    } =
+                        client.storage
+                            .from(
+                                "publication-images"
+                            )
+                            .getPublicUrl(
+                                filePath
+                            );
+
+
+                    mainImageUrl =
+                        imageData.publicUrl;
+
+                }
+
+
+                const {
+                    error
+                } =
+                    await client
+                        .from(
+                            "publications"
+                        )
+                        .update({
+
+                            title_ua:
+                                titleUA,
+
+                            title_en:
+                                titleEN,
+
+                            publication_type:
+                                publicationType,
+
+                            publication_name_ua:
+                                publicationNameUA,
+
+                            publication_name_en:
+                                publicationNameEN,
+
+                            publication_date:
+                                publicationDate,
+
+                            status:
+                                status,
+
+                            excerpt_ua:
+                                excerptUA,
+
+                            excerpt_en:
+                                excerptEN,
+
+                            content_ua:
+                                contentUA,
+
+                            content_en:
+                                contentEN,
+
+                            main_image:
+                                mainImageUrl,
+
+                            caption_ua:
+                                captionUA || null,
+
+                            caption_en:
+                                captionEN || null,
+
+                            publication_url:
+                                publicationUrl || null,
+
+                            slug:
+                                slug || null
+
+                        })
+                        .eq(
+                            "id",
+                            publication.id
+                        );
+
+
+                if (error) {
+
+                    console.error(
+                        "Помилка оновлення публікації:",
+                        error
+                    );
+
+
+                    alert(
+                        "Не вдалося зберегти зміни."
+                    );
+
+
+                    return;
+
+                }
+
+
+                alert(
+                    "Зміни успішно збережено."
+                );
+
+
+                editForm.remove();
+
+
+                editingPublicationId =
+                    null;
+
+
+                await loadPublications();
+
+            } catch (error) {
+
+                console.error(
+                    "Непередбачена помилка:",
+                    error
+                );
+
+
+                alert(
+                    "Сталася помилка під час збереження змін."
+                );
+
+            } finally {
+
+                saveEditButton.disabled =
+                    false;
+
+
+                saveEditButton.textContent =
+                    "ЗБЕРЕГТИ ЗМІНИ";
+
+            }
+
+        }
+    );
+
+
+
+    /*
+     * СКАСУВАННЯ
+     */
+
+    cancelButton.addEventListener(
+        "click",
+        function() {
+
+            editForm.remove();
+
+
+            editingPublicationId =
+                null;
+
+        }
+    );
+
+
+    /*
+     * ПРОКРУТКА
+     */
+
+    window.scrollTo({
+
+        top:
+            editForm.offsetTop - 30,
+
+        behavior:
+            "smooth"
+
+    });
+
+}
+
+
+
+/*
+ * =========================
+ * ФІЛЬТРИ
+ * =========================
+ */
+
+const togglePublicationFilters =
+    document.getElementById(
+        "togglePublicationFilters"
+    );
+
+
+const publicationFiltersPanel =
+    document.getElementById(
+        "publicationFiltersPanel"
+    );
+
+
+if (
+    togglePublicationFilters &&
+    publicationFiltersPanel
+) {
+
+    togglePublicationFilters.addEventListener(
+        "click",
+        function() {
+
+            const isOpen =
+                publicationFiltersPanel.style.display ===
+                "block";
+
+
+            publicationFiltersPanel.style.display =
+                isOpen
+                    ? "none"
+                    : "block";
+
+        }
+    );
+
+}
+
+
+
+/*
+ * ЗАСТОСУВАТИ
+ */
+
+const applyPublicationFilters =
+    document.getElementById(
+        "applyPublicationFilters"
+    );
+
+
+if (applyPublicationFilters) {
+
+    applyPublicationFilters.addEventListener(
+        "click",
+        function() {
+
+            renderPublications();
+
+        }
+    );
+
+}
+
+
+
+/*
+ * СКИНУТИ
+ */
+
+const resetPublicationFilters =
+    document.getElementById(
+        "resetPublicationFilters"
+    );
+
+
+if (resetPublicationFilters) {
+
+    resetPublicationFilters.addEventListener(
+        "click",
+        function() {
+
+            document.getElementById(
+                "filterTitleUA"
+            ).value = "";
+
+
+            document.getElementById(
+                "filterTitleEN"
+            ).value = "";
+
+
+            document.getElementById(
+                "filterPublicationType"
+            ).value = "";
+
+
+            document.getElementById(
+                "filterPublicationName"
+            ).value = "";
+
+
+            document.getElementById(
+                "filterDateFrom"
+            ).value = "";
+
+
+            document.getElementById(
+                "filterDateTo"
+            ).value = "";
+
+
+            document.getElementById(
+                "filterStatus"
+            ).value = "";
+
+
+            renderPublications();
+
+        }
+    );
+
+}
+
+
+
+/*
+ * =========================
+ * ДОПОМІЖНІ ФУНКЦІЇ
+ * =========================
+ */
+
+function escapePublicationHtml(
+    value
+) {
+
+    if (
+        value === null ||
+        value === undefined
+    ) {
+
+        return "";
+
+    }
+
+
+    return String(value)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+
+function escapePublicationAttribute(
+    value
+) {
+
+    return escapePublicationHtml(
+        value
+    );
+
+}
+
+
+
+function formatPublicationDateTime(
+    value
+) {
+
+    if (!value) {
+        return "—";
+    }
+
+
+    const date =
+        new Date(value);
+
+
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+
+        return value;
+
+    }
+
+
+    return date.toLocaleString(
+        "uk-UA"
+    );
+
+}
+
+
+
+/*
+ * =========================
+ * ЗАПУСК
+ * =========================
+ */
+
+checkSession();
+
+loadPublications();
+
+
+</script>
+
+
+</body>
+
+</html>

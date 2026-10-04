@@ -104,15 +104,27 @@
 
    <div class="admin-toolbar">
 
+    <div class="admin-toolbar-left">
+
         <button
-    type="button"
-    id="createArticleButton"
-    class="admin-button admin-button-primary"
->
+            type="button"
+            id="createArticleButton"
+            class="admin-button admin-button-primary"
+        >
             СТВОРИТИ СТАТТЮ
         </button>
 
+        <button
+            type="button"
+            id="toggleArticleFilters"
+            class="admin-button"
+        >
+            ФІЛЬТРИ
+        </button>
+
     </div>
+
+</div>
 
 
     <!-- ФОРМА СТВОРЕННЯ -->
@@ -358,7 +370,12 @@
 
 <!-- ФІЛЬТРИ СТАТЕЙ -->
 
-<div class="admin-filters">
+<div
+    id="articleFiltersPanel"
+    class="admin-filters"
+    style="display: none;"
+>
+    <h3>Фільтри</h3>
 
     <h3>Фільтри</h3>
 
@@ -1915,6 +1932,37 @@ async function loadArticles() {
 
 }
 
+const toggleArticleFilters =
+    document.getElementById(
+        "toggleArticleFilters"
+    );
+
+const articleFiltersPanel =
+    document.getElementById(
+        "articleFiltersPanel"
+    );
+
+if (
+    toggleArticleFilters &&
+    articleFiltersPanel
+) {
+
+    toggleArticleFilters.addEventListener(
+        "click",
+        function() {
+
+            const isOpen =
+                articleFiltersPanel.style.display ===
+                "block";
+
+            articleFiltersPanel.style.display =
+                isOpen
+                    ? "none"
+                    : "block";
+        }
+    );
+}
+    
 /*
  * =========================
  * ДОПОМІЖНІ ФУНКЦІЇ

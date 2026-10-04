@@ -1429,6 +1429,8 @@ if (saveArticleButton) {
  */
 let allArticles = [];
 
+let editingArticleId = null;
+
 async function loadArticles() {
 
     if (!articlesList) {
@@ -1957,6 +1959,17 @@ function renderArticles() {
                 deleteButton
             );
 
+            editButton.addEventListener(
+    "click",
+    function() {
+
+        startArticleEditing(
+            article,
+            articleItem
+        );
+
+    }
+);
 
             details.appendChild(
                 actions
@@ -1993,6 +2006,323 @@ function renderArticles() {
         }
     );
 }
+
+function startArticleEditing(
+    article,
+    articleItem
+) {
+
+    if (editingArticleId) {
+        return;
+    }
+
+    editingArticleId =
+        article.id;
+
+
+    const editForm =
+        document.createElement(
+            "div"
+        );
+
+    editForm.className =
+        "admin-form";
+
+
+    editForm.innerHTML = `
+        <div class="admin-form-section">
+
+            <h3>Редагування статті</h3>
+
+            <div class="admin-form-group">
+
+                <label>
+                    Назва UA *
+                </label>
+
+                <input
+                    type="text"
+                    class="edit-title-ua"
+                    value="${escapeArticleAttribute(
+                        article.title_ua || ""
+                    )}"
+                >
+
+            </div>
+
+
+            <div class="admin-form-group">
+
+                <label>
+                    Назва EN *
+                </label>
+
+                <input
+                    type="text"
+                    class="edit-title-en"
+                    value="${escapeArticleAttribute(
+                        article.title_en || ""
+                    )}"
+                >
+
+            </div>
+
+
+            <div class="admin-form-group">
+
+                <label>
+                    Категорія *
+                </label>
+
+                <select class="edit-category">
+
+                    <option value="Репортаж">
+                        Репортаж
+                    </option>
+
+                    <option value="Аналітика">
+                        Аналітика
+                    </option>
+
+                    <option value="Інтерв’ю">
+                        Інтерв’ю
+                    </option>
+
+                    <option value="Колонка">
+                        Колонка
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="admin-form-group">
+
+                <label>
+                    Дата публікації *
+                </label>
+
+                <input
+                    type="date"
+                    class="edit-publication-date"
+                    value="${escapeArticleAttribute(
+                        article.publication_date || ""
+                    )}"
+                >
+
+            </div>
+
+
+            <div class="admin-form-group">
+
+                <label>
+                    Статус
+                </label>
+
+                <select class="edit-status">
+
+                    <option value="draft">
+                        Чернетка
+                    </option>
+
+                    <option value="published">
+                        Опубліковано
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="admin-form-group">
+
+                <label>
+                    Анонс UA *
+                </label>
+
+                <textarea
+                    class="edit-excerpt-ua"
+                    rows="6"
+                >${escapeArticleHtml(
+                    article.excerpt_ua || ""
+                )}</textarea>
+
+            </div>
+
+
+            <div class="admin-form-group">
+
+                <label>
+                    Анонс EN *
+                </label>
+
+                <textarea
+                    class="edit-excerpt-en"
+                    rows="6"
+                >${escapeArticleHtml(
+                    article.excerpt_en || ""
+                )}</textarea>
+
+            </div>
+
+
+            <div class="admin-form-group">
+
+                <label>
+                    Основний текст UA *
+                </label>
+
+                <textarea
+                    class="edit-content-ua"
+                    rows="12"
+                >${escapeArticleHtml(
+                    article.content_ua || ""
+                )}</textarea>
+
+            </div>
+
+
+            <div class="admin-form-group">
+
+                <label>
+                    Основний текст EN *
+                </label>
+
+                <textarea
+                    class="edit-content-en"
+                    rows="12"
+                >${escapeArticleHtml(
+                    article.content_en || ""
+                )}</textarea>
+
+            </div>
+
+
+            <div class="admin-form-group">
+
+                <label>
+                    Підпис UA
+                </label>
+
+                <input
+                    type="text"
+                    class="edit-caption-ua"
+                    value="${escapeArticleAttribute(
+                        article.caption_ua || ""
+                    )}"
+                >
+
+            </div>
+
+
+            <div class="admin-form-group">
+
+                <label>
+                    Підпис EN
+                </label>
+
+                <input
+                    type="text"
+                    class="edit-caption-en"
+                    value="${escapeArticleAttribute(
+                        article.caption_en || ""
+                    )}"
+                >
+
+            </div>
+
+
+            <div class="admin-form-group">
+
+                <label>
+                    Slug
+                </label>
+
+                <input
+                    type="text"
+                    class="edit-slug"
+                    value="${escapeArticleAttribute(
+                        article.slug || ""
+                    )}"
+                >
+
+            </div>
+
+
+            <div class="admin-form-actions">
+
+                <button
+                    type="button"
+                    class="admin-button admin-button-primary edit-save-button"
+                >
+                    ЗБЕРЕГТИ ЗМІНИ
+                </button>
+
+                <button
+                    type="button"
+                    class="admin-button edit-cancel-button"
+                >
+                    СКАСУВАТИ
+                </button>
+
+            </div>
+
+        </div>
+    `;
+
+
+    const categorySelect =
+        editForm.querySelector(
+            ".edit-category"
+        );
+
+    categorySelect.value =
+        article.category || "";
+
+
+    const statusSelect =
+        editForm.querySelector(
+            ".edit-status"
+        );
+
+    statusSelect.value =
+        article.status || "draft";
+
+
+    articleItem.appendChild(
+        editForm
+    );
+
+
+    const cancelButton =
+        editForm.querySelector(
+            ".edit-cancel-button"
+        );
+
+
+    cancelButton.addEventListener(
+        "click",
+        function() {
+
+            editForm.remove();
+
+            editingArticleId =
+                null;
+
+        }
+    );
+
+
+    window.scrollTo({
+        top:
+            editForm.offsetTop - 30,
+        behavior:
+            "smooth"
+    });
+
+}
+    
 const toggleArticleFilters =
     document.getElementById(
         "toggleArticleFilters"

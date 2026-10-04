@@ -377,8 +377,6 @@
 >
     <h3>Фільтри</h3>
 
-    <h3>Фільтри</h3>
-
     <div class="articles-filters">
 
         <div class="admin-filter-group">
@@ -1421,6 +1419,7 @@ if (saveArticleButton) {
  * ЗАВАНТАЖЕННЯ СТАТЕЙ
  * =========================
  */
+let allArticles = [];
 
 async function loadArticles() {
 
@@ -1428,10 +1427,8 @@ async function loadArticles() {
         return;
     }
 
-
     articlesList.innerHTML =
         "<p>Завантаження статей...</p>";
-
 
     const {
         data,
@@ -1447,7 +1444,6 @@ async function loadArticles() {
                 }
             );
 
-
     if (error) {
 
         console.error(
@@ -1459,27 +1455,151 @@ async function loadArticles() {
             "<p>Не вдалося завантажити статті.</p>";
 
         return;
-
     }
+
+    allArticles = data || [];
+
+    renderArticles();
+}
+
+
+function renderArticles() {
+
+    if (!articlesList) {
+        return;
+    }
+
+    const titleUA =
+        document.getElementById(
+            "filterTitleUA"
+        ).value
+            .trim()
+            .toLowerCase();
+
+    const titleEN =
+        document.getElementById(
+            "filterTitleEN"
+        ).value
+            .trim()
+            .toLowerCase();
+
+    const category =
+        document.getElementById(
+            "filterCategory"
+        ).value;
+
+    const dateFrom =
+        document.getElementById(
+            "filterDateFrom"
+        ).value;
+
+    const dateTo =
+        document.getElementById(
+            "filterDateTo"
+        ).value;
+
+    const status =
+        document.getElementById(
+            "filterStatus"
+        ).value;
+
+
+    const filteredArticles =
+        allArticles.filter(
+            function(article) {
+
+                const articleTitleUA =
+                    String(
+                        article.title_ua || ""
+                    ).toLowerCase();
+
+                const articleTitleEN =
+                    String(
+                        article.title_en || ""
+                    ).toLowerCase();
+
+
+                if (
+                    titleUA &&
+                    !articleTitleUA.includes(
+                        titleUA
+                    )
+                ) {
+                    return false;
+                }
+
+
+                if (
+                    titleEN &&
+                    !articleTitleEN.includes(
+                        titleEN
+                    )
+                ) {
+                    return false;
+                }
+
+
+                if (
+                    category &&
+                    article.category !==
+                        category
+                ) {
+                    return false;
+                }
+
+
+                if (
+                    dateFrom &&
+                    article.publication_date <
+                        dateFrom
+                ) {
+                    return false;
+                }
+
+
+                if (
+                    dateTo &&
+                    article.publication_date >
+                        dateTo
+                ) {
+                    return false;
+                }
+
+
+                if (
+                    status &&
+                    article.status !==
+                        status
+                ) {
+                    return false;
+                }
+
+
+                return true;
+            }
+        );
+
+
+    articlesCount.textContent =
+        "Знайдено: " +
+        filteredArticles.length;
 
 
     if (
-        !data ||
-        data.length === 0
+        filteredArticles.length === 0
     ) {
 
         articlesList.innerHTML =
-            "<p>Статей поки немає.</p>";
+            "<p>За заданими фільтрами статей не знайдено.</p>";
 
         return;
-
     }
 
 
     articlesList.innerHTML = "";
 
 
-    data.forEach(
+    filteredArticles.forEach(
         function(article) {
 
             const articleItem =
@@ -1490,12 +1610,6 @@ async function loadArticles() {
             articleItem.className =
                 "admin-item";
 
-
-            /*
-             * =========================
-             * КЛІКАБЕЛЬНА НАЗВА
-             * =========================
-             */
 
             const title =
                 document.createElement(
@@ -1510,12 +1624,6 @@ async function loadArticles() {
                 "pointer";
 
 
-            /*
-             * =========================
-             * ПОВНА ІНФОРМАЦІЯ
-             * =========================
-             */
-
             const details =
                 document.createElement(
                     "div"
@@ -1524,12 +1632,6 @@ async function loadArticles() {
             details.style.display =
                 "none";
 
-
-            /*
-             * =========================
-             * ОСНОВНА ІНФОРМАЦІЯ
-             * =========================
-             */
 
             const mainInfo =
                 document.createElement(
@@ -1588,12 +1690,6 @@ async function loadArticles() {
             );
 
 
-            /*
-             * =========================
-             * КОРОТКИЙ ОПИС
-             * =========================
-             */
-
             const excerpts =
                 document.createElement(
                     "div"
@@ -1633,12 +1729,6 @@ async function loadArticles() {
             );
 
 
-            /*
-             * =========================
-             * ОСНОВНИЙ ТЕКСТ
-             * =========================
-             */
-
             const contents =
                 document.createElement(
                     "div"
@@ -1673,12 +1763,6 @@ async function loadArticles() {
                 contents
             );
 
-
-            /*
-             * =========================
-             * ЗОБРАЖЕННЯ
-             * =========================
-             */
 
             const imageSection =
                 document.createElement(
@@ -1716,7 +1800,6 @@ async function loadArticles() {
                         class="admin-image"
                     >
                 `;
-
             }
 
 
@@ -1752,12 +1835,6 @@ async function loadArticles() {
             );
 
 
-            /*
-             * =========================
-             * ДОДАТКОВІ ДАНІ
-             * =========================
-             */
-
             const additionalData =
                 document.createElement(
                     "div"
@@ -1786,12 +1863,6 @@ async function loadArticles() {
                 additionalData
             );
 
-
-            /*
-             * =========================
-             * СЛУЖБОВІ ДАНІ
-             * =========================
-             */
 
             const systemData =
                 document.createElement(
@@ -1830,12 +1901,6 @@ async function loadArticles() {
                 systemData
             );
 
-
-            /*
-             * =========================
-             * КНОПКИ
-             * =========================
-             */
 
             const actions =
                 document.createElement(
@@ -1890,12 +1955,6 @@ async function loadArticles() {
             );
 
 
-            /*
-             * =========================
-             * ВІДКРИТТЯ / ЗАКРИТТЯ
-             * =========================
-             */
-
             title.addEventListener(
                 "click",
                 function() {
@@ -1904,12 +1963,10 @@ async function loadArticles() {
                         details.style.display ===
                         "block";
 
-
                     details.style.display =
                         isOpen
                             ? "none"
                             : "block";
-
                 }
             );
 
@@ -1922,16 +1979,12 @@ async function loadArticles() {
                 details
             );
 
-
             articlesList.appendChild(
                 articleItem
             );
-
         }
     );
-
 }
-
 const toggleArticleFilters =
     document.getElementById(
         "toggleArticleFilters"
@@ -1961,6 +2014,69 @@ if (
                     : "block";
         }
     );
+}
+
+const articleFilterInputs =
+    document.querySelectorAll(
+        "#articleFiltersPanel input, #articleFiltersPanel select"
+    );
+
+articleFilterInputs.forEach(
+    function(input) {
+
+        input.addEventListener(
+            "input",
+            renderArticles
+        );
+
+        input.addEventListener(
+            "change",
+            renderArticles
+        );
+
+    }
+);
+
+
+const resetArticleFilters =
+    document.getElementById(
+        "resetArticleFilters"
+    );
+
+if (resetArticleFilters) {
+
+    resetArticleFilters.addEventListener(
+        "click",
+        function() {
+
+            document.getElementById(
+                "filterTitleUA"
+            ).value = "";
+
+            document.getElementById(
+                "filterTitleEN"
+            ).value = "";
+
+            document.getElementById(
+                "filterCategory"
+            ).value = "";
+
+            document.getElementById(
+                "filterDateFrom"
+            ).value = "";
+
+            document.getElementById(
+                "filterDateTo"
+            ).value = "";
+
+            document.getElementById(
+                "filterStatus"
+            ).value = "";
+
+            renderArticles();
+        }
+    );
+
 }
     
 /*

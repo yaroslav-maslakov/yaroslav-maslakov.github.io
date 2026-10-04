@@ -354,22 +354,164 @@
     </div>
 
 
-    <!-- СПИСОК СТАТЕЙ -->
+<!-- ФІЛЬТРИ СТАТЕЙ -->
 
-    <div class="admin-certificates">
+<div class="admin-certificates">
 
-        <h3>Список статей</h3>
+    <h3>Фільтри</h3>
 
-        <div id="articlesList">
+    <div class="articles-filters">
 
-            <p>
-                Тут будуть опубліковані та чернеткові статті.
-            </p>
+        <div class="form-group">
+
+            <label for="filterTitleUA">
+                Назва UA
+            </label>
+
+            <input
+                type="text"
+                id="filterTitleUA"
+                placeholder="Пошук за назвою UA"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="filterTitleEN">
+                Назва EN
+            </label>
+
+            <input
+                type="text"
+                id="filterTitleEN"
+                placeholder="Пошук за назвою EN"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="filterCategory">
+                Категорія
+            </label>
+
+            <select id="filterCategory">
+
+                <option value="">
+                    Усі категорії
+                </option>
+
+                <option value="Репортаж">
+                    Репортаж
+                </option>
+
+                <option value="Аналітика">
+                    Аналітика
+                </option>
+
+                <option value="Інтерв’ю">
+                    Інтерв’ю
+                </option>
+
+                <option value="Колонка">
+                    Колонка
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="filterDateFrom">
+                Дата від
+            </label>
+
+            <input
+                type="date"
+                id="filterDateFrom"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="filterDateTo">
+                Дата до
+            </label>
+
+            <input
+                type="date"
+                id="filterDateTo"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="filterStatus">
+                Статус
+            </label>
+
+            <select id="filterStatus">
+
+                <option value="">
+                    Усі статуси
+                </option>
+
+                <option value="published">
+                    Опубліковано
+                </option>
+
+                <option value="draft">
+                    Чернетка
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="articles-filter-buttons">
+
+            <button
+                type="button"
+                id="resetArticleFilters"
+            >
+                СКИНУТИ ФІЛЬТРИ
+            </button>
 
         </div>
 
     </div>
 
+
+    <div class="articles-list-header">
+
+        <h3>Список статей</h3>
+
+        <div id="articlesCount">
+            Знайдено: 0
+        </div>
+
+    </div>
+
+
+    <div id="articlesList">
+
+        <p>
+            Завантаження статей...
+        </p>
+
+    </div>
+
+</div>
 </section>
 
 

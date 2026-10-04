@@ -95,20 +95,20 @@
 
     <main>
 
-<section class="latest">
+<section class="latest admin-page">
 
-    <h2>Статті</h2>
+   <h2 class="admin-page-title">Статті</h2>
 
 
     <!-- КНОПКА СТВОРЕННЯ -->
 
-    <div class="admin-articles-toolbar">
+   <div class="admin-toolbar">
 
         <button
-            type="button"
-            id="createArticleButton"
-            class="admin-primary-button"
-        >
+    type="button"
+    id="createArticleButton"
+    class="admin-button admin-button-primary"
+>
             СТВОРИТИ СТАТТЮ
         </button>
 
@@ -117,16 +117,16 @@
 
     <!-- ФОРМА СТВОРЕННЯ -->
 
-    <div
-        id="articleForm"
-        class="article-admin-form"
-        style="display: none;"
-    >
+<div
+    id="articleForm"
+    class="admin-form"
+    style="display: none;"
+>
 
         <h3>Основна інформація</h3>
 
 
-        <div class="form-group">
+       <div class="admin-form-group">
 
             <label for="titleUA">
                 Назва UA *
@@ -141,7 +141,7 @@
         </div>
 
 
-        <div class="form-group">
+       <div class="admin-form-group">
 
             <label for="titleEN">
                 Назва EN *
@@ -156,7 +156,7 @@
         </div>
 
 
-        <div class="form-group">
+        <div class="admin-form-group">
 
             <label for="category">
                 Категорія *
@@ -192,7 +192,7 @@
         </div>
 
 
-        <div class="form-group">
+       <div class="admin-form-group">
 
             <label for="publicationDate">
                 Дата публікації *
@@ -207,7 +207,7 @@
         </div>
 
 
-        <div class="form-group">
+        <div class="admin-form-group">
 
             <label for="articleStatus">
                 Статус
@@ -231,7 +231,7 @@
         <h3>Короткий опис</h3>
 
 
-        <div class="form-group">
+        <div class="admin-form-group">
 
             <label for="excerptUA">
                 Анонс UA *
@@ -246,7 +246,7 @@
         </div>
 
 
-        <div class="form-group">
+        <div class="admin-form-group">
 
             <label for="excerptEN">
                 Анонс EN *
@@ -274,7 +274,7 @@
         <h3>Зображення</h3>
 
 
-        <div class="form-group">
+        <div class="admin-form-group">
 
             <label for="mainImage">
                 Головне зображення
@@ -289,7 +289,7 @@
         </div>
 
 
-        <div class="form-group">
+        <div class="admin-form-group">
 
             <label for="captionUA">
                 Підпис UA
@@ -303,7 +303,7 @@
         </div>
 
 
-        <div class="form-group">
+        <div class="admin-form-group">
 
             <label for="captionEN">
                 Підпис EN
@@ -319,7 +319,7 @@
 
         <h3>Додаткові дані</h3>
 
-        <div class="form-group">
+       <div class="admin-form-group">
 
             <label for="slug">
                 Slug
@@ -333,19 +333,21 @@
         </div>
 
 
-        <div class="admin-form-buttons">
+        <div class="admin-form-actions">
 
             <button
-                type="button"
-                id="saveArticleButton"
-            >
+    type="button"
+    id="saveArticleButton"
+    class="admin-button admin-button-primary"
+>
                 ЗБЕРЕГТИ СТАТТЮ
             </button>
 
             <button
-                type="button"
-                id="cancelArticleButton"
-            >
+    type="button"
+    id="cancelArticleButton"
+    class="admin-button"
+>
                 СКАСУВАТИ
             </button>
 
@@ -356,13 +358,13 @@
 
 <!-- ФІЛЬТРИ СТАТЕЙ -->
 
-<div class="admin-articles">
+<div class="admin-filters">
 
     <h3>Фільтри</h3>
 
     <div class="articles-filters">
 
-        <div class="form-group">
+        <div class="admin-filter-group">
 
             <label for="filterTitleUA">
                 Назва UA
@@ -377,7 +379,7 @@
         </div>
 
 
-        <div class="form-group">
+        <div class="admin-filter-group">
 
             <label for="filterTitleEN">
                 Назва EN
@@ -392,7 +394,7 @@
         </div>
 
 
-        <div class="form-group">
+        <div class="admin-filter-group">
 
             <label for="filterCategory">
                 Категорія
@@ -425,7 +427,7 @@
         </div>
 
 
-        <div class="form-group">
+        <div class="admin-filter-group">
 
             <label for="filterDateFrom">
                 Дата від
@@ -439,7 +441,7 @@
         </div>
 
 
-        <div class="form-group">
+        <div class="admin-filter-group">
 
             <label for="filterDateTo">
                 Дата до
@@ -453,7 +455,7 @@
         </div>
 
 
-        <div class="form-group">
+        <div class="admin-filter-group">
 
             <label for="filterStatus">
                 Статус
@@ -478,40 +480,45 @@
         </div>
 
 
-        <div class="articles-filter-buttons">
+       <div class="admin-filter-actions">
 
             <button
-                type="button"
-                id="resetArticleFilters"
-            >
+    type="button"
+    id="resetArticleFilters"
+    class="admin-button"
+>
                 СКИНУТИ ФІЛЬТРИ
             </button>
 
         </div>
 
     </div>
+</div>
 
+    <div class="admin-list-header">
 
-    <div class="articles-list-header">
+    <h3>Список статей</h3>
 
-        <h3>Список статей</h3>
-
-        <div id="articlesCount">
-            Знайдено: 0
-        </div>
-
+    <div
+        id="articlesCount"
+        class="admin-list-count"
+    >
+        Знайдено: 0
     </div>
 
+</div>
 
-    <div id="articlesList">
 
+    <div
+    id="articlesList"
+    class="admin-list"
+>
         <p>
             Завантаження статей...
         </p>
 
     </div>
 
-</div>
 </section>
 
 
@@ -1469,8 +1476,8 @@ async function loadArticles() {
                     "article"
                 );
 
-            articleItem.className =
-                "admin-article-item";
+          articleItem.className =
+    "admin-item";
 
 
             /*
@@ -1505,8 +1512,8 @@ async function loadArticles() {
                     "div"
                 );
 
-            mainInfo.className =
-                "admin-article-section";
+          mainInfo.className =
+    "admin-item-section";
 
 
             mainInfo.innerHTML = `
@@ -1568,8 +1575,8 @@ async function loadArticles() {
                     "div"
                 );
 
-            excerpts.className =
-                "admin-article-section";
+           excerpts.className =
+    "admin-item-section";
 
 
             excerpts.innerHTML = `
@@ -1613,8 +1620,8 @@ async function loadArticles() {
                     "div"
                 );
 
-            contents.className =
-                "admin-article-section";
+           contents.className =
+    "admin-item-section";
 
 
             contents.innerHTML = `
@@ -1629,7 +1636,7 @@ async function loadArticles() {
 
                 <h5>Основний текст EN</h5>
 
-                <div class="admin-article-content">
+               <div class="admin-content">
                     ${
                         article.content_en ||
                         ""
@@ -1654,8 +1661,8 @@ async function loadArticles() {
                     "div"
                 );
 
-            imageSection.className =
-                "admin-article-section";
+           imageSection.className =
+    "admin-item-section";
 
 
             let imageHtml =
@@ -1682,7 +1689,7 @@ async function loadArticles() {
                             article.title_ua ||
                             ""
                         )}"
-                        class="admin-article-main-image"
+                        class="admin-image"
                     >
                 `;
 
@@ -1732,8 +1739,8 @@ async function loadArticles() {
                     "div"
                 );
 
-            additionalData.className =
-                "admin-article-section";
+           additionalData.className =
+    "admin-item-section";
 
 
             additionalData.innerHTML = `
@@ -1768,7 +1775,7 @@ async function loadArticles() {
                 );
 
             systemData.className =
-                "admin-article-system";
+    "admin-system-info";
 
 
             systemData.innerHTML = `

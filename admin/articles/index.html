@@ -2183,20 +2183,26 @@ function startArticleEditing(
             </div>
 
 
-            <div class="admin-form-group">
+           <div class="admin-form-group">
 
-                <label>
-                    Основний текст EN *
-                </label>
+    <label>
+        Основний текст UA *
+    </label>
 
-                <textarea
-                    class="edit-content-en"
-                    rows="12"
-                >${escapeArticleHtml(
-                    article.content_en || ""
-                )}</textarea>
+    <div class="edit-content-ua"></div>
 
-            </div>
+</div>
+
+
+<div class="admin-form-group">
+
+    <label>
+        Основний текст EN *
+    </label>
+
+    <div class="edit-content-en"></div>
+
+</div>
 
 
             <div class="admin-form-group">
@@ -2294,7 +2300,136 @@ function startArticleEditing(
         editForm
     );
 
+    const editContentUA =
+    editForm.querySelector(
+        ".edit-content-ua"
+    );
 
+const editContentEN =
+    editForm.querySelector(
+        ".edit-content-en"
+    );
+
+
+const editQuillUA =
+    new Quill(
+        editContentUA,
+        {
+            theme: "snow",
+
+            modules: {
+                toolbar: [
+                    [
+                        {
+                            header: [
+                                1,
+                                2,
+                                3,
+                                false
+                            ]
+                        }
+                    ],
+                    [
+                        "bold",
+                        "italic",
+                        "underline"
+                    ],
+                    [
+                        {
+                            list: "ordered"
+                        },
+                        {
+                            list: "bullet"
+                        }
+                    ],
+                    [
+                        "blockquote"
+                    ],
+                    [
+                        "link",
+                        "image"
+                    ],
+                    [
+                        {
+                            align: []
+                        }
+                    ],
+                    [
+                        "clean"
+                    ]
+                ]
+            }
+        }
+    );
+
+
+const editQuillEN =
+    new Quill(
+        editContentEN,
+        {
+            theme: "snow",
+
+            modules: {
+                toolbar: [
+                    [
+                        {
+                            header: [
+                                1,
+                                2,
+                                3,
+                                false
+                            ]
+                        }
+                    ],
+                    [
+                        "bold",
+                        "italic",
+                        "underline"
+                    ],
+                    [
+                        {
+                            list: "ordered"
+                        },
+                        {
+                            list: "bullet"
+                        }
+                    ],
+                    [
+                        "blockquote"
+                    ],
+                    [
+                        "link",
+                        "image"
+                    ],
+                    [
+                        {
+                            align: []
+                        }
+                    ],
+                    [
+                        "clean"
+                    ]
+                ]
+            }
+        }
+    );
+
+
+editQuillUA.root.innerHTML =
+    article.content_ua || "";
+
+
+editQuillEN.root.innerHTML =
+    article.content_en || "";
+
+
+articleItem.appendChild(
+    editForm
+);
+
+
+const cancelButton =
+    
     const cancelButton =
         editForm.querySelector(
             ".edit-cancel-button"

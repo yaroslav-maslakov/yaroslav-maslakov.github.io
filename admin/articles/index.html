@@ -872,6 +872,307 @@ toolbarEN.addHandler(
         );
 
     }
+
+    /*
+ * =========================
+ * ЗБЕРЕЖЕННЯ СТАТТІ
+ * =========================
+ */
+
+const saveArticleButton =
+    document.getElementById(
+        "saveArticleButton"
+    );
+
+
+if (saveArticleButton) {
+
+    saveArticleButton.addEventListener(
+        "click",
+        async function() {
+
+            const titleUA =
+                document.getElementById(
+                    "titleUA"
+                ).value.trim();
+
+            const titleEN =
+                document.getElementById(
+                    "titleEN"
+                ).value.trim();
+
+            const category =
+                document.getElementById(
+                    "category"
+                ).value;
+
+            const publicationDate =
+                document.getElementById(
+                    "publicationDate"
+                ).value;
+
+            const status =
+                document.getElementById(
+                    "articleStatus"
+                ).value;
+
+            const excerptUA =
+                document.getElementById(
+                    "excerptUA"
+                ).value.trim();
+
+            const excerptEN =
+                document.getElementById(
+                    "excerptEN"
+                ).value.trim();
+
+            const captionUA =
+                document.getElementById(
+                    "captionUA"
+                ).value.trim();
+
+            const captionEN =
+                document.getElementById(
+                    "captionEN"
+                ).value.trim();
+
+            const author =
+                document.getElementById(
+                    "author"
+                ).value.trim();
+
+            const slug =
+                document.getElementById(
+                    "slug"
+                ).value.trim();
+
+
+            const contentUA =
+                articleQuillUA
+                    ? articleQuillUA.root.innerHTML
+                    : "";
+
+            const contentEN =
+                articleQuillEN
+                    ? articleQuillEN.root.innerHTML
+                    : "";
+
+
+            /*
+             * ПЕРЕВІРКА ОБОВ'ЯЗКОВИХ ПОЛІВ
+             */
+
+            if (
+                !titleUA ||
+                !titleEN ||
+                !category ||
+                !publicationDate ||
+                !excerptUA ||
+                !excerptEN ||
+                !contentUA ||
+                !contentEN
+            ) {
+
+                alert(
+                    "Заповніть усі обов'язкові поля."
+                );
+
+                return;
+
+            }
+
+
+            /*
+             * БЛОКУЄМО КНОПКУ НА ЧАС ЗБЕРЕЖЕННЯ
+             */
+
+            saveArticleButton.disabled =
+                true;
+
+            saveArticleButton.textContent =
+                "ЗБЕРІГАЄМО...";
+
+
+            try {
+
+                /*
+                 * ЗБЕРЕЖЕННЯ ОСНОВНОЇ СТАТТІ
+                 */
+
+                const {
+                    data,
+                    error
+                } =
+                    await client
+                        .from("articles")
+                        .insert({
+                            title_ua:
+                                titleUA,
+
+                            title_en:
+                                titleEN,
+
+                            category:
+                                category,
+
+                            publication_date:
+                                publicationDate,
+
+                            status:
+                                status,
+
+                            excerpt_ua:
+                                excerptUA,
+
+                            excerpt_en:
+                                excerptEN,
+
+                            content_ua:
+                                contentUA,
+
+                            content_en:
+                                contentEN,
+
+                            caption_ua:
+                                captionUA ||
+                                null,
+
+                            caption_en:
+                                captionEN ||
+                                null,
+
+                            author:
+                                author ||
+                                null,
+
+                            slug:
+                                slug ||
+                                null
+                        })
+                        .select()
+                        .single();
+
+
+                if (error) {
+
+                    console.error(
+                        "Помилка збереження статті:",
+                        error
+                    );
+
+                    alert(
+                        "Не вдалося зберегти статтю."
+                    );
+
+                    return;
+
+                }
+
+
+                console.log(
+                    "Статтю створено:",
+                    data
+                );
+
+
+                alert(
+                    "Статтю успішно збережено."
+                );
+
+
+                /*
+                 * ОЧИЩЕННЯ ФОРМИ
+                 */
+
+                document.getElementById(
+                    "titleUA"
+                ).value = "";
+
+                document.getElementById(
+                    "titleEN"
+                ).value = "";
+
+                document.getElementById(
+                    "category"
+                ).value = "";
+
+                document.getElementById(
+                    "publicationDate"
+                ).value = "";
+
+                document.getElementById(
+                    "articleStatus"
+                ).value = "draft";
+
+                document.getElementById(
+                    "excerptUA"
+                ).value = "";
+
+                document.getElementById(
+                    "excerptEN"
+                ).value = "";
+
+                document.getElementById(
+                    "captionUA"
+                ).value = "";
+
+                document.getElementById(
+                    "captionEN"
+                ).value = "";
+
+                document.getElementById(
+                    "author"
+                ).value = "";
+
+                document.getElementById(
+                    "slug"
+                ).value = "";
+
+                document.getElementById(
+                    "mainImage"
+                ).value = "";
+
+
+                if (articleQuillUA) {
+
+                    articleQuillUA.setContents([]);
+
+                }
+
+
+                if (articleQuillEN) {
+
+                    articleQuillEN.setContents([]);
+
+                }
+
+
+            } catch (error) {
+
+                console.error(
+                    "Непередбачена помилка:",
+                    error
+                );
+
+                alert(
+                    "Сталася помилка під час збереження статті."
+                );
+
+            } finally {
+
+                saveArticleButton.disabled =
+                    false;
+
+                saveArticleButton.textContent =
+                    "ЗБЕРЕГТИ СТАТТЮ";
+
+            }
+
+        }
+    );
+
+}
+
     
     /*
      * =========================

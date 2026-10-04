@@ -1303,3 +1303,101 @@ footer {
     }
 
 }
+/* =========================
+   ADMIN — ARTICLES LIST
+   ========================= */
+
+.admin-article-item {
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 35px;
+    padding: 28px;
+    border: 1px solid #DED8D0;
+    background: #FAF7F2;
+}
+
+.admin-article-item h4 {
+    margin: 0 0 25px 0;
+    color: #4A1725;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.admin-article-section {
+    margin-top: 28px;
+    padding-top: 22px;
+    border-top: 1px solid #DED8D0;
+}
+
+.admin-article-section h5 {
+    margin: 0 0 15px 0;
+    color: #6E2235;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.admin-article-section p {
+    margin: 0 0 12px 0;
+    color: #4A1725;
+    line-height: 1.6;
+}
+
+.admin-article-text {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #E5DFD7;
+    background: #F7F4EF;
+    white-space: pre-wrap;
+    line-height: 1.6;
+}
+
+.admin-article-content {
+    margin-bottom: 25px;
+    line-height: 1.7;
+    color: #4A1725;
+}
+
+.admin-article-content img {
+    max-width: 100%;
+    height: auto;
+}
+
+.admin-article-main-image {
+    display: block;
+    max-width: 500px;
+    max-height: 350px;
+    width: auto;
+    height: auto;
+    margin: 10px 0 20px 0;
+}
+
+.admin-article-system {
+    margin-top: 28px;
+    padding-top: 18px;
+    border-top: 1px solid #DED8D0;
+    color: #6F6A63;
+    font-size: 13px;
+}
+
+.admin-article-system p {
+    margin: 0 0 7px 0;
+}
+
+
+/* МОБІЛЬНА ВЕРСІЯ */
+
+@media (max-width: 700px) {
+
+    .admin-article-item {
+        padding: 18px;
+    }
+
+    .admin-article-item h4 {
+        font-size: 19px;
+    }
+
+    .admin-article-main-image {
+        max-width: 100%;
+    }
+
+}

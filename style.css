@@ -1896,3 +1896,9 @@ footer {
     }
 
 }
+.admin-form > h3 {
+    margin: 0 0 28px;
+    color: #4A1725;
+    font-size: 22px;
+    font-weight: 500;
+}

@@ -495,17 +495,25 @@
         </div>
 
 
-       <div class="admin-filter-actions">
+      <div class="admin-filter-actions">
 
-            <button
-    type="button"
-    id="resetArticleFilters"
-    class="admin-button"
->
-                СКИНУТИ ФІЛЬТРИ
-            </button>
+    <button
+        type="button"
+        id="applyArticleFilters"
+        class="admin-button admin-button-primary"
+    >
+        ЗАСТОСУВАТИ ФІЛЬТРИ
+    </button>
 
-        </div>
+    <button
+        type="button"
+        id="resetArticleFilters"
+        class="admin-button"
+    >
+        СКИНУТИ ФІЛЬТРИ
+    </button>
+
+</div>
 
     </div>
 </div>
@@ -2016,28 +2024,24 @@ if (
     );
 }
 
-const articleFilterInputs =
-    document.querySelectorAll(
-        "#articleFiltersPanel input, #articleFiltersPanel select"
+const applyArticleFilters =
+    document.getElementById(
+        "applyArticleFilters"
     );
 
-articleFilterInputs.forEach(
-    function(input) {
+if (applyArticleFilters) {
 
-        input.addEventListener(
-            "input",
-            renderArticles
-        );
+    applyArticleFilters.addEventListener(
+        "click",
+        function() {
 
-        input.addEventListener(
-            "change",
-            renderArticles
-        );
+            renderArticles();
 
-    }
-);
+        }
+    );
 
-
+}
+    
 const resetArticleFilters =
     document.getElementById(
         "resetArticleFilters"

@@ -1405,12 +1405,6 @@ if (saveArticleButton) {
  * =========================
  */
 
-const articlesList =
-    document.getElementById(
-        "articlesList"
-    );
-
-
 async function loadArticles() {
 
     if (!articlesList) {
@@ -1476,13 +1470,13 @@ async function loadArticles() {
                     "article"
                 );
 
-          articleItem.className =
-    "admin-item";
+            articleItem.className =
+                "admin-item";
 
 
             /*
              * =========================
-             * ЗАГОЛОВОК
+             * КЛІКАБЕЛЬНА НАЗВА
              * =========================
              */
 
@@ -1495,10 +1489,23 @@ async function loadArticles() {
                 article.title_ua ||
                 "Без назви";
 
+            title.style.cursor =
+                "pointer";
 
-            articleItem.appendChild(
-                title
-            );
+
+            /*
+             * =========================
+             * ПОВНА ІНФОРМАЦІЯ
+             * =========================
+             */
+
+            const details =
+                document.createElement(
+                    "div"
+                );
+
+            details.style.display =
+                "none";
 
 
             /*
@@ -1512,8 +1519,8 @@ async function loadArticles() {
                     "div"
                 );
 
-          mainInfo.className =
-    "admin-item-section";
+            mainInfo.className =
+                "admin-item-section";
 
 
             mainInfo.innerHTML = `
@@ -1559,7 +1566,7 @@ async function loadArticles() {
             `;
 
 
-            articleItem.appendChild(
+            details.appendChild(
                 mainInfo
             );
 
@@ -1575,8 +1582,8 @@ async function loadArticles() {
                     "div"
                 );
 
-           excerpts.className =
-    "admin-item-section";
+            excerpts.className =
+                "admin-item-section";
 
 
             excerpts.innerHTML = `
@@ -1604,7 +1611,7 @@ async function loadArticles() {
             `;
 
 
-            articleItem.appendChild(
+            details.appendChild(
                 excerpts
             );
 
@@ -1620,8 +1627,8 @@ async function loadArticles() {
                     "div"
                 );
 
-           contents.className =
-    "admin-item-section";
+            contents.className =
+                "admin-item-section";
 
 
             contents.innerHTML = `
@@ -1636,7 +1643,7 @@ async function loadArticles() {
 
                 <h5>Основний текст EN</h5>
 
-               <div class="admin-content">
+                <div class="admin-content">
                     ${
                         article.content_en ||
                         ""
@@ -1645,7 +1652,7 @@ async function loadArticles() {
             `;
 
 
-            articleItem.appendChild(
+            details.appendChild(
                 contents
             );
 
@@ -1661,8 +1668,8 @@ async function loadArticles() {
                     "div"
                 );
 
-           imageSection.className =
-    "admin-item-section";
+            imageSection.className =
+                "admin-item-section";
 
 
             let imageHtml =
@@ -1723,7 +1730,7 @@ async function loadArticles() {
             `;
 
 
-            articleItem.appendChild(
+            details.appendChild(
                 imageSection
             );
 
@@ -1739,8 +1746,8 @@ async function loadArticles() {
                     "div"
                 );
 
-           additionalData.className =
-    "admin-item-section";
+            additionalData.className =
+                "admin-item-section";
 
 
             additionalData.innerHTML = `
@@ -1758,7 +1765,7 @@ async function loadArticles() {
             `;
 
 
-            articleItem.appendChild(
+            details.appendChild(
                 additionalData
             );
 
@@ -1775,7 +1782,7 @@ async function loadArticles() {
                 );
 
             systemData.className =
-    "admin-system-info";
+                "admin-system-info";
 
 
             systemData.innerHTML = `
@@ -1802,8 +1809,100 @@ async function loadArticles() {
             `;
 
 
-            articleItem.appendChild(
+            details.appendChild(
                 systemData
+            );
+
+
+            /*
+             * =========================
+             * КНОПКИ
+             * =========================
+             */
+
+            const actions =
+                document.createElement(
+                    "div"
+                );
+
+            actions.className =
+                "admin-item-actions";
+
+
+            const editButton =
+                document.createElement(
+                    "button"
+                );
+
+            editButton.type =
+                "button";
+
+            editButton.className =
+                "admin-button";
+
+            editButton.textContent =
+                "РЕДАГУВАТИ";
+
+
+            const deleteButton =
+                document.createElement(
+                    "button"
+                );
+
+            deleteButton.type =
+                "button";
+
+            deleteButton.className =
+                "admin-button admin-button-danger";
+
+            deleteButton.textContent =
+                "ВИДАЛИТИ";
+
+
+            actions.appendChild(
+                editButton
+            );
+
+            actions.appendChild(
+                deleteButton
+            );
+
+
+            details.appendChild(
+                actions
+            );
+
+
+            /*
+             * =========================
+             * ВІДКРИТТЯ / ЗАКРИТТЯ
+             * =========================
+             */
+
+            title.addEventListener(
+                "click",
+                function() {
+
+                    const isOpen =
+                        details.style.display ===
+                        "block";
+
+
+                    details.style.display =
+                        isOpen
+                            ? "none"
+                            : "block";
+
+                }
+            );
+
+
+            articleItem.appendChild(
+                title
+            );
+
+            articleItem.appendChild(
+                details
             );
 
 
@@ -1815,7 +1914,6 @@ async function loadArticles() {
     );
 
 }
-
 
 /*
  * =========================

@@ -1902,3 +1902,13 @@ footer {
     font-size: 22px;
     font-weight: 500;
 }
+.admin-form > h4 {
+    margin: 32px 0 18px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #DED8D0;
+    color: #6E2235;
+    font-size: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}

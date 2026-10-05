@@ -1,241 +1,515 @@
 <!DOCTYPE html>
 <html lang="uk">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Адмін-панель — Ярослав Маслаков</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <link rel="stylesheet" href="../style.css">
+    <title>Головна — Адмін-панель</title>
+
+    <link
+        rel="stylesheet"
+        href="/style.css"
+    >
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.snow.css"
+        rel="stylesheet"
+    >
+
 </head>
 
-<body>
 
-    <header>
-        <div class="header-inner">
+<body class="admin-page">
 
-            <div class="logo">
-                ЯРОСЛАВ МАСЛАКОВ
-            </div>
 
-            <div class="language">
-                <a href="../uk/index.html">UA</a>
-                <span>|</span>
-                <a href="../en/index.html">EN</a>
-            </div>
+<header>
 
+    <div class="admin-header-inner">
+
+        <div class="admin-logo">
+            Адмін-панель
         </div>
-    </header>
+
+        <button
+            type="button"
+            class="menu-toggle"
+            aria-label="Відкрити меню"
+        >
+            МЕНЮ
+        </button>
+
+        <nav>
+
+            <a
+                href="/admin/index.html"
+                class="active"
+            >
+                Головна
+            </a>
+
+            <a href="/admin/articles/index.html">
+                Статті
+            </a>
+
+            <a href="/admin/research/index.html">
+                Дослідження
+            </a>
+
+            <a href="/admin/publications/index.html">
+                Публікації
+            </a>
+
+            <a href="/admin/certificates/index.html">
+                Сертифікати
+            </a>
+
+        </nav>
+
+        <button
+            type="button"
+            id="logoutButton"
+            class="admin-button"
+        >
+            ВИЙТИ
+        </button>
+
+    </div>
+
+</header>
 
 
-    <main>
+<main class="admin-content">
 
-        <section class="latest">
+    <h1 class="admin-page-title">
+        Головна
+    </h1>
 
-            <h2>Адмін-панель</h2>
 
-            <div id="auth">
+    <!-- =====================================================
+         STATISTICS
+         ===================================================== -->
+
+    <section class="admin-dashboard-stats">
+
+
+        <a
+            href="/admin/articles/index.html"
+            class="admin-dashboard-card"
+        >
+
+            <div class="admin-dashboard-card-title">
+                Статті
+            </div>
+
+            <div
+                class="admin-dashboard-card-total"
+                id="articlesTotal"
+            >
+                —
+            </div>
+
+            <div class="admin-dashboard-card-meta">
+
+                <span>
+                    Опубліковано:
+                    <strong id="articlesPublished">
+                        —
+                    </strong>
+                </span>
+
+                <span>
+                    Чернетки:
+                    <strong id="articlesDrafts">
+                        —
+                    </strong>
+                </span>
+
+            </div>
+
+        </a>
+
+
+
+        <a
+            href="/admin/research/index.html"
+            class="admin-dashboard-card"
+        >
+
+            <div class="admin-dashboard-card-title">
+                Дослідження
+            </div>
+
+            <div
+                class="admin-dashboard-card-total"
+                id="researchTotal"
+            >
+                —
+            </div>
+
+            <div class="admin-dashboard-card-meta">
+
+                <span>
+                    Опубліковано:
+                    <strong id="researchPublished">
+                        —
+                    </strong>
+                </span>
+
+                <span>
+                    Чернетки:
+                    <strong id="researchDrafts">
+                        —
+                    </strong>
+                </span>
+
+            </div>
+
+        </a>
+
+
+
+        <a
+            href="/admin/publications/index.html"
+            class="admin-dashboard-card"
+        >
+
+            <div class="admin-dashboard-card-title">
+                Публікації
+            </div>
+
+            <div
+                class="admin-dashboard-card-total"
+                id="publicationsTotal"
+            >
+                —
+            </div>
+
+            <div class="admin-dashboard-card-meta">
+
+                <span>
+                    Опубліковано:
+                    <strong id="publicationsPublished">
+                        —
+                    </strong>
+                </span>
+
+                <span>
+                    Чернетки:
+                    <strong id="publicationsDrafts">
+                        —
+                    </strong>
+                </span>
+
+            </div>
+
+        </a>
+
+
+
+        <a
+            href="/admin/certificates/index.html"
+            class="admin-dashboard-card"
+        >
+
+            <div class="admin-dashboard-card-title">
+                Сертифікати
+            </div>
+
+            <div
+                class="admin-dashboard-card-total"
+                id="certificatesTotal"
+            >
+                —
+            </div>
+
+            <div class="admin-dashboard-card-meta">
+
+                <span>
+                    Опубліковано:
+                    <strong id="certificatesPublished">
+                        —
+                    </strong>
+                </span>
+
+                <span>
+                    Чернетки:
+                    <strong id="certificatesDrafts">
+                        —
+                    </strong>
+                </span>
+
+            </div>
+
+        </a>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         ACTIVITY CHART
+         ===================================================== -->
+
+    <section class="admin-dashboard-section">
+
+        <div class="admin-dashboard-section-header">
+
+            <div>
+
+                <h2>
+                    Динаміка створення матеріалів
+                </h2>
 
                 <p>
-                    Увійдіть, щоб керувати матеріалами сайту.
+                    Кількість статей, досліджень та публікацій
+                    за місяцями.
                 </p>
-
-                <form id="loginForm">
-
-                    <input
-                        type="email"
-                        id="email"
-                        placeholder="Email"
-                        required
-                    >
-
-                    <input
-                        type="password"
-                        id="password"
-                        placeholder="Пароль"
-                        required
-                    >
-
-                    <button type="submit">
-                        УВІЙТИ
-                    </button>
-
-                    <button type="button" id="resetPasswordButton">
-                        ВІДНОВИТИ ПАРОЛЬ
-                    </button>
-
-                </form>
-
-                <p id="message"></p>
 
             </div>
 
 
-            <div id="adminPanel" style="display: none;">
-
-                <h3>Сертифікати</h3>
+            <div class="admin-dashboard-period">
 
                 <button
                     type="button"
-                    id="addCertificateButton"
+                    class="admin-button dashboard-period-button"
+                    data-months="3"
                 >
-                    ДОДАТИ СЕРТИФІКАТ
+                    3 міс.
                 </button>
 
-                <div id="certificates">
-                    Завантаження...
-                </div>
+                <button
+                    type="button"
+                    class="admin-button dashboard-period-button"
+                    data-months="6"
+                >
+                    6 міс.
+                </button>
 
-                <div id="certificateForm" style="display: none;">
-
-    <h3>Новий сертифікат</h3>
-
-    <form id="newCertificateForm">
-
-        <h4>Українська версія</h4>
-
-        <input
-            type="text"
-            id="title"
-            placeholder="Назва сертифіката"
-            required
-        >
-
-        <input
-            type="text"
-            id="organization"
-            placeholder="Організація"
-            required
-        >
-
-        <label for="certificate_date">
-            Дата отримання
-        </label>
-
-        <input
-            type="date"
-            id="certificate_date"
-            required
-        >
-
-        <input
-            type="number"
-            id="hours"
-            placeholder="Кількість годин"
-            min="0"
-            step="0.5"
-        >
-
-        <input
-            type="number"
-            id="ects"
-            placeholder="Кредити ЄКТС"
-            min="0"
-            step="0.1"
-        >
-
-        <textarea
-            id="description"
-            placeholder="Опис сертифіката"
-            rows="5"
-        ></textarea>
-
-
-        <h4>English version</h4>
-
-        <input
-            type="text"
-            id="title_en"
-            placeholder="Certificate title"
-        >
-
-        <input
-            type="text"
-            id="organization_en"
-            placeholder="Organization"
-        >
-
-        <textarea
-            id="description_en"
-            placeholder="Certificate description"
-            rows="5"
-        ></textarea>
-
-
-        <h4>PDF-файл</h4>
-
-        <input
-            type="file"
-            id="certificateFile"
-            accept="application/pdf"
-        >
-
-
-        <label>
-            <input
-                type="checkbox"
-                id="published"
-            >
-
-            Опублікувати одразу
-        </label>
-
-
-        <div>
-
-            <button
-                type="submit"
-            >
-                ЗБЕРЕГТИ СЕРТИФІКАТ
-            </button>
-
-            <button
-                type="button"
-                id="cancelCertificateButton"
-            >
-                СКАСУВАТИ
-            </button>
-
-        </div>
-
-        <p id="certificateFormMessage"></p>
-
-    </form>
-
-</div>
-
-                <button id="logoutButton">
-                    ВИЙТИ
+                <button
+                    type="button"
+                    class="admin-button dashboard-period-button active"
+                    data-months="12"
+                >
+                    12 міс.
                 </button>
 
             </div>
 
-        </section>
-
-    </main>
+        </div>
 
 
-    <footer>
-        © 2026 Ярослав Маслаков
-    </footer>
+        <div class="admin-dashboard-chart-wrapper">
+
+            <canvas id="materialsChart"></canvas>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         CONTENT STATE
+         ===================================================== -->
+
+    <section class="admin-dashboard-grid">
+
+
+        <div class="admin-dashboard-panel">
+
+            <h2>
+                Стан контенту
+            </h2>
+
+            <div class="admin-dashboard-info-list">
+
+                <div>
+
+                    <span>
+                        Усього матеріалів
+                    </span>
+
+                    <strong id="contentTotal">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Опубліковано
+                    </span>
+
+                    <strong id="contentPublished">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Чернетки
+                    </span>
+
+                    <strong id="contentDrafts">
+                        —
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             LANGUAGE COVERAGE
+             ================================================= -->
+
+        <div class="admin-dashboard-panel">
+
+            <h2>
+                Мовне покриття
+            </h2>
+
+            <div class="admin-dashboard-info-list">
+
+                <div>
+
+                    <span>
+                        Українська версія
+                    </span>
+
+                    <strong id="uaCoverage">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Англійська версія
+                    </span>
+
+                    <strong id="enCoverage">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Обидві мови
+                    </span>
+
+                    <strong id="bothLanguages">
+                        —
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         NEEDS ATTENTION
+         ===================================================== -->
+
+    <section class="admin-dashboard-section">
+
+        <div class="admin-dashboard-section-header">
+
+            <div>
+
+                <h2>
+                    Потребують уваги
+                </h2>
+
+                <p>
+                    Матеріали, які потребують перевірки.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="attentionList"
+            class="admin-dashboard-attention"
+        >
+
+            <div class="admin-dashboard-attention-item">
+                Перевіряємо контент...
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         VISITS PLACEHOLDER
+         ===================================================== -->
+
+    <section class="admin-dashboard-section admin-dashboard-visits">
+
+        <h2>
+            Відвідування сайту
+        </h2>
+
+        <p>
+            Статистика відвідувань буде доступна після
+            підключення системи веб-аналітики.
+        </p>
+
+    </section>
+
+
+</main>
+
 
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
 <script>
 
-    const SUPABASE_URL =
-        "https://jtplvfweyguheyqyewal.supabase.co";
+const SUPABASE_URL =
+    "https://jtplvfweyguheyqyewal.supabase.co";
 
-    const SUPABASE_KEY =
-        "sb_publishable_jAg0mG8Pj30tCF7qND3ydQ_-WDv4EhP";
-
-
-    const { createClient } =
-        supabase;
+const SUPABASE_KEY =
+    "sb_publishable_jAg0mG8Pj30tCF7qND3ydQ_-WDv4EhP";
 
 
-    const client =
+const { createClient } = supabase;
+
+
+const client =
     createClient(
         SUPABASE_URL,
         SUPABASE_KEY,
@@ -249,274 +523,1019 @@
     );
 
 
-    const loginForm =
-        document.getElementById("loginForm");
 
-    const auth =
-        document.getElementById("auth");
+/* =========================================================
+   AUTH
+   ========================================================= */
 
-    const adminPanel =
-        document.getElementById("adminPanel");
+async function checkSession() {
 
-    const message =
-        document.getElementById("message");
-
-    const logoutButton =
-        document.getElementById("logoutButton");
-    
-    const resetPasswordButton =
-        document.getElementById("resetPasswordButton");
+    const {
+        data,
+        error
+    } = await client.auth.getSession();
 
 
-    async function checkSession() {
+    if (
+        error ||
+        !data ||
+        !data.session
+    ) {
 
-        const {
-            data: {
-                session
-            }
-        } = await client.auth.getSession();
+        window.location.href =
+            "/admin/login.html";
 
-
-        if (session) {
-
-            auth.style.display = "none";
-
-            adminPanel.style.display = "block";
-
-            loadCertificates();
-
-        }
+        return false;
 
     }
 
-resetPasswordButton.addEventListener(
-    "click",
-    async function() {
+    return true;
 
-        const email =
-            document.getElementById("email").value;
-
-        if (!email) {
-
-            message.textContent =
-                "Спочатку введіть email.";
-
-            return;
-        }
+}
 
 
-        message.textContent =
-            "Надсилаємо лист...";
 
+/* =========================================================
+   LOGOUT
+   ========================================================= */
 
-        const { error } =
-            await client.auth.resetPasswordForEmail(
-                email,
-                {
-                    redirectTo:
-                        "https://yaroslav-maslakov.github.io/admin/"
-                }
-            );
-
-
-        if (error) {
-
-            message.textContent =
-                "Помилка: " + error.message;
-
-            return;
-        }
-
-
-        message.textContent =
-            "Лист для відновлення пароля надіслано.";
-    }
-);
-    loginForm.addEventListener(
-        "submit",
-        async function(event) {
-
-            event.preventDefault();
-
-            message.textContent = "Вхід...";
-
-
-            const email =
-                document.getElementById("email").value;
-
-            const password =
-                document.getElementById("password").value;
-
-
-            const {
-                error
-            } = await client.auth.signInWithPassword({
-
-                email: email,
-
-                password: password
-
-            });
-
-
-            if (error) {
-
-                message.textContent =
-                    "Помилка входу: " +
-                    error.message;
-
-                return;
-
-            }
-
-
-            auth.style.display = "none";
-
-            adminPanel.style.display = "block";
-
-        }
-    );
-
-
-    logoutButton.addEventListener(
+document
+    .getElementById("logoutButton")
+    .addEventListener(
         "click",
         async function() {
 
             await client.auth.signOut();
 
-            adminPanel.style.display = "none";
-
-            auth.style.display = "block";
-
-            loginForm.reset();
-
-            message.textContent = "";
+            window.location.href =
+                "/admin/login.html";
 
         }
     );
 
-    const addCertificateButton =
-    document.getElementById("addCertificateButton");
-
-const certificateForm =
-    document.getElementById("certificateForm");
-
-const cancelCertificateButton =
-    document.getElementById("cancelCertificateButton");
 
 
-addCertificateButton.addEventListener(
-    "click",
-    function() {
+/* =========================================================
+   MOBILE MENU
+   ========================================================= */
 
-        certificateForm.style.display = "block";
+const adminMenuButton =
+    document.querySelector(".menu-toggle");
 
-        addCertificateButton.style.display = "none";
+const adminMenu =
+    document.querySelector("nav");
+
+
+if (
+    adminMenuButton &&
+    adminMenu
+) {
+
+    adminMenuButton.addEventListener(
+        "click",
+        function() {
+
+            const isOpen =
+                adminMenu.classList.toggle(
+                    "menu-open"
+                );
+
+
+            adminMenuButton.textContent =
+                isOpen
+                    ? "ЗАКРИТИ"
+                    : "МЕНЮ";
+
+
+            adminMenuButton.setAttribute(
+                "aria-label",
+                isOpen
+                    ? "Закрити меню"
+                    : "Відкрити меню"
+            );
+
+        }
+    );
+
+}
+
+
+
+/* =========================================================
+   DATA
+   ========================================================= */
+
+let dashboardData = {
+
+    articles: [],
+    research: [],
+    publications: [],
+    certificates: []
+
+};
+
+
+
+/* =========================================================
+   LOAD DATA
+   ========================================================= */
+
+async function loadDashboardData() {
+
+    try {
+
+        const results =
+            await Promise.all([
+
+                client
+                    .from("articles")
+                    .select("*"),
+
+                client
+                    .from("research")
+                    .select("*"),
+
+                client
+                    .from("publications")
+                    .select("*"),
+
+                client
+                    .from("certificates")
+                    .select("*")
+
+            ]);
+
+
+        const [
+            articlesResult,
+            researchResult,
+            publicationsResult,
+            certificatesResult
+        ] = results;
+
+
+        if (articlesResult.error) {
+            throw articlesResult.error;
+        }
+
+        if (researchResult.error) {
+            throw researchResult.error;
+        }
+
+        if (publicationsResult.error) {
+            throw publicationsResult.error;
+        }
+
+        if (certificatesResult.error) {
+            throw certificatesResult.error;
+        }
+
+
+        dashboardData.articles =
+            articlesResult.data || [];
+
+
+        dashboardData.research =
+            researchResult.data || [];
+
+
+        dashboardData.publications =
+            publicationsResult.data || [];
+
+
+        dashboardData.certificates =
+            certificatesResult.data || [];
+
+
+        updateStatistics();
+
+        updateLanguageCoverage();
+
+        updateAttention();
+
+        createChart(12);
+
+    } catch (error) {
+
+        console.error(
+            "Помилка завантаження Dashboard:",
+            error
+        );
+
+        alert(
+            "Не вдалося завантажити статистику."
+        );
 
     }
-);
+
+}
 
 
-cancelCertificateButton.addEventListener(
-    "click",
-    function() {
 
-        certificateForm.style.display = "none";
+/* =========================================================
+   STATUS HELPER
+   ========================================================= */
 
-        addCertificateButton.style.display = "inline-block";
+function getPublishedCount(items) {
 
-    }
-);
+    return items.filter(
+        item =>
+            item.status === "published" ||
+            item.published === true
+    ).length;
+
+}
 
 
-    checkSession();
-    async function loadCertificates() {
+function getDraftCount(items) {
+
+    return items.length -
+        getPublishedCount(items);
+
+}
+
+
+
+/* =========================================================
+   STATISTICS
+   ========================================================= */
+
+function updateStatistics() {
+
+    const articles =
+        dashboardData.articles;
+
+    const research =
+        dashboardData.research;
+
+    const publications =
+        dashboardData.publications;
 
     const certificates =
-        document.getElementById("certificates");
+        dashboardData.certificates;
 
-    certificates.textContent =
-        "Завантаження...";
 
-    const {
-        data,
-        error
-    } = await client
-        .from("certificates")
-        .select("*")
-        .order("certificate_date", {
-            ascending: false
+    const articlesPublished =
+        getPublishedCount(articles);
+
+    const researchPublished =
+        getPublishedCount(research);
+
+    const publicationsPublished =
+        getPublishedCount(publications);
+
+    const certificatesPublished =
+        getPublishedCount(certificates);
+
+
+    document
+        .getElementById("articlesTotal")
+        .textContent =
+        articles.length;
+
+
+    document
+        .getElementById("articlesPublished")
+        .textContent =
+        articlesPublished;
+
+
+    document
+        .getElementById("articlesDrafts")
+        .textContent =
+        articles.length -
+        articlesPublished;
+
+
+    document
+        .getElementById("researchTotal")
+        .textContent =
+        research.length;
+
+
+    document
+        .getElementById("researchPublished")
+        .textContent =
+        researchPublished;
+
+
+    document
+        .getElementById("researchDrafts")
+        .textContent =
+        research.length -
+        researchPublished;
+
+
+    document
+        .getElementById("publicationsTotal")
+        .textContent =
+        publications.length;
+
+
+    document
+        .getElementById("publicationsPublished")
+        .textContent =
+        publicationsPublished;
+
+
+    document
+        .getElementById("publicationsDrafts")
+        .textContent =
+        publications.length -
+        publicationsPublished;
+
+
+    document
+        .getElementById("certificatesTotal")
+        .textContent =
+        certificates.length;
+
+
+    document
+        .getElementById("certificatesPublished")
+        .textContent =
+        certificatesPublished;
+
+
+    document
+        .getElementById("certificatesDrafts")
+        .textContent =
+        certificates.length -
+        certificatesPublished;
+
+
+    const allContent =
+        [
+            ...articles,
+            ...research,
+            ...publications
+        ];
+
+
+    const publishedContent =
+        getPublishedCount(
+            allContent
+        );
+
+
+    document
+        .getElementById("contentTotal")
+        .textContent =
+        allContent.length;
+
+
+    document
+        .getElementById("contentPublished")
+        .textContent =
+        publishedContent;
+
+
+    document
+        .getElementById("contentDrafts")
+        .textContent =
+        allContent.length -
+        publishedContent;
+
+}
+
+
+
+/* =========================================================
+   LANGUAGE COVERAGE
+   ========================================================= */
+
+function hasUa(item) {
+
+    return Boolean(
+        item.title_ua ||
+        item.excerpt_ua ||
+        item.description_ua ||
+        item.content_ua
+    );
+
+}
+
+
+function hasEn(item) {
+
+    return Boolean(
+        item.title_en ||
+        item.excerpt_en ||
+        item.description_en ||
+        item.content_en
+    );
+
+}
+
+
+function updateLanguageCoverage() {
+
+    const allContent = [
+
+        ...dashboardData.articles,
+        ...dashboardData.research,
+        ...dashboardData.publications
+
+    ];
+
+
+    if (!allContent.length) {
+
+        document
+            .getElementById("uaCoverage")
+            .textContent = "0%";
+
+
+        document
+            .getElementById("enCoverage")
+            .textContent = "0%";
+
+
+        document
+            .getElementById("bothLanguages")
+            .textContent = "0";
+
+        return;
+
+    }
+
+
+    const uaCount =
+        allContent.filter(
+            hasUa
+        ).length;
+
+
+    const enCount =
+        allContent.filter(
+            hasEn
+        ).length;
+
+
+    const bothCount =
+        allContent.filter(
+            item =>
+                hasUa(item) &&
+                hasEn(item)
+        ).length;
+
+
+    document
+        .getElementById("uaCoverage")
+        .textContent =
+        Math.round(
+            uaCount /
+            allContent.length *
+            100
+        ) + "%";
+
+
+    document
+        .getElementById("enCoverage")
+        .textContent =
+        Math.round(
+            enCount /
+            allContent.length *
+            100
+        ) + "%";
+
+
+    document
+        .getElementById("bothLanguages")
+        .textContent =
+        bothCount;
+
+}
+
+
+
+/* =========================================================
+   ATTENTION
+   ========================================================= */
+
+function updateAttention() {
+
+    const attentionList =
+        document.getElementById(
+            "attentionList"
+        );
+
+
+    const items = [];
+
+
+    const allContent = [
+
+        ...dashboardData.articles,
+        ...dashboardData.research,
+        ...dashboardData.publications
+
+    ];
+
+
+    const withoutEnglish =
+        allContent.filter(
+            item =>
+                hasUa(item) &&
+                !hasEn(item)
+        );
+
+
+    if (withoutEnglish.length) {
+
+        items.push(
+            `Матеріалів без англійської версії: ${withoutEnglish.length}`
+        );
+
+    }
+
+
+    const withoutImage =
+        allContent.filter(
+            item =>
+                !item.main_image
+        );
+
+
+    if (withoutImage.length) {
+
+        items.push(
+            `Матеріалів без головного зображення: ${withoutImage.length}`
+        );
+
+    }
+
+
+    const oldDrafts =
+        allContent.filter(
+            item => {
+
+                const isDraft =
+                    !(
+                        item.status === "published" ||
+                        item.published === true
+                    );
+
+
+                if (
+                    !isDraft ||
+                    !item.created_at
+                ) {
+
+                    return false;
+
+                }
+
+
+                const created =
+                    new Date(
+                        item.created_at
+                    );
+
+
+                const now =
+                    new Date();
+
+
+                const difference =
+                    now - created;
+
+
+                const thirtyDays =
+                    30 *
+                    24 *
+                    60 *
+                    60 *
+                    1000;
+
+
+                return difference >
+                    thirtyDays;
+
+            }
+        );
+
+
+    if (oldDrafts.length) {
+
+        items.push(
+            `Чернеток старше 30 днів: ${oldDrafts.length}`
+        );
+
+    }
+
+
+    if (!items.length) {
+
+        attentionList.innerHTML =
+            `
+            <div class="admin-dashboard-attention-item success">
+                Все добре — матеріали не потребують додаткової уваги.
+            </div>
+            `;
+
+        return;
+
+    }
+
+
+    attentionList.innerHTML =
+        items
+            .map(
+                item =>
+                    `
+                    <div class="admin-dashboard-attention-item">
+                        ${item}
+                    </div>
+                    `
+            )
+            .join("");
+
+}
+
+
+
+/* =========================================================
+   CHART
+   ========================================================= */
+
+let materialsChart = null;
+
+
+function getMonthKey(date) {
+
+    return (
+        date.getFullYear() +
+        "-" +
+        String(
+            date.getMonth() + 1
+        ).padStart(
+            2,
+            "0"
+        )
+    );
+
+}
+
+
+function getMonthLabel(date) {
+
+    const months = [
+
+        "Січень",
+        "Лютий",
+        "Березень",
+        "Квітень",
+        "Травень",
+        "Червень",
+        "Липень",
+        "Серпень",
+        "Вересень",
+        "Жовтень",
+        "Листопад",
+        "Грудень"
+
+    ];
+
+
+    return (
+        months[date.getMonth()] +
+        " " +
+        date.getFullYear()
+    );
+
+}
+
+
+function createChart(monthsCount) {
+
+    const canvas =
+        document.getElementById(
+            "materialsChart"
+        );
+
+
+    if (!canvas) {
+        return;
+    }
+
+
+    const now =
+        new Date();
+
+
+    const months = [];
+
+
+    for (
+        let i = monthsCount - 1;
+        i >= 0;
+        i--
+    ) {
+
+        const date =
+            new Date(
+                now.getFullYear(),
+                now.getMonth() - i,
+                1
+            );
+
+
+        months.push({
+
+            key:
+                getMonthKey(date),
+
+            label:
+                getMonthLabel(date)
+
         });
 
-    if (error) {
-
-        certificates.textContent =
-            "Помилка завантаження: " +
-            error.message;
-
-        return;
     }
 
-    if (!data || data.length === 0) {
 
-        certificates.textContent =
-            "Сертифікатів поки немає.";
+    const allItems = [
 
-        return;
+        ...dashboardData.articles.map(
+            item => ({
+                ...item,
+                contentType: "Статті"
+            })
+        ),
+
+        ...dashboardData.research.map(
+            item => ({
+                ...item,
+                contentType: "Дослідження"
+            })
+        ),
+
+        ...dashboardData.publications.map(
+            item => ({
+                ...item,
+                contentType: "Публікації"
+            })
+        )
+
+    ];
+
+
+    const articleData =
+        months.map(
+            month =>
+                allItems.filter(
+                    item =>
+                        item.contentType ===
+                        "Статті" &&
+                        item.created_at &&
+                        getMonthKey(
+                            new Date(
+                                item.created_at
+                            )
+                        ) ===
+                        month.key
+                ).length
+        );
+
+
+    const researchData =
+        months.map(
+            month =>
+                allItems.filter(
+                    item =>
+                        item.contentType ===
+                        "Дослідження" &&
+                        item.created_at &&
+                        getMonthKey(
+                            new Date(
+                                item.created_at
+                            )
+                        ) ===
+                        month.key
+                ).length
+        );
+
+
+    const publicationData =
+        months.map(
+            month =>
+                allItems.filter(
+                    item =>
+                        item.contentType ===
+                        "Публікації" &&
+                        item.created_at &&
+                        getMonthKey(
+                            new Date(
+                                item.created_at
+                            )
+                        ) ===
+                        month.key
+                ).length
+        );
+
+
+    if (materialsChart) {
+
+        materialsChart.destroy();
+
     }
 
-    certificates.innerHTML = "";
 
-    data.forEach(function(certificate) {
+    materialsChart =
+        new Chart(
+            canvas,
+            {
 
-        const item =
-            document.createElement("div");
+                type: "line",
 
-        item.className =
-            "certificate-card";
+                data: {
 
-        item.innerHTML = `
-            <h3>${certificate.title}</h3>
+                    labels:
+                        months.map(
+                            month =>
+                                month.label
+                        ),
 
-            <p>
-                ${certificate.organization}
-            </p>
+                    datasets: [
 
-            <p>
-                Дата: ${certificate.certificate_date}
-            </p>
+                        {
 
-            <p>
-                Години: ${certificate.hours ?? "—"}
-                |
-                ЄКТС: ${certificate.ects ?? "—"}
-            </p>
+                            label:
+                                "Статті",
 
-            <p>
-                Статус:
-                ${certificate.published ? "Опубліковано" : "Чернетка"}
-            </p>
+                            data:
+                                articleData,
 
-            ${
-                certificate.file_url
-                ? `<p>
-                    <a
-                        href="${certificate.file_url}"
-                        target="_blank"
-                    >
-                        Відкрити сертифікат →
-                    </a>
-                   </p>`
-                : ""
+                            tension:
+                                0.3,
+
+                            borderWidth:
+                                2
+
+                        },
+
+                        {
+
+                            label:
+                                "Дослідження",
+
+                            data:
+                                researchData,
+
+                            tension:
+                                0.3,
+
+                            borderWidth:
+                                2
+
+                        },
+
+                        {
+
+                            label:
+                                "Публікації",
+
+                            data:
+                                publicationData,
+
+                            tension:
+                                0.3,
+
+                            borderWidth:
+                                2
+
+                        }
+
+                    ]
+
+                },
+
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+
+                    interaction: {
+
+                        intersect:
+                            false,
+
+                        mode:
+                            "index"
+
+                    },
+
+                    plugins: {
+
+                        legend: {
+
+                            position:
+                                "bottom"
+
+                        }
+
+                    },
+
+                    scales: {
+
+                        y: {
+
+                            beginAtZero:
+                                true,
+
+                            ticks: {
+
+                                precision:
+                                    0
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
             }
-        `;
+        );
 
-        certificates.appendChild(item);
-
-    });
 }
+
+
+
+/* =========================================================
+   PERIOD BUTTONS
+   ========================================================= */
+
+document
+    .querySelectorAll(
+        ".dashboard-period-button"
+    )
+    .forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+                function() {
+
+                    document
+                        .querySelectorAll(
+                            ".dashboard-period-button"
+                        )
+                        .forEach(
+                            item =>
+                                item.classList.remove(
+                                    "active"
+                                )
+                        );
+
+
+                    this.classList.add(
+                        "active"
+                    );
+
+
+                    const months =
+                        Number(
+                            this.dataset.months
+                        );
+
+
+                    createChart(
+                        months
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+
+/* =========================================================
+   START
+   ========================================================= */
+
+(async function() {
+
+    const sessionExists =
+        await checkSession();
+
+
+    if (!sessionExists) {
+        return;
+    }
+
+
+    await loadDashboardData();
+
+})();
 
 </script>
 
+
 </body>
+
 </html>

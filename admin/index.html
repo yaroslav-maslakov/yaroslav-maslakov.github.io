@@ -1,516 +1,464 @@
+
 <!DOCTYPE html>
 <html lang="uk">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Головна — Адмін-панель</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .dashboard {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px 50px;
+        }
 
-    <link
-        rel="stylesheet"
-        href="/style.css"
-    >
+        .dashboard-title {
+            margin: 0 0 28px;
+            color: #4A1725;
+            font-size: 28px;
+            font-weight: 500;
+        }
 
-    <link
-        href="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.snow.css"
-        rel="stylesheet"
-    >
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px;
+            margin-bottom: 28px;
+        }
 
+        .dashboard-card {
+            display: block;
+            padding: 22px;
+            background: #fff;
+            border: 1px solid #DED8D0;
+            border-top: 3px solid #6E2235;
+            border-radius: 5px;
+            color: inherit;
+            text-decoration: none;
+            transition: box-shadow .2s, transform .2s;
+        }
+
+        .dashboard-card:hover {
+            box-shadow: 0 5px 18px rgba(45, 25, 25, .09);
+            transform: translateY(-2px);
+        }
+
+        .dashboard-card h3 {
+            margin: 0 0 14px;
+            color: #6E2235;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .dashboard-total {
+            margin-bottom: 16px;
+            color: #302A28;
+            font-size: 36px;
+            font-weight: 600;
+            line-height: 1.1;
+        }
+
+        .dashboard-card-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            color: #6F6863;
+            font-size: 13px;
+        }
+
+        .dashboard-card-stats strong {
+            color: #302A28;
+            font-weight: 600;
+        }
+
+        .dashboard-panel {
+            margin-bottom: 24px;
+            padding: 24px;
+            background: #fff;
+            border: 1px solid #DED8D0;
+            border-radius: 5px;
+        }
+
+        .dashboard-panel h3 {
+            margin: 0 0 8px;
+            color: #4A1725;
+            font-size: 19px;
+            font-weight: 600;
+        }
+
+        .dashboard-subtitle {
+            margin: 0 0 20px;
+            color: #77706B;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .dashboard-panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+
+        .dashboard-panel-header h3 {
+            margin-bottom: 5px;
+        }
+
+        .dashboard-period {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+        }
+
+        .dashboard-period button {
+            padding: 8px 12px;
+            border: 1px solid #DED8D0;
+            border-radius: 3px;
+            background: #FAF7F2;
+            color: #4A1725;
+            cursor: pointer;
+            font: inherit;
+            font-size: 13px;
+        }
+
+        .dashboard-period button.active {
+            background: #6E2235;
+            border-color: #6E2235;
+            color: #fff;
+        }
+
+        .dashboard-chart {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .dashboard-columns {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        .dashboard-info-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin-top: 16px;
+        }
+
+        .dashboard-info-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 13px 0;
+            border-bottom: 1px solid #EAE5DF;
+            color: #625B56;
+            font-size: 14px;
+        }
+
+        .dashboard-info-row:last-child {
+            border-bottom: 0;
+        }
+
+        .dashboard-info-row strong {
+            color: #302A28;
+            font-size: 16px;
+            font-weight: 600;
+            text-align: right;
+        }
+
+        .dashboard-alerts {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .dashboard-alert {
+            padding: 13px 15px;
+            border-left: 3px solid #B58A42;
+            background: #FAF7F2;
+            color: #554B42;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .dashboard-alert.success {
+            border-left-color: #66856B;
+        }
+
+        .dashboard-visits-note {
+            margin: 0;
+            color: #77706B;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .dashboard-loading {
+            color: #77706B;
+            font-size: 14px;
+        }
+
+        @media (max-width: 1000px) {
+            .dashboard-stats {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 700px) {
+            .dashboard {
+                padding: 22px 14px 35px;
+            }
+
+            .dashboard-title {
+                font-size: 24px;
+            }
+
+            .dashboard-stats {
+                gap: 12px;
+            }
+
+            .dashboard-card {
+                padding: 16px;
+            }
+
+            .dashboard-total {
+                font-size: 30px;
+            }
+
+            .dashboard-card h3 {
+                font-size: 15px;
+            }
+
+            .dashboard-card-stats {
+                font-size: 12px;
+            }
+
+            .dashboard-columns {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .dashboard-panel {
+                padding: 18px;
+            }
+
+            .dashboard-chart {
+                height: 250px;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .dashboard-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-card {
+                padding: 18px;
+            }
+        }
+    </style>
 </head>
 
-
-<body class="admin-page">
-
+<body>
 
 <header>
-
-    <div class="admin-header-inner">
-
-        <div class="admin-logo">
-            Адмін-панель
+    <div class="header-inner">
+        <div class="logo">
+            ЯРОСЛАВ МАСЛАКОВ
         </div>
 
+        <nav>
+            <a href="/admin/index.html" class="active">Головна</a>
+            <a href="/admin/articles/index.html">Статті</a>
+            <a href="/admin/research/index.html">Дослідження</a>
+            <a href="/admin/publications/index.html">Публікації</a>
+            <a href="/admin/certificates/index.html">Сертифікати</a>
+        </nav>
+
         <button
-            type="button"
             class="menu-toggle"
+            type="button"
             aria-label="Відкрити меню"
         >
             МЕНЮ
         </button>
 
-        <nav>
+        <div class="admin-header-actions">
+            <div class="language">
+                <a href="/uk/index.html">САЙТ</a>
+            </div>
 
-            <a
-                href="/admin/index.html"
-                class="active"
+            <button
+                type="button"
+                id="logoutButton"
+                class="admin-header-logout"
             >
-                Головна
-            </a>
-
-            <a href="/admin/articles/index.html">
-                Статті
-            </a>
-
-            <a href="/admin/research/index.html">
-                Дослідження
-            </a>
-
-            <a href="/admin/publications/index.html">
-                Публікації
-            </a>
-
-            <a href="/admin/certificates/index.html">
-                Сертифікати
-            </a>
-
-        </nav>
-
-        <button
-            type="button"
-            id="logoutButton"
-            class="admin-button"
-        >
-            ВИЙТИ
-        </button>
-
+                ВИЙТИ
+            </button>
+        </div>
     </div>
-
 </header>
 
+<main class="dashboard">
 
-<main class="admin-content">
+    <h1 class="dashboard-title">Головна</h1>
 
-    <h1 class="admin-page-title">
-        Головна
-    </h1>
+    <!-- СТАТИСТИКА -->
+    <section class="dashboard-stats">
 
-
-    <!-- =====================================================
-         STATISTICS
-         ===================================================== -->
-
-    <section class="admin-dashboard-stats">
-
-
-        <a
-            href="/admin/articles/index.html"
-            class="admin-dashboard-card"
-        >
-
-            <div class="admin-dashboard-card-title">
-                Статті
+        <a href="/admin/articles/index.html" class="dashboard-card">
+            <h3>Статті</h3>
+            <div class="dashboard-total" id="articlesTotal">—</div>
+            <div class="dashboard-card-stats">
+                <span>Опубліковано: <strong id="articlesPublished">—</strong></span>
+                <span>Чернетки: <strong id="articlesDrafts">—</strong></span>
             </div>
-
-            <div
-                class="admin-dashboard-card-total"
-                id="articlesTotal"
-            >
-                —
-            </div>
-
-            <div class="admin-dashboard-card-meta">
-
-                <span>
-                    Опубліковано:
-                    <strong id="articlesPublished">
-                        —
-                    </strong>
-                </span>
-
-                <span>
-                    Чернетки:
-                    <strong id="articlesDrafts">
-                        —
-                    </strong>
-                </span>
-
-            </div>
-
         </a>
 
-
-
-        <a
-            href="/admin/research/index.html"
-            class="admin-dashboard-card"
-        >
-
-            <div class="admin-dashboard-card-title">
-                Дослідження
+        <a href="/admin/research/index.html" class="dashboard-card">
+            <h3>Дослідження</h3>
+            <div class="dashboard-total" id="researchTotal">—</div>
+            <div class="dashboard-card-stats">
+                <span>Опубліковано: <strong id="researchPublished">—</strong></span>
+                <span>Чернетки: <strong id="researchDrafts">—</strong></span>
             </div>
-
-            <div
-                class="admin-dashboard-card-total"
-                id="researchTotal"
-            >
-                —
-            </div>
-
-            <div class="admin-dashboard-card-meta">
-
-                <span>
-                    Опубліковано:
-                    <strong id="researchPublished">
-                        —
-                    </strong>
-                </span>
-
-                <span>
-                    Чернетки:
-                    <strong id="researchDrafts">
-                        —
-                    </strong>
-                </span>
-
-            </div>
-
         </a>
 
-
-
-        <a
-            href="/admin/publications/index.html"
-            class="admin-dashboard-card"
-        >
-
-            <div class="admin-dashboard-card-title">
-                Публікації
+        <a href="/admin/publications/index.html" class="dashboard-card">
+            <h3>Публікації</h3>
+            <div class="dashboard-total" id="publicationsTotal">—</div>
+            <div class="dashboard-card-stats">
+                <span>Опубліковано: <strong id="publicationsPublished">—</strong></span>
+                <span>Чернетки: <strong id="publicationsDrafts">—</strong></span>
             </div>
-
-            <div
-                class="admin-dashboard-card-total"
-                id="publicationsTotal"
-            >
-                —
-            </div>
-
-            <div class="admin-dashboard-card-meta">
-
-                <span>
-                    Опубліковано:
-                    <strong id="publicationsPublished">
-                        —
-                    </strong>
-                </span>
-
-                <span>
-                    Чернетки:
-                    <strong id="publicationsDrafts">
-                        —
-                    </strong>
-                </span>
-
-            </div>
-
         </a>
 
-
-
-        <a
-            href="/admin/certificates/index.html"
-            class="admin-dashboard-card"
-        >
-
-            <div class="admin-dashboard-card-title">
-                Сертифікати
+        <a href="/admin/certificates/index.html" class="dashboard-card">
+            <h3>Сертифікати</h3>
+            <div class="dashboard-total" id="certificatesTotal">—</div>
+            <div class="dashboard-card-stats">
+                <span>Опубліковано: <strong id="certificatesPublished">—</strong></span>
+                <span>Чернетки: <strong id="certificatesDrafts">—</strong></span>
             </div>
-
-            <div
-                class="admin-dashboard-card-total"
-                id="certificatesTotal"
-            >
-                —
-            </div>
-
-            <div class="admin-dashboard-card-meta">
-
-                <span>
-                    Опубліковано:
-                    <strong id="certificatesPublished">
-                        —
-                    </strong>
-                </span>
-
-                <span>
-                    Чернетки:
-                    <strong id="certificatesDrafts">
-                        —
-                    </strong>
-                </span>
-
-            </div>
-
         </a>
 
     </section>
 
-
-
-    <!-- =====================================================
-         ACTIVITY CHART
-         ===================================================== -->
-
-    <section class="admin-dashboard-section">
-
-        <div class="admin-dashboard-section-header">
-
+    <!-- ГРАФІК -->
+    <section class="dashboard-panel">
+        <div class="dashboard-panel-header">
             <div>
-
-                <h2>
-                    Динаміка створення матеріалів
-                </h2>
-
-                <p>
-                    Кількість статей, досліджень та публікацій
-                    за місяцями.
+                <h3>Динаміка створення матеріалів</h3>
+                <p class="dashboard-subtitle">
+                    Кількість створених статей, досліджень і публікацій за місяцями.
                 </p>
-
             </div>
 
-
-            <div class="admin-dashboard-period">
-
-                <button
-                    type="button"
-                    class="admin-button dashboard-period-button"
-                    data-months="3"
-                >
-                    3 міс.
-                </button>
-
-                <button
-                    type="button"
-                    class="admin-button dashboard-period-button"
-                    data-months="6"
-                >
-                    6 міс.
-                </button>
-
-                <button
-                    type="button"
-                    class="admin-button dashboard-period-button active"
-                    data-months="12"
-                >
-                    12 міс.
-                </button>
-
+            <div class="dashboard-period">
+                <button type="button" data-months="3">3 міс.</button>
+                <button type="button" data-months="6">6 міс.</button>
+                <button type="button" data-months="12" class="active">12 міс.</button>
             </div>
-
         </div>
 
-
-        <div class="admin-dashboard-chart-wrapper">
-
+        <div class="dashboard-chart">
             <canvas id="materialsChart"></canvas>
+        </div>
+    </section>
 
+    <!-- СТАН КОНТЕНТУ І МОВИ -->
+    <section class="dashboard-columns">
+
+        <div class="dashboard-panel">
+            <h3>Стан контенту</h3>
+            <p class="dashboard-subtitle">
+                Загальна статистика основних матеріалів.
+            </p>
+
+            <div class="dashboard-info-list">
+                <div class="dashboard-info-row">
+                    <span>Усього матеріалів</span>
+                    <strong id="contentTotal">—</strong>
+                </div>
+                <div class="dashboard-info-row">
+                    <span>Опубліковано</span>
+                    <strong id="contentPublished">—</strong>
+                </div>
+                <div class="dashboard-info-row">
+                    <span>Чернетки</span>
+                    <strong id="contentDrafts">—</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-panel">
+            <h3>Мовне покриття</h3>
+            <p class="dashboard-subtitle">
+                Наявність української та англійської версій матеріалів.
+            </p>
+
+            <div class="dashboard-info-list">
+                <div class="dashboard-info-row">
+                    <span>Українська версія</span>
+                    <strong id="uaCoverage">—</strong>
+                </div>
+                <div class="dashboard-info-row">
+                    <span>Англійська версія</span>
+                    <strong id="enCoverage">—</strong>
+                </div>
+                <div class="dashboard-info-row">
+                    <span>Обидві мови</span>
+                    <strong id="bothLanguages">—</strong>
+                </div>
+            </div>
         </div>
 
     </section>
 
-
-
-    <!-- =====================================================
-         CONTENT STATE
-         ===================================================== -->
-
-    <section class="admin-dashboard-grid">
-
-
-        <div class="admin-dashboard-panel">
-
-            <h2>
-                Стан контенту
-            </h2>
-
-            <div class="admin-dashboard-info-list">
-
-                <div>
-
-                    <span>
-                        Усього матеріалів
-                    </span>
-
-                    <strong id="contentTotal">
-                        —
-                    </strong>
-
-                </div>
-
-
-                <div>
-
-                    <span>
-                        Опубліковано
-                    </span>
-
-                    <strong id="contentPublished">
-                        —
-                    </strong>
-
-                </div>
-
-
-                <div>
-
-                    <span>
-                        Чернетки
-                    </span>
-
-                    <strong id="contentDrafts">
-                        —
-                    </strong>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-
-        <!-- =================================================
-             LANGUAGE COVERAGE
-             ================================================= -->
-
-        <div class="admin-dashboard-panel">
-
-            <h2>
-                Мовне покриття
-            </h2>
-
-            <div class="admin-dashboard-info-list">
-
-                <div>
-
-                    <span>
-                        Українська версія
-                    </span>
-
-                    <strong id="uaCoverage">
-                        —
-                    </strong>
-
-                </div>
-
-
-                <div>
-
-                    <span>
-                        Англійська версія
-                    </span>
-
-                    <strong id="enCoverage">
-                        —
-                    </strong>
-
-                </div>
-
-
-                <div>
-
-                    <span>
-                        Обидві мови
-                    </span>
-
-                    <strong id="bothLanguages">
-                        —
-                    </strong>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         NEEDS ATTENTION
-         ===================================================== -->
-
-    <section class="admin-dashboard-section">
-
-        <div class="admin-dashboard-section-header">
-
-            <div>
-
-                <h2>
-                    Потребують уваги
-                </h2>
-
-                <p>
-                    Матеріали, які потребують перевірки.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <div
-            id="attentionList"
-            class="admin-dashboard-attention"
-        >
-
-            <div class="admin-dashboard-attention-item">
-                Перевіряємо контент...
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         VISITS PLACEHOLDER
-         ===================================================== -->
-
-    <section class="admin-dashboard-section admin-dashboard-visits">
-
-        <h2>
-            Відвідування сайту
-        </h2>
-
-        <p>
-            Статистика відвідувань буде доступна після
-            підключення системи веб-аналітики.
+    <!-- ПОТРЕБУЮТЬ УВАГИ -->
+    <section class="dashboard-panel">
+        <h3>Потребують уваги</h3>
+        <p class="dashboard-subtitle">
+            Перевірка матеріалів на відсутні дані.
         </p>
 
+        <div id="attentionList" class="dashboard-alerts">
+            <div class="dashboard-loading">Завантаження...</div>
+        </div>
     </section>
 
+    <!-- АНАЛІТИКА -->
+    <section class="dashboard-panel">
+        <h3>Відвідування сайту</h3>
+        <p class="dashboard-visits-note">
+            Статистика відвідувань з'явиться після підключення системи веб-аналітики.
+            Поки що лічильники не відображаються, щоб не показувати неперевірені дані.
+        </p>
+    </section>
 
 </main>
 
-
+<footer>
+    © 2026 Ярослав Маслаков
+</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-
 <script>
+    const SUPABASE_URL =
+        "https://jtplvfweyguheyqyewal.supabase.co";
 
-const SUPABASE_URL =
-    "https://jtplvfweyguheyqyewal.supabase.co";
+    const SUPABASE_KEY =
+        "sb_publishable_jAg0mG8Pj30tCF7qND3ydQ_-WDv4EhP";
 
-const SUPABASE_KEY =
-    "sb_publishable_jAg0mG8Pj30tCF7qND3ydQ_-WDv4EhP";
+    const { createClient } = supabase;
 
-
-const { createClient } = supabase;
-
-
-const client =
-    createClient(
+    const client = createClient(
         SUPABASE_URL,
         SUPABASE_KEY,
         {
@@ -522,1020 +470,331 @@ const client =
         }
     );
 
+    // АВТОРИЗАЦІЯ
+    async function checkSession() {
+        const { data, error } =
+            await client.auth.getSession();
 
+        if (error || !data.session) {
+            window.location.href = "/admin/index.html";
+            return false;
+        }
 
-/* =========================================================
-   AUTH
-   ========================================================= */
-
-async function checkSession() {
-
-    const {
-        data,
-        error
-    } = await client.auth.getSession();
-
-
-    if (
-        error ||
-        !data ||
-        !data.session
-    ) {
-
-        window.location.href =
-            "/admin/login.html";
-
-        return false;
-
+        return true;
     }
 
-    return true;
-
-}
-
-
-
-/* =========================================================
-   LOGOUT
-   ========================================================= */
-
-document
-    .getElementById("logoutButton")
-    .addEventListener(
-        "click",
-        async function() {
-
+    // ВИХІД
+    document.getElementById("logoutButton")
+        .addEventListener("click", async function() {
             await client.auth.signOut();
+            window.location.href = "/admin/index.html";
+        });
 
-            window.location.href =
-                "/admin/login.html";
+    // МОБІЛЬНЕ МЕНЮ — та сама логіка, що й на інших сторінках
+    const adminMenuButton =
+        document.querySelector(".menu-toggle");
 
-        }
-    );
+    const adminMenu =
+        document.querySelector("nav");
 
-
-
-/* =========================================================
-   MOBILE MENU
-   ========================================================= */
-
-const adminMenuButton =
-    document.querySelector(".menu-toggle");
-
-const adminMenu =
-    document.querySelector("nav");
-
-
-if (
-    adminMenuButton &&
-    adminMenu
-) {
-
-    adminMenuButton.addEventListener(
-        "click",
-        function() {
-
+    if (adminMenuButton && adminMenu) {
+        adminMenuButton.addEventListener("click", function() {
             const isOpen =
-                adminMenu.classList.toggle(
-                    "menu-open"
-                );
-
+                adminMenu.classList.toggle("menu-open");
 
             adminMenuButton.textContent =
-                isOpen
-                    ? "ЗАКРИТИ"
-                    : "МЕНЮ";
-
+                isOpen ? "ЗАКРИТИ" : "МЕНЮ";
 
             adminMenuButton.setAttribute(
                 "aria-label",
-                isOpen
-                    ? "Закрити меню"
-                    : "Відкрити меню"
+                isOpen ? "Закрити меню" : "Відкрити меню"
             );
-
-        }
-    );
-
-}
-
-
-
-/* =========================================================
-   DATA
-   ========================================================= */
-
-let dashboardData = {
-
-    articles: [],
-    research: [],
-    publications: [],
-    certificates: []
-
-};
-
-
-
-/* =========================================================
-   LOAD DATA
-   ========================================================= */
-
-async function loadDashboardData() {
-
-    try {
-
-        const results =
-            await Promise.all([
-
-                client
-                    .from("articles")
-                    .select("*"),
-
-                client
-                    .from("research")
-                    .select("*"),
-
-                client
-                    .from("publications")
-                    .select("*"),
-
-                client
-                    .from("certificates")
-                    .select("*")
-
-            ]);
-
-
-        const [
-            articlesResult,
-            researchResult,
-            publicationsResult,
-            certificatesResult
-        ] = results;
-
-
-        if (articlesResult.error) {
-            throw articlesResult.error;
-        }
-
-        if (researchResult.error) {
-            throw researchResult.error;
-        }
-
-        if (publicationsResult.error) {
-            throw publicationsResult.error;
-        }
-
-        if (certificatesResult.error) {
-            throw certificatesResult.error;
-        }
-
-
-        dashboardData.articles =
-            articlesResult.data || [];
-
-
-        dashboardData.research =
-            researchResult.data || [];
-
-
-        dashboardData.publications =
-            publicationsResult.data || [];
-
-
-        dashboardData.certificates =
-            certificatesResult.data || [];
-
-
-        updateStatistics();
-
-        updateLanguageCoverage();
-
-        updateAttention();
-
-        createChart(12);
-
-    } catch (error) {
-
-        console.error(
-            "Помилка завантаження Dashboard:",
-            error
-        );
-
-        alert(
-            "Не вдалося завантажити статистику."
-        );
-
+        });
     }
 
-}
+    let dashboardData = {
+        articles: [],
+        research: [],
+        publications: [],
+        certificates: []
+    };
 
+    function countPublished(items, isCertificate = false) {
+        return items.filter(item =>
+            isCertificate
+                ? item.published === true
+                : item.status === "published"
+        ).length;
+    }
 
+    function setText(id, value) {
+        const element = document.getElementById(id);
+        if (element) element.textContent = value;
+    }
 
-/* =========================================================
-   STATUS HELPER
-   ========================================================= */
-
-function getPublishedCount(items) {
-
-    return items.filter(
-        item =>
-            item.status === "published" ||
-            item.published === true
-    ).length;
-
-}
-
-
-function getDraftCount(items) {
-
-    return items.length -
-        getPublishedCount(items);
-
-}
-
-
-
-/* =========================================================
-   STATISTICS
-   ========================================================= */
-
-function updateStatistics() {
-
-    const articles =
-        dashboardData.articles;
-
-    const research =
-        dashboardData.research;
-
-    const publications =
-        dashboardData.publications;
-
-    const certificates =
-        dashboardData.certificates;
-
-
-    const articlesPublished =
-        getPublishedCount(articles);
-
-    const researchPublished =
-        getPublishedCount(research);
-
-    const publicationsPublished =
-        getPublishedCount(publications);
-
-    const certificatesPublished =
-        getPublishedCount(certificates);
-
-
-    document
-        .getElementById("articlesTotal")
-        .textContent =
-        articles.length;
-
-
-    document
-        .getElementById("articlesPublished")
-        .textContent =
-        articlesPublished;
-
-
-    document
-        .getElementById("articlesDrafts")
-        .textContent =
-        articles.length -
-        articlesPublished;
-
-
-    document
-        .getElementById("researchTotal")
-        .textContent =
-        research.length;
-
-
-    document
-        .getElementById("researchPublished")
-        .textContent =
-        researchPublished;
-
-
-    document
-        .getElementById("researchDrafts")
-        .textContent =
-        research.length -
-        researchPublished;
-
-
-    document
-        .getElementById("publicationsTotal")
-        .textContent =
-        publications.length;
-
-
-    document
-        .getElementById("publicationsPublished")
-        .textContent =
-        publicationsPublished;
-
-
-    document
-        .getElementById("publicationsDrafts")
-        .textContent =
-        publications.length -
-        publicationsPublished;
-
-
-    document
-        .getElementById("certificatesTotal")
-        .textContent =
-        certificates.length;
-
-
-    document
-        .getElementById("certificatesPublished")
-        .textContent =
-        certificatesPublished;
-
-
-    document
-        .getElementById("certificatesDrafts")
-        .textContent =
-        certificates.length -
-        certificatesPublished;
-
-
-    const allContent =
-        [
-            ...articles,
-            ...research,
-            ...publications
+    function updateStatistics() {
+        const groups = [
+            ["articles", "articles", false],
+            ["research", "research", false],
+            ["publications", "publications", false],
+            ["certificates", "certificates", true]
         ];
 
-
-    const publishedContent =
-        getPublishedCount(
-            allContent
-        );
-
-
-    document
-        .getElementById("contentTotal")
-        .textContent =
-        allContent.length;
-
-
-    document
-        .getElementById("contentPublished")
-        .textContent =
-        publishedContent;
-
-
-    document
-        .getElementById("contentDrafts")
-        .textContent =
-        allContent.length -
-        publishedContent;
-
-}
-
-
-
-/* =========================================================
-   LANGUAGE COVERAGE
-   ========================================================= */
-
-function hasUa(item) {
-
-    return Boolean(
-        item.title_ua ||
-        item.excerpt_ua ||
-        item.description_ua ||
-        item.content_ua
-    );
-
-}
-
-
-function hasEn(item) {
-
-    return Boolean(
-        item.title_en ||
-        item.excerpt_en ||
-        item.description_en ||
-        item.content_en
-    );
-
-}
-
-
-function updateLanguageCoverage() {
-
-    const allContent = [
-
-        ...dashboardData.articles,
-        ...dashboardData.research,
-        ...dashboardData.publications
-
-    ];
-
-
-    if (!allContent.length) {
-
-        document
-            .getElementById("uaCoverage")
-            .textContent = "0%";
-
-
-        document
-            .getElementById("enCoverage")
-            .textContent = "0%";
-
-
-        document
-            .getElementById("bothLanguages")
-            .textContent = "0";
-
-        return;
-
-    }
-
-
-    const uaCount =
-        allContent.filter(
-            hasUa
-        ).length;
-
-
-    const enCount =
-        allContent.filter(
-            hasEn
-        ).length;
-
-
-    const bothCount =
-        allContent.filter(
-            item =>
-                hasUa(item) &&
-                hasEn(item)
-        ).length;
-
-
-    document
-        .getElementById("uaCoverage")
-        .textContent =
-        Math.round(
-            uaCount /
-            allContent.length *
-            100
-        ) + "%";
-
-
-    document
-        .getElementById("enCoverage")
-        .textContent =
-        Math.round(
-            enCount /
-            allContent.length *
-            100
-        ) + "%";
-
-
-    document
-        .getElementById("bothLanguages")
-        .textContent =
-        bothCount;
-
-}
-
-
-
-/* =========================================================
-   ATTENTION
-   ========================================================= */
-
-function updateAttention() {
-
-    const attentionList =
-        document.getElementById(
-            "attentionList"
-        );
-
-
-    const items = [];
-
-
-    const allContent = [
-
-        ...dashboardData.articles,
-        ...dashboardData.research,
-        ...dashboardData.publications
-
-    ];
-
-
-    const withoutEnglish =
-        allContent.filter(
-            item =>
-                hasUa(item) &&
-                !hasEn(item)
-        );
-
-
-    if (withoutEnglish.length) {
-
-        items.push(
-            `Матеріалів без англійської версії: ${withoutEnglish.length}`
-        );
-
-    }
-
-
-    const withoutImage =
-        allContent.filter(
-            item =>
-                !item.main_image
-        );
-
-
-    if (withoutImage.length) {
-
-        items.push(
-            `Матеріалів без головного зображення: ${withoutImage.length}`
-        );
-
-    }
-
-
-    const oldDrafts =
-        allContent.filter(
-            item => {
-
-                const isDraft =
-                    !(
-                        item.status === "published" ||
-                        item.published === true
-                    );
-
-
-                if (
-                    !isDraft ||
-                    !item.created_at
-                ) {
-
-                    return false;
-
-                }
-
-
-                const created =
-                    new Date(
-                        item.created_at
-                    );
-
-
-                const now =
-                    new Date();
-
-
-                const difference =
-                    now - created;
-
-
-                const thirtyDays =
-                    30 *
-                    24 *
-                    60 *
-                    60 *
-                    1000;
-
-
-                return difference >
-                    thirtyDays;
-
-            }
-        );
-
-
-    if (oldDrafts.length) {
-
-        items.push(
-            `Чернеток старше 30 днів: ${oldDrafts.length}`
-        );
-
-    }
-
-
-    if (!items.length) {
-
-        attentionList.innerHTML =
-            `
-            <div class="admin-dashboard-attention-item success">
-                Все добре — матеріали не потребують додаткової уваги.
-            </div>
-            `;
-
-        return;
-
-    }
-
-
-    attentionList.innerHTML =
-        items
-            .map(
-                item =>
-                    `
-                    <div class="admin-dashboard-attention-item">
-                        ${item}
-                    </div>
-                    `
-            )
-            .join("");
-
-}
-
-
-
-/* =========================================================
-   CHART
-   ========================================================= */
-
-let materialsChart = null;
-
-
-function getMonthKey(date) {
-
-    return (
-        date.getFullYear() +
-        "-" +
-        String(
-            date.getMonth() + 1
-        ).padStart(
-            2,
-            "0"
-        )
-    );
-
-}
-
-
-function getMonthLabel(date) {
-
-    const months = [
-
-        "Січень",
-        "Лютий",
-        "Березень",
-        "Квітень",
-        "Травень",
-        "Червень",
-        "Липень",
-        "Серпень",
-        "Вересень",
-        "Жовтень",
-        "Листопад",
-        "Грудень"
-
-    ];
-
-
-    return (
-        months[date.getMonth()] +
-        " " +
-        date.getFullYear()
-    );
-
-}
-
-
-function createChart(monthsCount) {
-
-    const canvas =
-        document.getElementById(
-            "materialsChart"
-        );
-
-
-    if (!canvas) {
-        return;
-    }
-
-
-    const now =
-        new Date();
-
-
-    const months = [];
-
-
-    for (
-        let i = monthsCount - 1;
-        i >= 0;
-        i--
-    ) {
-
-        const date =
-            new Date(
-                now.getFullYear(),
-                now.getMonth() - i,
-                1
-            );
-
-
-        months.push({
-
-            key:
-                getMonthKey(date),
-
-            label:
-                getMonthLabel(date)
-
+        groups.forEach(([key, prefix, isCertificate]) => {
+            const items = dashboardData[key];
+            const published = countPublished(items, isCertificate);
+
+            setText(prefix + "Total", items.length);
+            setText(prefix + "Published", published);
+            setText(prefix + "Drafts", items.length - published);
         });
 
+        const content = [
+            ...dashboardData.articles,
+            ...dashboardData.research,
+            ...dashboardData.publications
+        ];
+
+        const published = countPublished(content);
+
+        setText("contentTotal", content.length);
+        setText("contentPublished", published);
+        setText("contentDrafts", content.length - published);
     }
 
-
-    const allItems = [
-
-        ...dashboardData.articles.map(
-            item => ({
-                ...item,
-                contentType: "Статті"
-            })
-        ),
-
-        ...dashboardData.research.map(
-            item => ({
-                ...item,
-                contentType: "Дослідження"
-            })
-        ),
-
-        ...dashboardData.publications.map(
-            item => ({
-                ...item,
-                contentType: "Публікації"
-            })
-        )
-
-    ];
-
-
-    const articleData =
-        months.map(
-            month =>
-                allItems.filter(
-                    item =>
-                        item.contentType ===
-                        "Статті" &&
-                        item.created_at &&
-                        getMonthKey(
-                            new Date(
-                                item.created_at
-                            )
-                        ) ===
-                        month.key
-                ).length
+    function hasUa(item) {
+        return Boolean(
+            item.title_ua ||
+            item.excerpt_ua ||
+            item.description_ua ||
+            item.content_ua
         );
-
-
-    const researchData =
-        months.map(
-            month =>
-                allItems.filter(
-                    item =>
-                        item.contentType ===
-                        "Дослідження" &&
-                        item.created_at &&
-                        getMonthKey(
-                            new Date(
-                                item.created_at
-                            )
-                        ) ===
-                        month.key
-                ).length
-        );
-
-
-    const publicationData =
-        months.map(
-            month =>
-                allItems.filter(
-                    item =>
-                        item.contentType ===
-                        "Публікації" &&
-                        item.created_at &&
-                        getMonthKey(
-                            new Date(
-                                item.created_at
-                            )
-                        ) ===
-                        month.key
-                ).length
-        );
-
-
-    if (materialsChart) {
-
-        materialsChart.destroy();
-
     }
 
-
-    materialsChart =
-        new Chart(
-            canvas,
-            {
-
-                type: "line",
-
-                data: {
-
-                    labels:
-                        months.map(
-                            month =>
-                                month.label
-                        ),
-
-                    datasets: [
-
-                        {
-
-                            label:
-                                "Статті",
-
-                            data:
-                                articleData,
-
-                            tension:
-                                0.3,
-
-                            borderWidth:
-                                2
-
-                        },
-
-                        {
-
-                            label:
-                                "Дослідження",
-
-                            data:
-                                researchData,
-
-                            tension:
-                                0.3,
-
-                            borderWidth:
-                                2
-
-                        },
-
-                        {
-
-                            label:
-                                "Публікації",
-
-                            data:
-                                publicationData,
-
-                            tension:
-                                0.3,
-
-                            borderWidth:
-                                2
-
-                        }
-
-                    ]
-
-                },
-
-                options: {
-
-                    responsive: true,
-
-                    maintainAspectRatio: false,
-
-                    interaction: {
-
-                        intersect:
-                            false,
-
-                        mode:
-                            "index"
-
-                    },
-
-                    plugins: {
-
-                        legend: {
-
-                            position:
-                                "bottom"
-
-                        }
-
-                    },
-
-                    scales: {
-
-                        y: {
-
-                            beginAtZero:
-                                true,
-
-                            ticks: {
-
-                                precision:
-                                    0
-
-                            }
-
-                        }
-
-                    }
-
-                }
-
-            }
+    function hasEn(item) {
+        return Boolean(
+            item.title_en ||
+            item.excerpt_en ||
+            item.description_en ||
+            item.content_en
         );
+    }
 
-}
+    function updateLanguageCoverage() {
+        const content = [
+            ...dashboardData.articles,
+            ...dashboardData.research,
+            ...dashboardData.publications
+        ];
 
-
-
-/* =========================================================
-   PERIOD BUTTONS
-   ========================================================= */
-
-document
-    .querySelectorAll(
-        ".dashboard-period-button"
-    )
-    .forEach(
-        button => {
-
-            button.addEventListener(
-                "click",
-                function() {
-
-                    document
-                        .querySelectorAll(
-                            ".dashboard-period-button"
-                        )
-                        .forEach(
-                            item =>
-                                item.classList.remove(
-                                    "active"
-                                )
-                        );
-
-
-                    this.classList.add(
-                        "active"
-                    );
-
-
-                    const months =
-                        Number(
-                            this.dataset.months
-                        );
-
-
-                    createChart(
-                        months
-                    );
-
-                }
-            );
-
+        if (!content.length) {
+            setText("uaCoverage", "0%");
+            setText("enCoverage", "0%");
+            setText("bothLanguages", "0");
+            return;
         }
-    );
 
+        const ua = content.filter(hasUa).length;
+        const en = content.filter(hasEn).length;
+        const both = content.filter(item => hasUa(item) && hasEn(item)).length;
 
-
-/* =========================================================
-   START
-   ========================================================= */
-
-(async function() {
-
-    const sessionExists =
-        await checkSession();
-
-
-    if (!sessionExists) {
-        return;
+        setText("uaCoverage", Math.round(ua / content.length * 100) + "%");
+        setText("enCoverage", Math.round(en / content.length * 100) + "%");
+        setText("bothLanguages", both);
     }
 
+    function updateAttention() {
+        const container = document.getElementById("attentionList");
 
-    await loadDashboardData();
+        const content = [
+            ...dashboardData.articles,
+            ...dashboardData.research,
+            ...dashboardData.publications
+        ];
 
-})();
+        const issues = [];
 
+        const noEnglish = content.filter(item => hasUa(item) && !hasEn(item)).length;
+        const noImage = content.filter(item => !item.main_image).length;
+
+        const cutoff = Date.now() - 30 * 24 * 60 * 60 * 1000;
+
+        const oldDrafts = content.filter(item =>
+            item.status !== "published" &&
+            item.created_at &&
+            new Date(item.created_at).getTime() < cutoff
+        ).length;
+
+        if (noEnglish) {
+            issues.push("Матеріалів без англійської версії: " + noEnglish);
+        }
+
+        if (noImage) {
+            issues.push("Матеріалів без головного зображення: " + noImage);
+        }
+
+        if (oldDrafts) {
+            issues.push("Чернеток старше 30 днів: " + oldDrafts);
+        }
+
+        if (!issues.length) {
+            container.innerHTML =
+                '<div class="dashboard-alert success">Наразі немає очевидних проблем із заповненням матеріалів.</div>';
+            return;
+        }
+
+        container.innerHTML = "";
+
+        issues.forEach(message => {
+            const item = document.createElement("div");
+            item.className = "dashboard-alert";
+            item.textContent = message;
+            container.appendChild(item);
+        });
+    }
+
+    // ГРАФІК ЗА created_at
+    let materialsChart = null;
+
+    function monthKey(date) {
+        return date.getFullYear() + "-" +
+            String(date.getMonth() + 1).padStart(2, "0");
+    }
+
+    function monthLabel(date) {
+        return date.toLocaleDateString("uk-UA", {
+            month: "short",
+            year: "numeric"
+        });
+    }
+
+    function createChart(monthsCount) {
+        const canvas = document.getElementById("materialsChart");
+        const now = new Date();
+        const months = [];
+
+        for (let i = monthsCount - 1; i >= 0; i--) {
+            const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
+            months.push({
+                key: monthKey(date),
+                label: monthLabel(date)
+            });
+        }
+
+        const series = [
+            {
+                label: "Статті",
+                items: dashboardData.articles
+            },
+            {
+                label: "Дослідження",
+                items: dashboardData.research
+            },
+            {
+                label: "Публікації",
+                items: dashboardData.publications
+            }
+        ];
+
+        const datasets = series.map(group => ({
+            label: group.label,
+            data: months.map(month =>
+                group.items.filter(item =>
+                    item.created_at &&
+                    monthKey(new Date(item.created_at)) === month.key
+                ).length
+            ),
+            tension: 0.3,
+            borderWidth: 2,
+            pointRadius: 3,
+            pointHoverRadius: 5,
+            fill: false
+        }));
+
+        if (materialsChart) materialsChart.destroy();
+
+        materialsChart = new Chart(canvas, {
+            type: "line",
+            data: {
+                labels: months.map(month => month.label),
+                datasets
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    intersect: false,
+                    mode: "index"
+                },
+                plugins: {
+                    legend: {
+                        position: "bottom",
+                        labels: {
+                            usePointStyle: true,
+                            padding: 18
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            precision: 0
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    document.querySelectorAll(".dashboard-period button")
+        .forEach(button => {
+            button.addEventListener("click", function() {
+                document.querySelectorAll(".dashboard-period button")
+                    .forEach(item => item.classList.remove("active"));
+
+                this.classList.add("active");
+                createChart(Number(this.dataset.months));
+            });
+        });
+
+    async function loadDashboard() {
+        const requests = await Promise.all([
+            client.from("articles").select("*"),
+            client.from("research").select("*"),
+            client.from("publications").select("*"),
+            client.from("certificates").select("*")
+        ]);
+
+        const names = ["articles", "research", "publications", "certificates"];
+
+        requests.forEach((result, index) => {
+            if (result.error) {
+                throw new Error(names[index] + ": " + result.error.message);
+            }
+
+            dashboardData[names[index]] = result.data || [];
+        });
+
+        updateStatistics();
+        updateLanguageCoverage();
+        updateAttention();
+        createChart(12);
+    }
+
+    (async function() {
+        const authorized = await checkSession();
+        if (!authorized) return;
+
+        try {
+            await loadDashboard();
+        } catch (error) {
+            console.error("Помилка завантаження головної:", error);
+            document.getElementById("attentionList").innerHTML =
+                '<div class="dashboard-alert">Не вдалося завантажити статистику. Перевір консоль браузера.</div>';
+        }
+    })();
 </script>
 
-
 </body>
-
 </html>

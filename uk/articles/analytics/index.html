@@ -44,23 +44,15 @@
         </p>
     </div>
 
-    <div class="page-content">
+   <div class="page-content">
 
-        <div class="page-cards">
+    <div class="page-cards" id="articles-list">
 
-            <article class="page-card">
-                <div class="page-card-type">Аналітика</div>
-                <h2>Аналітичні матеріали</h2>
-                <p>
-                    Тут будуть представлені матеріали,
-                    у яких розглядаються актуальні події,
-                    тенденції та суспільні процеси.
-                </p>
-            </article>
-
-        </div>
+        <p id="loading-message">Завантаження матеріалів...</p>
 
     </div>
+
+</div>
 
 </main>
 
@@ -80,5 +72,76 @@
         }
     });
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+    const SUPABASE_URL = "https://jtplvfweyguheyqyewal.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_jAg0mG8Pj30tCF7qND3ydQ_-WDv4EhP";
+
+    const supabaseClient = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+    async function loadArticles() {
+
+        const articlesList = document.getElementById("articles-list");
+
+        const { data, error } = await supabaseClient
+            .from("articles")
+            .select("*")
+            .eq("status", "published")
+            .eq("category", "Аналітика")
+            .order("publication_date", { ascending: false });
+
+        if (error) {
+            console.error("Помилка завантаження матеріалів:", error);
+
+            articlesList.innerHTML = `
+                <p>Не вдалося завантажити матеріали.</p>
+            `;
+
+            return;
+        }
+
+        if (!data || data.length === 0) {
+            articlesList.innerHTML = `
+                <p>Опублікованих аналітичних матеріалів поки немає.</p>
+            `;
+
+            return;
+        }
+
+        articlesList.innerHTML = "";
+
+        data.forEach(article => {
+
+            const card = document.createElement("article");
+            card.className = "page-card";
+
+            card.innerHTML = `
+                <div class="page-card-type">Аналітика</div>
+
+                <h2>${escapeHtml(article.title_ua || "")}</h2>
+
+                <p>
+                    ${escapeHtml(article.excerpt_ua || "")}
+                </p>
+            `;
+
+            articlesList.appendChild(card);
+        });
+    }
+
+    function escapeHtml(text) {
+        const div = document.createElement("div");
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    loadArticles();
+</script>
+
 </body>
 </html>

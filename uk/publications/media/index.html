@@ -44,22 +44,15 @@
         </p>
     </div>
 
-    <div class="page-content">
+<div class="page-content">
 
-        <div class="page-cards">
+    <div class="page-cards" id="publications-list">
 
-            <article class="page-card">
-                <div class="page-card-type">Медіа</div>
-                <h2>Журналістські матеріали</h2>
-                <p>
-                    Тут будуть представлені опубліковані статті,
-                    репортажі, інтерв'ю та інші журналістські матеріали.
-                </p>
-            </article>
-
-        </div>
+        <p id="loading-message">Завантаження публікацій...</p>
 
     </div>
+
+</div>
 
 </main>
 
@@ -79,5 +72,74 @@
         }
     });
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+    const SUPABASE_URL = "https://jtplvfweyguheyqyewal.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_jAg0mG8Pj30tCF7qND3ydQ_-WDv4EhP";
+
+    const supabaseClient = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+    async function loadPublications() {
+
+        const publicationsList = document.getElementById("publications-list");
+
+        const { data, error } = await supabaseClient
+            .from("publications")
+            .select("*")
+            .eq("status", "published")
+            .eq("publication_type", "media")
+            .order("publication_date", { ascending: false });
+
+        if (error) {
+            console.error("Помилка завантаження публікацій:", error);
+
+            publicationsList.innerHTML = `
+                <p>Не вдалося завантажити публікації.</p>
+            `;
+
+            return;
+        }
+
+        if (!data || data.length === 0) {
+            publicationsList.innerHTML = `
+                <p>Опублікованих медійних публікацій поки немає.</p>
+            `;
+
+            return;
+        }
+
+        publicationsList.innerHTML = "";
+
+        data.forEach(publication => {
+
+            const card = document.createElement("article");
+            card.className = "page-card";
+
+            card.innerHTML = `
+                <h2>${escapeHtml(publication.title_ua || "")}</h2>
+
+                <p>
+                    ${escapeHtml(publication.description_ua || "")}
+                </p>
+            `;
+
+            publicationsList.appendChild(card);
+        });
+    }
+
+    function escapeHtml(text) {
+        const div = document.createElement("div");
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    loadPublications();
+</script>
+    
 </body>
 </html>

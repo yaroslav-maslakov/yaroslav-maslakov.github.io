@@ -1922,19 +1922,34 @@ function renderPublications() {
                 "admin-item";
 
 
-            const title =
-                document.createElement(
-                    "h4"
-                );
+            const typeLabel =
+    document.createElement(
+        "div"
+    );
+
+typeLabel.className =
+    "admin-item-category";
+
+typeLabel.textContent =
+    publication.publication_type ===
+    "academic"
+        ? "Академічна"
+        : "Медійна";
 
 
-            title.textContent =
-                publication.title_ua ||
-                "Без назви";
+const title =
+    document.createElement(
+        "h4"
+    );
 
 
-            title.style.cursor =
-                "pointer";
+title.textContent =
+    publication.title_ua ||
+    "Без назви";
+
+
+title.style.cursor =
+    "pointer";
 
 
             const details =
@@ -2528,18 +2543,23 @@ function renderPublications() {
 
 
             publicationItem.appendChild(
-                title
-            );
+    typeLabel
+);
 
 
-            publicationItem.appendChild(
-                details
-            );
+publicationItem.appendChild(
+    title
+);
 
 
-            publicationList.appendChild(
-                publicationItem
-            );
+publicationItem.appendChild(
+    details
+);
+
+
+publicationList.appendChild(
+    publicationItem
+);
 
         }
     );

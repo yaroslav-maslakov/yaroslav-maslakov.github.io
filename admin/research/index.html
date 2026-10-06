@@ -1885,23 +1885,40 @@ function renderResearch() {
 
 
 
-            /*
-             * НАЗВА
-             */
+           /*
+ * КАТЕГОРІЯ
+ */
 
-            const title =
-                document.createElement(
-                    "h4"
-                );
+const categoryLabel =
+    document.createElement(
+        "div"
+    );
+
+categoryLabel.className =
+    "admin-item-category";
+
+categoryLabel.textContent =
+    research.category ||
+    "Без категорії";
 
 
-            title.textContent =
-                research.title_ua ||
-                "Без назви";
+/*
+ * НАЗВА
+ */
+
+const title =
+    document.createElement(
+        "h4"
+    );
 
 
-            title.style.cursor =
-                "pointer";
+title.textContent =
+    research.title_ua ||
+    "Без назви";
+
+
+title.style.cursor =
+    "pointer";
 
 
 
@@ -2482,18 +2499,23 @@ function renderResearch() {
 
 
             researchItem.appendChild(
-                title
-            );
+    categoryLabel
+);
 
 
-            researchItem.appendChild(
-                details
-            );
+researchItem.appendChild(
+    title
+);
 
 
-            researchList.appendChild(
-                researchItem
-            );
+researchItem.appendChild(
+    details
+);
+
+
+researchList.appendChild(
+    researchItem
+);
 
         }
     );

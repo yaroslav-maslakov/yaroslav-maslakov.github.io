@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Аналітичний матеріал — Ярослав Маслаков</title>
+    <link rel="stylesheet" href="../../../../style.css">
+</head>
+
+<body>
+
+<header>
+    <div class="header-inner">
+
+        <div class="logo">ЯРОСЛАВ МАСЛАКОВ</div>
+
+        <nav>
+            <a href="../../../index.html">Головна</a>
+            <a href="../../index.html" class="active">Статті</a>
+            <a href="../../../research/index.html">Дослідження</a>
+            <a href="../../../publications/index.html">Публікації</a>
+            <a href="../../../certificates/index.html">Сертифікати</a>
+            <a href="../../../about/index.html">Про мене</a>
+            <a href="../../../contacts/index.html">Контакти</a>
+        </nav>
+
+        <button
+            class="menu-toggle"
+            type="button"
+            aria-label="Відкрити меню"
+            onclick="this.textContent = this.textContent === 'МЕНЮ' ? 'ЗАКРИТИ' : 'МЕНЮ'; document.querySelector('nav').classList.toggle('menu-open')"
+        >
+            МЕНЮ
+        </button>
+
+        <div class="language">
+            <a href="../../../../uk/articles/analytics/index.html">UA</a>
+            <span>|</span>
+            <a href="../../../../en/articles/analytics/article/index.html">EN</a>
+        </div>
+
+    </div>
+</header>
+
+
+<main class="page">
+
+    <div class="page-content">
+
+        <article id="article-content">
+
+            <p>Завантаження матеріалу...</p>
+
+        </article>
+
+    </div>
+
+</main>
+
+
+<footer>
+    © 2026 Ярослав Маслаков
+</footer>
+
+
+<script>
+    const menuButton = document.querySelector('.menu-toggle');
+    const menu = document.querySelector('nav');
+
+    document.addEventListener('click', function(event) {
+        if (!menuButton || !menu) return;
+
+        if (!menu.contains(event.target) && !menuButton.contains(event.target)) {
+            menu.classList.remove('menu-open');
+            menuButton.textContent = 'МЕНЮ';
+        }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<script>
+
+    const SUPABASE_URL =
+        "https://jtplvfweyguheyqyewal.supabase.co";
+
+    const SUPABASE_KEY =
+        "sb_publishable_jAg0mG8Pj30tCF7qND3ydQ_-WDv4EhP";
+
+    const supabaseClient =
+        window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_KEY
+        );
+
+
+    async function loadArticle() {
+
+        const articleContent =
+            document.getElementById("article-content");
+
+
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
+
+
+        const slug =
+            params.get("slug");
+
+
+        if (!slug) {
+
+            articleContent.innerHTML = `
+                <p>
+                    Матеріал не знайдено.
+                </p>
+            `;
+
+            return;
+        }
+
+
+        const { data, error } =
+            await supabaseClient
+                .from("articles")
+                .select("*")
+                .eq("slug", slug)
+                .eq("status", "published")
+                .eq("category", "Аналітика")
+                .single();
+
+
+        if (error || !data) {
+
+            console.error(
+                "Помилка завантаження матеріалу:",
+                error
+            );
+
+            articleContent.innerHTML = `
+                <p>
+                    Не вдалося завантажити матеріал.
+                </p>
+            `;
+
+            return;
+        }
+
+
+        document.title =
+            `${data.title_ua || "Аналітичний матеріал"} — Ярослав Маслаков`;
+
+
+        let contentHtml = "";
+
+
+        if (data.content_ua) {
+
+            contentHtml =
+                data.content_ua
+                    .split(/\n\s*\n/)
+                    .map(paragraph => {
+
+                        return `
+                            <p>
+                                ${escapeHtml(paragraph).replace(/\n/g, "<br>")}
+                            </p>
+                        `;
+
+                    })
+                    .join("");
+
+        }
+
+
+        articleContent.innerHTML = `
+
+            <div class="page-header">
+
+                <h1>
+                    ${escapeHtml(data.title_ua || "")}
+                </h1>
+
+                <p>
+                    ${formatDate(data.publication_date)}
+                </p>
+
+            </div>
+
+
+            ${
+                data.main_image
+                    ? `
+                        <div class="article-image">
+
+                            <img
+                                src="${escapeHtml(data.main_image)}"
+                                alt="${escapeHtml(data.caption_ua || data.title_ua || "")}"
+                            >
+
+                            ${
+                                data.caption_ua
+                                    ? `
+                                        <p class="article-caption">
+                                            ${escapeHtml(data.caption_ua)}
+                                        </p>
+                                    `
+                                    : ""
+                            }
+
+                        </div>
+                    `
+                    : ""
+            }
+
+
+            <div class="article-text">
+
+                ${contentHtml}
+
+            </div>
+
+        `;
+    }
+
+
+    function formatDate(date) {
+
+        if (!date) return "";
+
+        const parts =
+            date.split("-");
+
+        if (parts.length !== 3) {
+            return escapeHtml(date);
+        }
+
+        return `${parts[2]}.${parts[1]}.${parts[0]}`;
+    }
+
+
+    function escapeHtml(text) {
+
+        const div =
+            document.createElement("div");
+
+        div.textContent =
+            text;
+
+        return div.innerHTML;
+    }
+
+
+    loadArticle();
+
+</script>
+
+</body>
+</html>

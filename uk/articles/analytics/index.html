@@ -115,22 +115,31 @@
 
         articlesList.innerHTML = "";
 
-        data.forEach(article => {
+       data.forEach(article => {
 
-            const card = document.createElement("article");
-            card.className = "page-card";
+    const card = document.createElement("article");
+    card.className = "page-card";
 
-            card.innerHTML = `
-                
-                <h2>${escapeHtml(article.title_ua || "")}</h2>
+    card.innerHTML = `
+        
+        <h2>${escapeHtml(article.title_ua || "")}</h2>
 
-                <p>
-                    ${escapeHtml(article.excerpt_ua || "")}
-                </p>
-            `;
+        <p>
+            ${escapeHtml(article.excerpt_ua || "")}
+        </p>
+    `;
 
-            articlesList.appendChild(card);
-        });
+    card.style.cursor = "pointer";
+
+    card.addEventListener("click", function() {
+
+        window.location.href =
+            `article/index.html?slug=${encodeURIComponent(article.slug)}`;
+
+    });
+
+    articlesList.appendChild(card);
+});
     }
 
     function escapeHtml(text) {

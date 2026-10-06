@@ -158,23 +158,23 @@
         let contentHtml = "";
 
 
-        if (data.content_ua) {
+      if (data.content_ua) {
 
-            contentHtml =
-                data.content_ua
-                    .split(/\n\s*\n/)
-                    .map(paragraph => {
+    contentHtml =
+        data.content_ua
+            .split(/\n\s*\n/)
+            .map(paragraph => {
 
-                        return `
-                            <p>
-                                ${escapeHtml(paragraph).replace(/\n/g, "<br>")}
-                            </p>
-                        `;
+                return `
+                    <p>
+                        ${paragraph.replace(/\n/g, "<br>")}
+                    </p>
+                `;
 
-                    })
-                    .join("");
+            })
+            .join("");
 
-        }
+}
 
 
         articleContent.innerHTML = `

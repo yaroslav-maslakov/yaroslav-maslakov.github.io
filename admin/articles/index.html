@@ -1613,17 +1613,30 @@ function renderArticles() {
                 "admin-item";
 
 
-            const title =
-                document.createElement(
-                    "h4"
-                );
+            const categoryLabel =
+    document.createElement(
+        "div"
+    );
 
-            title.textContent =
-                article.title_ua ||
-                "Без назви";
+categoryLabel.className =
+    "admin-item-category";
 
-            title.style.cursor =
-                "pointer";
+categoryLabel.textContent =
+    article.category ||
+    "Без категорії";
+
+
+const title =
+    document.createElement(
+        "h4"
+    );
+
+title.textContent =
+    article.title_ua ||
+    "Без назви";
+
+title.style.cursor =
+    "pointer";
 
 
             const details =
@@ -2067,16 +2080,20 @@ function renderArticles() {
 
 
             articleItem.appendChild(
-                title
-            );
+    categoryLabel
+);
 
-            articleItem.appendChild(
-                details
-            );
+articleItem.appendChild(
+    title
+);
 
-            articlesList.appendChild(
-                articleItem
-            );
+articleItem.appendChild(
+    details
+);
+
+articlesList.appendChild(
+    articleItem
+);
         }
     );
 }

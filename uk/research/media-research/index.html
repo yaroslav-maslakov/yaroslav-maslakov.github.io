@@ -46,22 +46,13 @@
 
     <div class="page-content">
 
-        <div class="page-cards">
+    <div class="page-cards" id="research-list">
 
-            <article class="page-card">
-                <div class="page-card-type">Медіадослідження</div>
-                <h2>Дослідження медіа</h2>
-                <p>
-                    Тут будуть представлені дослідження,
-                    присвячені сучасним медіа, журналістиці,
-                    цифровим платформам та інформаційному середовищу.
-                </p>
-            </article>
-
-        </div>
+        <p id="loading-message">Завантаження досліджень...</p>
 
     </div>
 
+</div>
 </main>
 
 <footer>
@@ -80,5 +71,74 @@
         }
     });
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+    const SUPABASE_URL = "https://jtplvfweyguheyqyewal.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_jAg0mG8Pj30tCF7qND3ydQ_-WDv4EhP";
+
+    const supabaseClient = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+    async function loadResearch() {
+
+        const researchList = document.getElementById("research-list");
+
+        const { data, error } = await supabaseClient
+            .from("articles")
+            .select("*")
+            .eq("status", "published")
+            .eq("category", "Медіадослідження")
+            .order("publication_date", { ascending: false });
+
+        if (error) {
+            console.error("Помилка завантаження досліджень:", error);
+
+            researchList.innerHTML = `
+                <p>Не вдалося завантажити дослідження.</p>
+            `;
+
+            return;
+        }
+
+        if (!data || data.length === 0) {
+            researchList.innerHTML = `
+                <p>Опублікованих медіадосліджень поки немає.</p>
+            `;
+
+            return;
+        }
+
+        researchList.innerHTML = "";
+
+        data.forEach(item => {
+
+            const card = document.createElement("article");
+            card.className = "page-card";
+
+            card.innerHTML = `
+                <h2>${escapeHtml(item.title_ua || "")}</h2>
+
+                <p>
+                    ${escapeHtml(item.excerpt_ua || "")}
+                </p>
+            `;
+
+            researchList.appendChild(card);
+        });
+    }
+
+    function escapeHtml(text) {
+        const div = document.createElement("div");
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    loadResearch();
+</script>
+    
 </body>
 </html>

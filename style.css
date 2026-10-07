@@ -1912,3 +1912,56 @@ footer {
     text-transform: uppercase;
     letter-spacing: 0.04em;
 }
+#articleEditorUA img.article-image-float-left {
+    float: left;
+    margin: 0 20px 10px 0;
+}
+
+#articleEditorUA img.article-image-float-right {
+    float: right;
+    margin: 0 0 10px 20px;
+}
+
+#articleEditorUA img.article-image-center {
+    display: block;
+    float: none;
+    margin: 10px auto;
+}
+
+#articleEditorEN img.article-image-float-left {
+    float: left;
+    margin: 0 20px 10px 0;
+}
+
+#articleEditorEN img.article-image-float-right {
+    float: right;
+    margin: 0 0 10px 20px;
+}
+
+#articleEditorEN img.article-image-center {
+    display: block;
+    float: none;
+    margin: 10px auto;
+}
+
+.article-image-wrap-toolbar {
+    display: none;
+    position: absolute;
+    z-index: 1000;
+    background: #ffffff;
+    border: 1px solid #d8d2ca;
+    padding: 5px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+}
+
+.article-image-wrap-toolbar button {
+    border: none;
+    background: transparent;
+    padding: 6px 9px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.article-image-wrap-toolbar button:hover {
+    background: #f2eee8;
+}

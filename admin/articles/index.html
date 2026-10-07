@@ -9,6 +9,46 @@
 
     <link rel="stylesheet" href="../../style.css">
 
+    <style>
+    #articleEditorUA img.article-image-float-left {
+        float: left;
+        margin: 0 20px 10px 0;
+    }
+
+    #articleEditorUA img.article-image-float-right {
+        float: right;
+        margin: 0 0 10px 20px;
+    }
+
+    #articleEditorUA img.article-image-center {
+        display: block;
+        float: none;
+        margin: 10px auto;
+    }
+
+    .article-image-wrap-toolbar {
+        display: none;
+        position: absolute;
+        z-index: 1000;
+        background: #ffffff;
+        border: 1px solid #d8d2ca;
+        padding: 5px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+    }
+
+    .article-image-wrap-toolbar button {
+        border: none;
+        background: transparent;
+        padding: 6px 9px;
+        cursor: pointer;
+        font-size: 13px;
+    }
+
+    .article-image-wrap-toolbar button:hover {
+        background: #f2eee8;
+    }
+</style>
+    
 </head>
 
 
@@ -869,9 +909,202 @@ if (articleEditorUA) {
 
 }
             }
-        );
+                );
 
 }
+
+/*
+ * =========================
+ * ОБТІКАННЯ ЗОБРАЖЕННЯ UA
+ * =========================
+ */
+
+let selectedArticleImageUA = null;
+
+const imageWrapToolbarUA =
+    document.createElement("div");
+
+imageWrapToolbarUA.className =
+    "article-image-wrap-toolbar";
+
+imageWrapToolbarUA.innerHTML = `
+    <button
+        type="button"
+        data-align="left"
+    >
+        Ліворуч
+    </button>
+
+    <button
+        type="button"
+        data-align="center"
+    >
+        По центру
+    </button>
+
+    <button
+        type="button"
+        data-align="right"
+    >
+        Праворуч
+    </button>
+`;
+
+document.body.appendChild(
+    imageWrapToolbarUA
+);
+
+
+function hideImageWrapToolbarUA() {
+
+    imageWrapToolbarUA.style.display =
+        "none";
+
+    selectedArticleImageUA =
+        null;
+}
+
+
+function showImageWrapToolbarUA(
+    image
+) {
+
+    selectedArticleImageUA =
+        image;
+
+    const rect =
+        image.getBoundingClientRect();
+
+    imageWrapToolbarUA.style.left =
+        (
+            window.scrollX +
+            rect.left
+        ) + "px";
+
+    imageWrapToolbarUA.style.top =
+        (
+            window.scrollY +
+            rect.bottom +
+            5
+        ) + "px";
+
+    imageWrapToolbarUA.style.display =
+        "block";
+}
+
+
+articleEditorUA.addEventListener(
+    "click",
+    function(event) {
+
+        if (
+            event.target &&
+            event.target.tagName === "IMG"
+        ) {
+
+            showImageWrapToolbarUA(
+                event.target
+            );
+
+            return;
+        }
+
+        hideImageWrapToolbarUA();
+
+    }
+);
+
+
+imageWrapToolbarUA
+    .addEventListener(
+        "click",
+        function(event) {
+
+            const button =
+                event.target.closest(
+                    "button"
+                );
+
+            if (
+                !button ||
+                !selectedArticleImageUA
+            ) {
+                return;
+            }
+
+            const align =
+                button.dataset.align;
+
+
+            selectedArticleImageUA.classList.remove(
+                "article-image-float-left",
+                "article-image-float-right",
+                "article-image-center"
+            );
+
+
+            if (align === "left") {
+
+                selectedArticleImageUA.classList.add(
+                    "article-image-float-left"
+                );
+
+            }
+
+
+            if (align === "right") {
+
+                selectedArticleImageUA.classList.add(
+                    "article-image-float-right"
+                );
+
+            }
+
+
+            if (align === "center") {
+
+                selectedArticleImageUA.classList.add(
+                    "article-image-center"
+                );
+
+            }
+
+
+            if (articleQuillUA) {
+
+                articleQuillUA.update();
+
+            }
+
+        }
+    );
+
+
+document.addEventListener(
+    "click",
+    function(event) {
+
+        if (
+            !articleEditorUA.contains(
+                event.target
+            ) &&
+            !imageWrapToolbarUA.contains(
+                event.target
+            )
+        ) {
+
+            hideImageWrapToolbarUA();
+
+        }
+
+    }
+);
+
+
+const toolbarUA =
+    articleQuillUA.getModule(
+        "toolbar"
+    );
 
     const toolbarUA =
     articleQuillUA.getModule(

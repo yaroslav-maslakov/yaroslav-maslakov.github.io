@@ -17,6 +17,32 @@
         href="../../style.css"
     >
 
+    <style>
+
+        .article-suggestion-button {
+            margin-top: 8px;
+        }
+
+        .publication-image-wrap-toolbar {
+            display: none;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            background: #fafafa;
+        }
+
+        .publication-image-wrap-toolbar button {
+            cursor: pointer;
+        }
+
+        .publication-editor-wrapper {
+            position: relative;
+        }
+
+    </style>
+
 </head>
 
 
@@ -182,6 +208,14 @@
                 required
             >
 
+            <button
+                type="button"
+                id="suggestTitleENButton"
+                class="admin-button article-suggestion-button"
+            >
+                ЗАПРОПОНУВАТИ АНГЛІЙСЬКУ
+            </button>
+
         </div>
 
 
@@ -328,14 +362,104 @@
             Основний текст UA
         </h3>
 
-        <div id="publicationEditorUA"></div>
+        <div
+            class="publication-editor-wrapper"
+            id="publicationEditorUAWrapper"
+        >
+            <div id="publicationEditorUA"></div>
+
+            <div
+                class="publication-image-wrap-toolbar"
+                id="publicationImageToolbarUA"
+            >
+
+                <button
+                    type="button"
+                    class="admin-button"
+                    data-image-action="left"
+                >
+                    ЛІВОРУЧ
+                </button>
+
+                <button
+                    type="button"
+                    class="admin-button"
+                    data-image-action="center"
+                >
+                    ПО ЦЕНТРУ
+                </button>
+
+                <button
+                    type="button"
+                    class="admin-button"
+                    data-image-action="right"
+                >
+                    ПРАВОРУЧ
+                </button>
+
+                <button
+                    type="button"
+                    class="admin-button"
+                    data-image-action="none"
+                >
+                    БЕЗ ОБТІКАННЯ
+                </button>
+
+            </div>
+
+        </div>
 
 
         <h3>
             Основний текст EN
         </h3>
 
-        <div id="publicationEditorEN"></div>
+        <div
+            class="publication-editor-wrapper"
+            id="publicationEditorENWrapper"
+        >
+            <div id="publicationEditorEN"></div>
+
+            <div
+                class="publication-image-wrap-toolbar"
+                id="publicationImageToolbarEN"
+            >
+
+                <button
+                    type="button"
+                    class="admin-button"
+                    data-image-action="left"
+                >
+                    ЛІВОРУЧ
+                </button>
+
+                <button
+                    type="button"
+                    class="admin-button"
+                    data-image-action="center"
+                >
+                    ПО ЦЕНТРУ
+                </button>
+
+                <button
+                    type="button"
+                    class="admin-button"
+                    data-image-action="right"
+                >
+                    ПРАВОРУЧ
+                </button>
+
+                <button
+                    type="button"
+                    class="admin-button"
+                    data-image-action="none"
+                >
+                    БЕЗ ОБТІКАННЯ
+                </button>
+
+            </div>
+
+        </div>
 
 
 
@@ -426,6 +550,14 @@
                 type="text"
                 id="slug"
             >
+
+            <button
+                type="button"
+                id="suggestSlugButton"
+                class="admin-button article-suggestion-button"
+            >
+                ЗАПРОПОНУВАТИ SLUG
+            </button>
 
         </div>
 
@@ -686,6 +818,16 @@
 ></script>
 
 
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"
+></script>
+
+
+<script
+    src="https://cdn.jsdelivr.net/npm/resize-quill-image@1.0.10/dist/index.iife.js"
+></script>
+
+
 
 <script>
 
@@ -719,6 +861,23 @@ const client =
             }
         }
     );
+
+
+
+/*
+ * =========================
+ * РЕЄСТРАЦІЯ RESIZE
+ * =========================
+ */
+
+if (typeof ImageResize !== "undefined") {
+
+    Quill.register(
+        "modules/imageResize",
+        ImageResize
+    );
+
+}
 
 
 
@@ -956,6 +1115,190 @@ async function uploadPublicationImage(
 
 /*
  * =========================
+ * ФОРМАТУВАННЯ КАРТИНОК
+ * =========================
+ */
+
+function applyPublicationImageStyle(
+    image,
+    action
+) {
+
+    if (!image) {
+        return;
+    }
+
+
+    image.style.marginTop =
+        "10px";
+
+    image.style.marginBottom =
+        "10px";
+
+
+    if (action === "left") {
+
+        image.style.float =
+            "left";
+
+        image.style.marginLeft =
+            "0";
+
+        image.style.marginRight =
+            "20px";
+
+        image.style.display =
+            "block";
+
+    }
+
+
+    if (action === "right") {
+
+        image.style.float =
+            "right";
+
+        image.style.marginLeft =
+            "20px";
+
+        image.style.marginRight =
+            "0";
+
+        image.style.display =
+            "block";
+
+    }
+
+
+    if (action === "center") {
+
+        image.style.float =
+            "none";
+
+        image.style.display =
+            "block";
+
+        image.style.marginLeft =
+            "auto";
+
+        image.style.marginRight =
+            "auto";
+
+    }
+
+
+    if (action === "none") {
+
+        image.style.float =
+            "none";
+
+        image.style.display =
+            "inline-block";
+
+        image.style.marginLeft =
+            "0";
+
+        image.style.marginRight =
+            "0";
+
+    }
+
+}
+
+
+
+/*
+ * =========================
+ * ПАНЕЛЬ ФОРМАТУВАННЯ
+ * =========================
+ */
+
+function setupPublicationImageToolbar(
+    quill,
+    editorElement,
+    toolbarElement
+) {
+
+    if (
+        !quill ||
+        !editorElement ||
+        !toolbarElement
+    ) {
+        return;
+    }
+
+
+    let selectedImage =
+        null;
+
+
+    editorElement.addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                event.target &&
+                event.target.tagName ===
+                    "IMG"
+            ) {
+
+                selectedImage =
+                    event.target;
+
+                toolbarElement.style.display =
+                    "flex";
+
+            } else {
+
+                selectedImage =
+                    null;
+
+                toolbarElement.style.display =
+                    "none";
+
+            }
+
+        }
+    );
+
+
+    toolbarElement
+        .querySelectorAll(
+            "[data-image-action]"
+        )
+        .forEach(
+            function(button) {
+
+                button.addEventListener(
+                    "click",
+                    function() {
+
+                        if (!selectedImage) {
+                            return;
+                        }
+
+
+                        const action =
+                            button.dataset.imageAction;
+
+
+                        applyPublicationImageStyle(
+                            selectedImage,
+                            action
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+}
+
+
+
+/*
+ * =========================
  * НАЛАШТУВАННЯ QUILL
  * =========================
  */
@@ -964,67 +1307,90 @@ function createPublicationQuill(
     element
 ) {
 
-    return new Quill(
-        element,
-        {
-            theme: "snow",
+    const editor =
+        new Quill(
+            element,
+            {
+                theme: "snow",
 
-            modules: {
+                modules: {
 
-                toolbar: [
+                    toolbar: [
 
-                    [
-                        {
-                            header: [
-                                1,
-                                2,
-                                3,
-                                false
-                            ]
-                        }
+                        [
+                            {
+                                header: [
+                                    1,
+                                    2,
+                                    3,
+                                    false
+                                ]
+                            }
+                        ],
+
+                        [
+                            "bold",
+                            "italic",
+                            "underline"
+                        ],
+
+                        [
+                            {
+                                list: "ordered"
+                            },
+
+                            {
+                                list: "bullet"
+                            }
+                        ],
+
+                        [
+                            "blockquote"
+                        ],
+
+                        [
+                            "link",
+                            "image"
+                        ],
+
+                        [
+                            {
+                                align: []
+                            }
+                        ],
+
+                        [
+                            "clean"
+                        ]
+
                     ],
 
-                    [
-                        "bold",
-                        "italic",
-                        "underline"
-                    ],
+                    imageResize: {
 
-                    [
-                        {
-                            list: "ordered"
-                        },
+                        displaySize:
+                            true,
 
-                        {
-                            list: "bullet"
-                        }
-                    ],
+                        helpIcon:
+                            true,
 
-                    [
-                        "blockquote"
-                    ],
+                        styleSelection:
+                            true,
 
-                    [
-                        "link",
-                        "image"
-                    ],
+                        minWidth:
+                            20,
 
-                    [
-                        {
-                            align: []
-                        }
-                    ],
+                        minHeight:
+                            20
 
-                    [
-                        "clean"
-                    ]
+                    }
 
-                ]
+                }
 
             }
+        );
 
-        }
-    );
+
+    return editor;
 
 }
 
@@ -1067,6 +1433,15 @@ if (publicationEditorUA) {
             }
         );
 
+
+    setupPublicationImageToolbar(
+        publicationQuillUA,
+        publicationEditorUA,
+        document.getElementById(
+            "publicationImageToolbarUA"
+        )
+    );
+
 }
 
 
@@ -1107,6 +1482,345 @@ if (publicationEditorEN) {
 
             }
         );
+
+
+    setupPublicationImageToolbar(
+        publicationQuillEN,
+        publicationEditorEN,
+        document.getElementById(
+            "publicationImageToolbarEN"
+        )
+    );
+
+}
+
+
+
+/*
+ * =========================
+ * ПРОПОЗИЦІЯ АНГЛІЙСЬКОЇ
+ * =========================
+ */
+
+async function suggestPublicationEnglishTitle(
+    titleUA
+) {
+
+    const cleanTitle =
+        String(
+            titleUA || ""
+        ).trim();
+
+
+    if (!cleanTitle) {
+
+        throw new Error(
+            "Введіть українську назву."
+        );
+
+    }
+
+
+    const {
+        data,
+        error
+    } =
+        await client.functions.invoke(
+            "rapid-function",
+            {
+                body: {
+                    title:
+                        cleanTitle,
+
+                    organization:
+                        "",
+
+                    description:
+                        ""
+                }
+            }
+        );
+
+
+    if (error) {
+
+        throw error;
+
+    }
+
+
+    const suggestedTitle =
+        data &&
+        data.title_en
+            ? String(
+                data.title_en
+            ).trim()
+            : "";
+
+
+    if (!suggestedTitle) {
+
+        throw new Error(
+            "Не вдалося отримати англійську назву."
+        );
+
+    }
+
+
+    return suggestedTitle;
+
+}
+
+
+
+/*
+ * =========================
+ * ПРОПОЗИЦІЯ SLUG
+ * =========================
+ */
+
+function generatePublicationSlug(
+    value
+) {
+
+    return String(
+        value || ""
+    )
+
+        .toLowerCase()
+
+        .trim()
+
+        .normalize(
+            "NFD"
+        )
+
+        .replace(
+            /[\u0300-\u036f]/g,
+            ""
+        )
+
+        .replace(
+            /[^a-z0-9]+/g,
+            "-"
+        )
+
+        .replace(
+            /^-+|-+$/g,
+            ""
+        );
+
+}
+
+
+
+/*
+ * =========================
+ * ПЕРЕВІРКА SLUG
+ * =========================
+ */
+
+async function publicationSlugExists(
+    slug,
+    excludeId = null
+) {
+
+    if (!slug) {
+        return false;
+    }
+
+
+    let query =
+        client
+            .from("publications")
+            .select("id")
+            .eq(
+                "slug",
+                slug
+            )
+            .limit(1);
+
+
+    if (excludeId !== null) {
+
+        query =
+            query.neq(
+                "id",
+                excludeId
+            );
+
+    }
+
+
+    const {
+        data,
+        error
+    } =
+        await query;
+
+
+    if (error) {
+
+        throw error;
+
+    }
+
+
+    return Boolean(
+        data &&
+        data.length > 0
+    );
+
+}
+
+
+
+/*
+ * =========================
+ * КНОПКА АНГЛІЙСЬКОЇ
+ * =========================
+ */
+
+const suggestTitleENButton =
+    document.getElementById(
+        "suggestTitleENButton"
+    );
+
+
+if (suggestTitleENButton) {
+
+    suggestTitleENButton.addEventListener(
+        "click",
+        async function() {
+
+            const titleUA =
+                document.getElementById(
+                    "titleUA"
+                ).value.trim();
+
+
+            if (!titleUA) {
+
+                alert(
+                    "Спочатку введіть назву UA."
+                );
+
+                return;
+
+            }
+
+
+            suggestTitleENButton.disabled =
+                true;
+
+
+            suggestTitleENButton.textContent =
+                "ПРОПОНУЄМО...";
+
+
+            try {
+
+                const suggestedTitle =
+                    await suggestPublicationEnglishTitle(
+                        titleUA
+                    );
+
+
+                document.getElementById(
+                    "titleEN"
+                ).value =
+                    suggestedTitle;
+
+
+            } catch (error) {
+
+                console.error(
+                    "Помилка пропонування англійської назви:",
+                    error
+                );
+
+
+                alert(
+                    "Не вдалося запропонувати англійську назву."
+                );
+
+            } finally {
+
+                suggestTitleENButton.disabled =
+                    false;
+
+
+                suggestTitleENButton.textContent =
+                    "ЗАПРОПОНУВАТИ АНГЛІЙСЬКУ";
+
+            }
+
+        }
+    );
+
+}
+
+
+
+/*
+ * =========================
+ * КНОПКА SLUG
+ * =========================
+ */
+
+const suggestSlugButton =
+    document.getElementById(
+        "suggestSlugButton"
+    );
+
+
+if (suggestSlugButton) {
+
+    suggestSlugButton.addEventListener(
+        "click",
+        function() {
+
+            const titleEN =
+                document.getElementById(
+                    "titleEN"
+                ).value.trim();
+
+
+            if (!titleEN) {
+
+                alert(
+                    "Спочатку введіть або запропонуйте назву EN."
+                );
+
+                return;
+
+            }
+
+
+            const slug =
+                generatePublicationSlug(
+                    titleEN
+                );
+
+
+            if (!slug) {
+
+                alert(
+                    "Не вдалося сформувати Slug."
+                );
+
+                return;
+
+            }
+
+
+            document.getElementById(
+                "slug"
+            ).value =
+                slug;
+
+        }
+    );
 
 }
 
@@ -1338,6 +2052,37 @@ if (savePublicationButton) {
 
 
             try {
+
+                /*
+                 * ПЕРЕВІРКА SLUG
+                 */
+
+                if (slug) {
+
+                    const slugExists =
+                        await publicationSlugExists(
+                            slug
+                        );
+
+
+                    if (slugExists) {
+
+                        alert(
+                            "Такий Slug уже існує. Замініть його на інший."
+                        );
+
+
+                        document.getElementById(
+                            "slug"
+                        ).focus();
+
+
+                        return;
+
+                    }
+
+                }
+
 
                 let mainImageUrl =
                     null;
@@ -1923,33 +2668,35 @@ function renderPublications() {
 
 
             const typeLabel =
-    document.createElement(
-        "div"
-    );
-
-typeLabel.className =
-    "admin-item-category";
-
-typeLabel.textContent =
-    publication.publication_type ===
-    "academic"
-        ? "Академічна"
-        : "Медійна";
+                document.createElement(
+                    "div"
+                );
 
 
-const title =
-    document.createElement(
-        "h4"
-    );
+            typeLabel.className =
+                "admin-item-category";
 
 
-title.textContent =
-    publication.title_ua ||
-    "Без назви";
+            typeLabel.textContent =
+                publication.publication_type ===
+                "academic"
+                    ? "Академічна"
+                    : "Медійна";
 
 
-title.style.cursor =
-    "pointer";
+            const title =
+                document.createElement(
+                    "h4"
+                );
+
+
+            title.textContent =
+                publication.title_ua ||
+                "Без назви";
+
+
+            title.style.cursor =
+                "pointer";
 
 
             const details =
@@ -2543,23 +3290,23 @@ title.style.cursor =
 
 
             publicationItem.appendChild(
-    typeLabel
-);
+                typeLabel
+            );
 
 
-publicationItem.appendChild(
-    title
-);
+            publicationItem.appendChild(
+                title
+            );
 
 
-publicationItem.appendChild(
-    details
-);
+            publicationItem.appendChild(
+                details
+            );
 
 
-publicationList.appendChild(
-    publicationItem
-);
+            publicationList.appendChild(
+                publicationItem
+            );
 
         }
     );
@@ -2637,6 +3384,13 @@ function startPublicationEditing(
                         publication.title_en || ""
                     )}"
                 >
+
+                <button
+                    type="button"
+                    class="admin-button article-suggestion-button edit-suggest-title-en-button"
+                >
+                    ЗАПРОПОНУВАТИ АНГЛІЙСЬКУ
+                </button>
 
             </div>
 
@@ -2772,7 +3526,51 @@ function startPublicationEditing(
                     Основний текст UA *
                 </label>
 
-                <div class="edit-content-ua"></div>
+                <div
+                    class="publication-editor-wrapper"
+                >
+
+                    <div class="edit-content-ua"></div>
+
+                    <div
+                        class="publication-image-wrap-toolbar edit-image-toolbar-ua"
+                    >
+
+                        <button
+                            type="button"
+                            class="admin-button"
+                            data-image-action="left"
+                        >
+                            ЛІВОРУЧ
+                        </button>
+
+                        <button
+                            type="button"
+                            class="admin-button"
+                            data-image-action="center"
+                        >
+                            ПО ЦЕНТРУ
+                        </button>
+
+                        <button
+                            type="button"
+                            class="admin-button"
+                            data-image-action="right"
+                        >
+                            ПРАВОРУЧ
+                        </button>
+
+                        <button
+                            type="button"
+                            class="admin-button"
+                            data-image-action="none"
+                        >
+                            БЕЗ ОБТІКАННЯ
+                        </button>
+
+                    </div>
+
+                </div>
 
             </div>
 
@@ -2783,7 +3581,51 @@ function startPublicationEditing(
                     Основний текст EN *
                 </label>
 
-                <div class="edit-content-en"></div>
+                <div
+                    class="publication-editor-wrapper"
+                >
+
+                    <div class="edit-content-en"></div>
+
+                    <div
+                        class="publication-image-wrap-toolbar edit-image-toolbar-en"
+                    >
+
+                        <button
+                            type="button"
+                            class="admin-button"
+                            data-image-action="left"
+                        >
+                            ЛІВОРУЧ
+                        </button>
+
+                        <button
+                            type="button"
+                            class="admin-button"
+                            data-image-action="center"
+                        >
+                            ПО ЦЕНТРУ
+                        </button>
+
+                        <button
+                            type="button"
+                            class="admin-button"
+                            data-image-action="right"
+                        >
+                            ПРАВОРУЧ
+                        </button>
+
+                        <button
+                            type="button"
+                            class="admin-button"
+                            data-image-action="none"
+                        >
+                            БЕЗ ОБТІКАННЯ
+                        </button>
+
+                    </div>
+
+                </div>
 
             </div>
 
@@ -2868,6 +3710,13 @@ function startPublicationEditing(
                     )}"
                 >
 
+                <button
+                    type="button"
+                    class="admin-button article-suggestion-button edit-suggest-slug-button"
+                >
+                    ЗАПРОПОНУВАТИ SLUG
+                </button>
+
             </div>
 
 
@@ -2923,6 +3772,145 @@ function startPublicationEditing(
 
 
     /*
+     * КНОПКА АНГЛІЙСЬКОЇ
+     */
+
+    const editSuggestTitleENButton =
+        editForm.querySelector(
+            ".edit-suggest-title-en-button"
+        );
+
+
+    editSuggestTitleENButton.addEventListener(
+        "click",
+        async function() {
+
+            const titleUA =
+                editForm.querySelector(
+                    ".edit-title-ua"
+                ).value.trim();
+
+
+            if (!titleUA) {
+
+                alert(
+                    "Спочатку введіть назву UA."
+                );
+
+                return;
+
+            }
+
+
+            editSuggestTitleENButton.disabled =
+                true;
+
+
+            editSuggestTitleENButton.textContent =
+                "ПРОПОНУЄМО...";
+
+
+            try {
+
+                const suggestedTitle =
+                    await suggestPublicationEnglishTitle(
+                        titleUA
+                    );
+
+
+                editForm.querySelector(
+                    ".edit-title-en"
+                ).value =
+                    suggestedTitle;
+
+
+            } catch (error) {
+
+                console.error(
+                    "Помилка пропонування англійської назви:",
+                    error
+                );
+
+
+                alert(
+                    "Не вдалося запропонувати англійську назву."
+                );
+
+            } finally {
+
+                editSuggestTitleENButton.disabled =
+                    false;
+
+
+                editSuggestTitleENButton.textContent =
+                    "ЗАПРОПОНУВАТИ АНГЛІЙСЬКУ";
+
+            }
+
+        }
+    );
+
+
+
+    /*
+     * КНОПКА SLUG
+     */
+
+    const editSuggestSlugButton =
+        editForm.querySelector(
+            ".edit-suggest-slug-button"
+        );
+
+
+    editSuggestSlugButton.addEventListener(
+        "click",
+        function() {
+
+            const titleEN =
+                editForm.querySelector(
+                    ".edit-title-en"
+                ).value.trim();
+
+
+            if (!titleEN) {
+
+                alert(
+                    "Спочатку введіть або запропонуйте назву EN."
+                );
+
+                return;
+
+            }
+
+
+            const slug =
+                generatePublicationSlug(
+                    titleEN
+                );
+
+
+            if (!slug) {
+
+                alert(
+                    "Не вдалося сформувати Slug."
+                );
+
+                return;
+
+            }
+
+
+            editForm.querySelector(
+                ".edit-slug"
+            ).value =
+                slug;
+
+        }
+    );
+
+
+
+    /*
      * QUILL UA
      */
 
@@ -2955,6 +3943,15 @@ function startPublicationEditing(
 
             }
         );
+
+
+    setupPublicationImageToolbar(
+        editQuillUA,
+        editContentUA,
+        editForm.querySelector(
+            ".edit-image-toolbar-ua"
+        )
+    );
 
 
 
@@ -2991,6 +3988,15 @@ function startPublicationEditing(
 
             }
         );
+
+
+    setupPublicationImageToolbar(
+        editQuillEN,
+        editContentEN,
+        editForm.querySelector(
+            ".edit-image-toolbar-en"
+        )
+    );
 
 
 
@@ -3142,6 +4148,38 @@ function startPublicationEditing(
 
 
             try {
+
+                /*
+                 * ПЕРЕВІРКА SLUG
+                 */
+
+                if (slug) {
+
+                    const slugExists =
+                        await publicationSlugExists(
+                            slug,
+                            publication.id
+                        );
+
+
+                    if (slugExists) {
+
+                        alert(
+                            "Такий Slug уже існує. Замініть його на інший."
+                        );
+
+
+                        editForm.querySelector(
+                            ".edit-slug"
+                        ).focus();
+
+
+                        return;
+
+                    }
+
+                }
+
 
                 let mainImageUrl =
                     publication.main_image ||

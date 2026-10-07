@@ -1958,3 +1958,6 @@ footer {
 .article-image-wrap-toolbar button:hover {
     background: #f2eee8;
 }
+.article-suggest-button {
+    margin-top: 8px;
+}

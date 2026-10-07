@@ -1145,6 +1145,193 @@ imageResize: {
             }
         );
 
+/*
+ * =========================
+ * ОБТІКАННЯ ЗОБРАЖЕННЯ EN
+ * =========================
+ */
+
+let selectedArticleImageEN = null;
+
+const imageWrapToolbarEN =
+    document.createElement("div");
+
+imageWrapToolbarEN.className =
+    "article-image-wrap-toolbar";
+
+imageWrapToolbarEN.innerHTML = `
+    <button
+        type="button"
+        data-align="left"
+    >
+        Left
+    </button>
+
+    <button
+        type="button"
+        data-align="center"
+    >
+        Center
+    </button>
+
+    <button
+        type="button"
+        data-align="right"
+    >
+        Right
+    </button>
+`;
+
+document.body.appendChild(
+    imageWrapToolbarEN
+);
+
+
+function hideImageWrapToolbarEN() {
+
+    imageWrapToolbarEN.style.display =
+        "none";
+
+    selectedArticleImageEN =
+        null;
+}
+
+
+function showImageWrapToolbarEN(
+    image
+) {
+
+    selectedArticleImageEN =
+        image;
+
+    const rect =
+        image.getBoundingClientRect();
+
+    imageWrapToolbarEN.style.left =
+        (
+            window.scrollX +
+            rect.left
+        ) + "px";
+
+    imageWrapToolbarEN.style.top =
+        (
+            window.scrollY +
+            rect.bottom +
+            5
+        ) + "px";
+
+    imageWrapToolbarEN.style.display =
+        "block";
+}
+
+
+articleEditorEN.addEventListener(
+    "click",
+    function(event) {
+
+        if (
+            event.target &&
+            event.target.tagName === "IMG"
+        ) {
+
+            showImageWrapToolbarEN(
+                event.target
+            );
+
+            return;
+        }
+
+        hideImageWrapToolbarEN();
+
+    }
+);
+
+
+imageWrapToolbarEN
+    .addEventListener(
+        "click",
+        function(event) {
+
+            const button =
+                event.target.closest(
+                    "button"
+                );
+
+            if (
+                !button ||
+                !selectedArticleImageEN
+            ) {
+                return;
+            }
+
+            const align =
+                button.dataset.align;
+
+
+            selectedArticleImageEN.classList.remove(
+                "article-image-float-left",
+                "article-image-float-right",
+                "article-image-center"
+            );
+
+
+            if (align === "left") {
+
+                selectedArticleImageEN.classList.add(
+                    "article-image-float-left"
+                );
+
+            }
+
+
+            if (align === "right") {
+
+                selectedArticleImageEN.classList.add(
+                    "article-image-float-right"
+                );
+
+            }
+
+
+            if (align === "center") {
+
+                selectedArticleImageEN.classList.add(
+                    "article-image-center"
+                );
+
+            }
+
+
+            if (articleQuillEN) {
+
+                articleQuillEN.update();
+
+            }
+
+        }
+    );
+
+
+document.addEventListener(
+    "click",
+    function(event) {
+
+        if (
+            !articleEditorEN.contains(
+                event.target
+            ) &&
+            !imageWrapToolbarEN.contains(
+                event.target
+            )
+        ) {
+
+            hideImageWrapToolbarEN();
+
+        }
+
+    }
+);
+    
     const toolbarEN =
     articleQuillEN.getModule(
         "toolbar"

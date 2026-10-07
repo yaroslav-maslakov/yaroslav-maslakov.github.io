@@ -560,6 +560,10 @@
     src="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.js">
 </script>
 
+    <script
+    src="https://cdn.jsdelivr.net/npm/resize-quill-image@1.0.10/dist/index.iife.js">
+</script>
+
 <script>
 
     /*
@@ -691,7 +695,10 @@
         );
 
     }
-
+Quill.register(
+    "modules/imageResize",
+    ImageResize
+);
 async function uploadArticleImage(
     quillEditor
 ) {
@@ -852,6 +859,13 @@ if (articleEditorUA) {
                             "clean"
                         ]
                     ]
+
+imageResize: {
+        showToolbar: true,
+        persistAlignment: true,
+        keepAspectRatio: true
+    }
+                    
                 }
             }
         );
@@ -930,6 +944,15 @@ if (articleEditorEN) {
                             "clean"
                         ]
                     ]
+
+,
+
+imageResize: {
+    showToolbar: true,
+    persistAlignment: true,
+    keepAspectRatio: true
+}
+                    
                 }
             }
         );

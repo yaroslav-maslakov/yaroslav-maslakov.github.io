@@ -2962,39 +2962,64 @@ editImageWrapToolbarUA
             const align =
                 button.dataset.align;
 
+--------------------------------------------------------------------------
+selectedEditImageUA.classList.remove(
+    "article-image-float-left",
+    "article-image-float-right",
+    "article-image-center"
+);
 
-            selectedEditImageUA.classList.remove(
-                "article-image-float-left",
-                "article-image-float-right",
-                "article-image-center"
-            );
-
-
-            if (align === "left") {
-
-                selectedEditImageUA.classList.add(
-                    "article-image-float-left"
-                );
-
-            }
+selectedEditImageUA.style.float = "";
+selectedEditImageUA.style.display = "";
+selectedEditImageUA.style.margin = "";
 
 
-            if (align === "right") {
+if (align === "left") {
 
-                selectedEditImageUA.classList.add(
-                    "article-image-float-right"
-                );
+    selectedEditImageUA.classList.add(
+        "article-image-float-left"
+    );
 
-            }
+    selectedEditImageUA.style.float =
+        "left";
+
+    selectedEditImageUA.style.margin =
+        "0 20px 10px 0";
+
+}
 
 
-            if (align === "center") {
+if (align === "right") {
 
-                selectedEditImageUA.classList.add(
-                    "article-image-center"
-                );
+    selectedEditImageUA.classList.add(
+        "article-image-float-right"
+    );
 
-            }
+    selectedEditImageUA.style.float =
+        "right";
+
+    selectedEditImageUA.style.margin =
+        "0 0 10px 20px";
+
+}
+
+
+if (align === "center") {
+
+    selectedEditImageUA.classList.add(
+        "article-image-center"
+    );
+
+    selectedEditImageUA.style.float =
+        "none";
+
+    selectedEditImageUA.style.display =
+        "block";
+
+    selectedEditImageUA.style.margin =
+        "10px auto";
+
+}
 
 
             if (editQuillUA) {
@@ -3207,40 +3232,63 @@ editImageWrapToolbarEN
             const align =
                 button.dataset.align;
 
+selectedEditImageEN.classList.remove(
+    "article-image-float-left",
+    "article-image-float-right",
+    "article-image-center"
+);
 
-            selectedEditImageEN.classList.remove(
-                "article-image-float-left",
-                "article-image-float-right",
-                "article-image-center"
-            );
-
-
-            if (align === "left") {
-
-                selectedEditImageEN.classList.add(
-                    "article-image-float-left"
-                );
-
-            }
+selectedEditImageEN.style.float = "";
+selectedEditImageEN.style.display = "";
+selectedEditImageEN.style.margin = "";
 
 
-            if (align === "right") {
+if (align === "left") {
 
-                selectedEditImageEN.classList.add(
-                    "article-image-float-right"
-                );
+    selectedEditImageEN.classList.add(
+        "article-image-float-left"
+    );
 
-            }
+    selectedEditImageEN.style.float =
+        "left";
+
+    selectedEditImageEN.style.margin =
+        "0 20px 10px 0";
+
+}
 
 
-            if (align === "center") {
+if (align === "right") {
 
-                selectedEditImageEN.classList.add(
-                    "article-image-center"
-                );
+    selectedEditImageEN.classList.add(
+        "article-image-float-right"
+    );
 
-            }
+    selectedEditImageEN.style.float =
+        "right";
 
+    selectedEditImageEN.style.margin =
+        "0 0 10px 20px";
+
+}
+
+
+if (align === "center") {
+
+    selectedEditImageEN.classList.add(
+        "article-image-center"
+    );
+
+    selectedEditImageEN.style.float =
+        "none";
+
+    selectedEditImageEN.style.display =
+        "block";
+
+    selectedEditImageEN.style.margin =
+        "10px auto";
+
+}
 
             if (editQuillEN) {
 

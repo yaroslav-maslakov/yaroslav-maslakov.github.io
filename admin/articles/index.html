@@ -8,7 +8,7 @@
     <title>Статті — Адмін-панель</title>
 
     <link rel="stylesheet" href="../../style.css">
-    
+
 </head>
 
 
@@ -25,58 +25,60 @@
             </div>
 
 
-          <nav>
+            <nav>
 
-    <a href="/admin/index.html">
-        Головна
-    </a>
+                <a href="/admin/index.html">
+                    Головна
+                </a>
 
-    <a href="/admin/articles/index.html" class="active">
-        Статті
-    </a>
+                <a href="/admin/articles/index.html" class="active">
+                    Статті
+                </a>
 
-    <a href="/admin/research/index.html">
-        Дослідження
-    </a>
+                <a href="/admin/research/index.html">
+                    Дослідження
+                </a>
 
-    <a href="/admin/publications/index.html">
-        Публікації
-    </a>
+                <a href="/admin/publications/index.html">
+                    Публікації
+                </a>
 
-    <a href="/admin/certificates/index.html">
-        Сертифікати
-    </a>
+                <a href="/admin/certificates/index.html">
+                    Сертифікати
+                </a>
 
-</nav>
+            </nav>
 
-<button
-    class="menu-toggle"
-    type="button"
-    aria-label="Відкрити меню"
->
-    МЕНЮ
-</button>
-            
+
+            <button
+                class="menu-toggle"
+                type="button"
+                aria-label="Відкрити меню"
+            >
+                МЕНЮ
+            </button>
+
+
             <div class="admin-header-actions">
 
-    <div class="language">
+                <div class="language">
 
-        <a href="../../uk/index.html">
-            САЙТ
-        </a>
+                    <a href="../../uk/index.html">
+                        САЙТ
+                    </a>
 
-    </div>
+                </div>
 
 
-    <button
-        type="button"
-        id="logoutButton"
-        class="admin-header-logout"
-    >
-        ВИЙТИ
-    </button>
+                <button
+                    type="button"
+                    id="logoutButton"
+                    class="admin-header-logout"
+                >
+                    ВИЙТИ
+                </button>
 
-</div>
+            </div>
 
 
         </div>
@@ -87,455 +89,499 @@
 
     <main>
 
-<section class="latest admin-page">
+        <section class="latest admin-page">
 
-   <h2 class="admin-page-title">Статті</h2>
-
-
-    <!-- КНОПКА СТВОРЕННЯ -->
-
-   <div class="admin-toolbar">
-
-    <div class="admin-toolbar-left">
-
-        <button
-            type="button"
-            id="createArticleButton"
-            class="admin-button admin-button-primary"
-        >
-            СТВОРИТИ СТАТТЮ
-        </button>
-
-        <button
-            type="button"
-            id="toggleArticleFilters"
-            class="admin-button"
-        >
-            ФІЛЬТРИ
-        </button>
-
-    </div>
-
-</div>
+            <h2 class="admin-page-title">
+                Статті
+            </h2>
 
 
-    <!-- ФОРМА СТВОРЕННЯ -->
+            <!-- КНОПКА СТВОРЕННЯ -->
 
-<div
-    id="articleForm"
-    class="admin-form"
-    style="display: none;"
->
+            <div class="admin-toolbar">
 
-        <h3>Основна інформація</h3>
+                <div class="admin-toolbar-left">
+
+                    <button
+                        type="button"
+                        id="createArticleButton"
+                        class="admin-button admin-button-primary"
+                    >
+                        СТВОРИТИ СТАТТЮ
+                    </button>
 
 
-       <div class="admin-form-group">
+                    <button
+                        type="button"
+                        id="toggleArticleFilters"
+                        class="admin-button"
+                    >
+                        ФІЛЬТРИ
+                    </button>
 
-            <label for="titleUA">
-                Назва UA *
-            </label>
+                </div>
 
-            <input
-                type="text"
-                id="titleUA"
-                required
+            </div>
+
+
+
+            <!-- ФОРМА СТВОРЕННЯ -->
+
+            <div
+                id="articleForm"
+                class="admin-form"
+                style="display: none;"
             >
 
-        </div>
+                <h3>
+                    Основна інформація
+                </h3>
 
 
-       <div class="admin-form-group">
+                <div class="admin-form-group">
 
-            <label for="titleEN">
-                Назва EN *
-            </label>
+                    <label for="titleUA">
+                        Назва UA *
+                    </label>
 
-            <input
-                type="text"
-                id="titleEN"
-                required
+                    <input
+                        type="text"
+                        id="titleUA"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="admin-form-group">
+
+                    <label for="titleEN">
+                        Назва EN *
+                    </label>
+
+                    <input
+                        type="text"
+                        id="titleEN"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        id="suggestTitleENButton"
+                        class="admin-button article-suggest-button"
+                    >
+                        ЗАПРОПОНУВАТИ АНГЛІЙСЬКУ
+                    </button>
+
+                </div>
+
+
+                <div class="admin-form-group">
+
+                    <label for="category">
+                        Категорія *
+                    </label>
+
+                    <select
+                        id="category"
+                        required
+                    >
+
+                        <option value="">
+                            Оберіть категорію
+                        </option>
+
+                        <option value="Репортаж">
+                            Репортаж
+                        </option>
+
+                        <option value="Аналітика">
+                            Аналітика
+                        </option>
+
+                        <option value="Інтерв’ю">
+                            Інтерв'ю
+                        </option>
+
+                        <option value="Колонка">
+                            Колонка
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="admin-form-group">
+
+                    <label for="publicationDate">
+                        Дата публікації *
+                    </label>
+
+                    <input
+                        type="date"
+                        id="publicationDate"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="admin-form-group">
+
+                    <label for="articleStatus">
+                        Статус
+                    </label>
+
+                    <select id="articleStatus">
+
+                        <option value="draft">
+                            Чернетка
+                        </option>
+
+                        <option value="published">
+                            Опубліковано
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <h3>
+                    Короткий опис
+                </h3>
+
+
+                <div class="admin-form-group">
+
+                    <label for="excerptUA">
+                        Анонс UA *
+                    </label>
+
+                    <textarea
+                        id="excerptUA"
+                        rows="6"
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <div class="admin-form-group">
+
+                    <label for="excerptEN">
+                        Анонс EN *
+                    </label>
+
+                    <textarea
+                        id="excerptEN"
+                        rows="6"
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <h3>
+                    Основний текст UA
+                </h3>
+
+                <div id="articleEditorUA"></div>
+
+
+                <h3>
+                    Основний текст EN
+                </h3>
+
+                <div id="articleEditorEN"></div>
+
+
+                <h3>
+                    Зображення
+                </h3>
+
+
+                <div class="admin-form-group">
+
+                    <label for="mainImage">
+                        Головне зображення
+                    </label>
+
+                    <input
+                        type="file"
+                        id="mainImage"
+                        accept="image/jpeg,image/png,image/webp,image/svg+xml"
+                    >
+
+                </div>
+
+
+                <div class="admin-form-group">
+
+                    <label for="captionUA">
+                        Підпис UA
+                    </label>
+
+                    <input
+                        type="text"
+                        id="captionUA"
+                    >
+
+                </div>
+
+
+                <div class="admin-form-group">
+
+                    <label for="captionEN">
+                        Підпис EN
+                    </label>
+
+                    <input
+                        type="text"
+                        id="captionEN"
+                    >
+
+                </div>
+
+
+                <h3>
+                    Додаткові дані
+                </h3>
+
+
+                <div class="admin-form-group">
+
+                    <label for="slug">
+                        Slug
+                    </label>
+
+                    <input
+                        type="text"
+                        id="slug"
+                    >
+
+                    <button
+                        type="button"
+                        id="suggestSlugButton"
+                        class="admin-button article-suggest-button"
+                    >
+                        ЗАПРОПОНУВАТИ SLUG
+                    </button>
+
+                </div>
+
+
+                <div class="admin-form-actions">
+
+                    <button
+                        type="button"
+                        id="saveArticleButton"
+                        class="admin-button admin-button-primary"
+                    >
+                        ЗБЕРЕГТИ СТАТТЮ
+                    </button>
+
+                    <button
+                        type="button"
+                        id="cancelArticleButton"
+                        class="admin-button"
+                    >
+                        СКАСУВАТИ
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ФІЛЬТРИ СТАТЕЙ -->
+
+            <div
+                id="articleFiltersPanel"
+                class="admin-filters"
+                style="display: none;"
             >
 
-        </div>
+                <h3>
+                    Фільтри
+                </h3>
 
 
-        <div class="admin-form-group">
+                <div class="articles-filters">
 
-            <label for="category">
-                Категорія *
-            </label>
 
-            <select
-                id="category"
-                required
+                    <div class="admin-filter-group">
+
+                        <label for="filterTitleUA">
+                            Назва UA
+                        </label>
+
+                        <input
+                            type="text"
+                            id="filterTitleUA"
+                            placeholder="Пошук за назвою UA"
+                        >
+
+                    </div>
+
+
+                    <div class="admin-filter-group">
+
+                        <label for="filterTitleEN">
+                            Назва EN
+                        </label>
+
+                        <input
+                            type="text"
+                            id="filterTitleEN"
+                            placeholder="Пошук за назвою EN"
+                        >
+
+                    </div>
+
+
+                    <div class="admin-filter-group">
+
+                        <label for="filterCategory">
+                            Категорія
+                        </label>
+
+                        <select id="filterCategory">
+
+                            <option value="">
+                                Усі категорії
+                            </option>
+
+                            <option value="Репортаж">
+                                Репортаж
+                            </option>
+
+                            <option value="Аналітика">
+                                Аналітика
+                            </option>
+
+                            <option value="Інтерв’ю">
+                                Інтерв'ю
+                            </option>
+
+                            <option value="Колонка">
+                                Колонка
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="admin-filter-group">
+
+                        <label for="filterDateFrom">
+                            Дата від
+                        </label>
+
+                        <input
+                            type="date"
+                            id="filterDateFrom"
+                        >
+
+                    </div>
+
+
+                    <div class="admin-filter-group">
+
+                        <label for="filterDateTo">
+                            Дата до
+                        </label>
+
+                        <input
+                            type="date"
+                            id="filterDateTo"
+                        >
+
+                    </div>
+
+
+                    <div class="admin-filter-group">
+
+                        <label for="filterStatus">
+                            Статус
+                        </label>
+
+                        <select id="filterStatus">
+
+                            <option value="">
+                                Усі статуси
+                            </option>
+
+                            <option value="published">
+                                Опубліковано
+                            </option>
+
+                            <option value="draft">
+                                Чернетка
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="admin-filter-actions">
+
+                        <button
+                            type="button"
+                            id="applyArticleFilters"
+                            class="admin-button admin-button-primary"
+                        >
+                            ЗАСТОСУВАТИ ФІЛЬТРИ
+                        </button>
+
+                        <button
+                            type="button"
+                            id="resetArticleFilters"
+                            class="admin-button"
+                        >
+                            СКИНУТИ ФІЛЬТРИ
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="admin-list-header">
+
+                <h3>
+                    Список статей
+                </h3>
+
+                <div
+                    id="articlesCount"
+                    class="admin-list-count"
+                >
+                    Знайдено: 0
+                </div>
+
+            </div>
+
+
+            <div
+                id="articlesList"
+                class="admin-list"
             >
 
-                <option value="">
-                    Оберіть категорію
-                </option>
+                <p>
+                    Завантаження статей...
+                </p>
 
-                <option value="Репортаж">
-                    Репортаж
-                </option>
+            </div>
 
-                <option value="Аналітика">
-                    Аналітика
-                </option>
-
-                <option value="Інтерв’ю">
-                    Інтерв'ю
-                </option>
-
-                <option value="Колонка">
-                    Колонка
-                </option>
-
-            </select>
-
-        </div>
-
-
-       <div class="admin-form-group">
-
-            <label for="publicationDate">
-                Дата публікації *
-            </label>
-
-            <input
-                type="date"
-                id="publicationDate"
-                required
-            >
-
-        </div>
-
-
-        <div class="admin-form-group">
-
-            <label for="articleStatus">
-                Статус
-            </label>
-
-            <select id="articleStatus">
-
-                <option value="draft">
-                    Чернетка
-                </option>
-
-                <option value="published">
-                    Опубліковано
-                </option>
-
-            </select>
-
-        </div>
-
-
-        <h3>Короткий опис</h3>
-
-
-        <div class="admin-form-group">
-
-            <label for="excerptUA">
-                Анонс UA *
-            </label>
-
-            <textarea
-                id="excerptUA"
-                rows="6"
-                required
-            ></textarea>
-
-        </div>
-
-
-        <div class="admin-form-group">
-
-            <label for="excerptEN">
-                Анонс EN *
-            </label>
-
-            <textarea
-                id="excerptEN"
-                rows="6"
-                required
-            ></textarea>
-
-        </div>
-
-
-        <h3>Основний текст UA</h3>
-
-        <div id="articleEditorUA"></div>
-
-
-        <h3>Основний текст EN</h3>
-
-        <div id="articleEditorEN"></div>
-
-
-        <h3>Зображення</h3>
-
-
-        <div class="admin-form-group">
-
-            <label for="mainImage">
-                Головне зображення
-            </label>
-
-            <input
-                type="file"
-                id="mainImage"
-                accept="image/jpeg,image/png,image/webp,image/svg+xml"
-            >
-
-        </div>
-
-
-        <div class="admin-form-group">
-
-            <label for="captionUA">
-                Підпис UA
-            </label>
-
-            <input
-                type="text"
-                id="captionUA"
-            >
-
-        </div>
-
-
-        <div class="admin-form-group">
-
-            <label for="captionEN">
-                Підпис EN
-            </label>
-
-            <input
-                type="text"
-                id="captionEN"
-            >
-
-        </div>
-
-
-        <h3>Додаткові дані</h3>
-
-       <div class="admin-form-group">
-
-            <label for="slug">
-                Slug
-            </label>
-
-            <input
-                type="text"
-                id="slug"
-            >
-
-        </div>
-
-
-        <div class="admin-form-actions">
-
-            <button
-    type="button"
-    id="saveArticleButton"
-    class="admin-button admin-button-primary"
->
-                ЗБЕРЕГТИ СТАТТЮ
-            </button>
-
-            <button
-    type="button"
-    id="cancelArticleButton"
-    class="admin-button"
->
-                СКАСУВАТИ
-            </button>
-
-        </div>
-
-    </div>
-
-
-<!-- ФІЛЬТРИ СТАТЕЙ -->
-
-<div
-    id="articleFiltersPanel"
-    class="admin-filters"
-    style="display: none;"
->
-    <h3>Фільтри</h3>
-
-    <div class="articles-filters">
-
-        <div class="admin-filter-group">
-
-            <label for="filterTitleUA">
-                Назва UA
-            </label>
-
-            <input
-                type="text"
-                id="filterTitleUA"
-                placeholder="Пошук за назвою UA"
-            >
-
-        </div>
-
-
-        <div class="admin-filter-group">
-
-            <label for="filterTitleEN">
-                Назва EN
-            </label>
-
-            <input
-                type="text"
-                id="filterTitleEN"
-                placeholder="Пошук за назвою EN"
-            >
-
-        </div>
-
-
-        <div class="admin-filter-group">
-
-            <label for="filterCategory">
-                Категорія
-            </label>
-
-            <select id="filterCategory">
-
-                <option value="">
-                    Усі категорії
-                </option>
-
-                <option value="Репортаж">
-                    Репортаж
-                </option>
-
-                <option value="Аналітика">
-                    Аналітика
-                </option>
-
-                <option value="Інтерв’ю">
-                    Інтерв’ю
-                </option>
-
-                <option value="Колонка">
-                    Колонка
-                </option>
-
-            </select>
-
-        </div>
-
-
-        <div class="admin-filter-group">
-
-            <label for="filterDateFrom">
-                Дата від
-            </label>
-
-            <input
-                type="date"
-                id="filterDateFrom"
-            >
-
-        </div>
-
-
-        <div class="admin-filter-group">
-
-            <label for="filterDateTo">
-                Дата до
-            </label>
-
-            <input
-                type="date"
-                id="filterDateTo"
-            >
-
-        </div>
-
-
-        <div class="admin-filter-group">
-
-            <label for="filterStatus">
-                Статус
-            </label>
-
-            <select id="filterStatus">
-
-                <option value="">
-                    Усі статуси
-                </option>
-
-                <option value="published">
-                    Опубліковано
-                </option>
-
-                <option value="draft">
-                    Чернетка
-                </option>
-
-            </select>
-
-        </div>
-
-
-      <div class="admin-filter-actions">
-
-    <button
-        type="button"
-        id="applyArticleFilters"
-        class="admin-button admin-button-primary"
-    >
-        ЗАСТОСУВАТИ ФІЛЬТРИ
-    </button>
-
-    <button
-        type="button"
-        id="resetArticleFilters"
-        class="admin-button"
-    >
-        СКИНУТИ ФІЛЬТРИ
-    </button>
-
-</div>
-
-    </div>
-</div>
-
-    <div class="admin-list-header">
-
-    <h3>Список статей</h3>
-
-    <div
-        id="articlesCount"
-        class="admin-list-count"
-    >
-        Знайдено: 0
-    </div>
-
-</div>
-
-
-    <div
-    id="articlesList"
-    class="admin-list"
->
-        <p>
-            Завантаження статей...
-        </p>
-
-    </div>
-
-</section>
-
+        </section>
 
     </main>
 
@@ -549,1013 +595,221 @@
 
 
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 
     <link
-    href="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.snow.css"
-    rel="stylesheet"
->
+        href="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.snow.css"
+        rel="stylesheet"
+    >
 
-<script
-    src="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.js">
-</script>
 
     <script
-    src="https://cdn.jsdelivr.net/npm/resize-quill-image@1.0.10/dist/index.iife.js">
-</script>
+        src="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.js"
+    ></script>
 
-<script>
 
-    /*
-     * =========================
-     * SUPABASE
-     * =========================
-     */
+    <script
+        src="https://cdn.jsdelivr.net/npm/resize-quill-image@1.0.10/dist/index.iife.js"
+    ></script>
 
-    const SUPABASE_URL =
-        "https://jtplvfweyguheyqyewal.supabase.co";
 
-    const SUPABASE_KEY =
-        "sb_publishable_jAg0mG8Pj30tCF7qND3ydQ_-WDv4EhP";
 
-    const { createClient } =
-        supabase;
+    <script>
 
-    const client =
-        createClient(
-            SUPABASE_URL,
-            SUPABASE_KEY,
-            {
-                auth: {
-                    flowType: "pkce",
-                    detectSessionInUrl: true,
-                    persistSession: true
+        /*
+         * =========================
+         * SUPABASE
+         * =========================
+         */
+
+        const SUPABASE_URL =
+            "https://jtplvfweyguheyqyewal.supabase.co";
+
+        const SUPABASE_KEY =
+            "sb_publishable_jAg0mG8Pj30tCF7qND3ydQ_-WDv4EhP";
+
+        const { createClient } =
+            supabase;
+
+        const client =
+            createClient(
+                SUPABASE_URL,
+                SUPABASE_KEY,
+                {
+                    auth: {
+                        flowType: "pkce",
+                        detectSessionInUrl: true,
+                        persistSession: true
+                    }
                 }
-            }
-        );
+            );
 
 
-    /*
-     * =========================
-     * ПЕРЕВІРКА АВТОРИЗАЦІЇ
-     * =========================
-     */
 
-    async function checkSession() {
+        /*
+         * =========================
+         * ПЕРЕВІРКА АВТОРИЗАЦІЇ
+         * =========================
+         */
 
-        const {
-            data: {
-                session
-            }
-        } = await client.auth.getSession();
+        async function checkSession() {
 
-        if (!session) {
-
-            window.location.href =
-                "../index.html";
-
-            return;
-
-        }
-
-    }
+            const {
+                data: {
+                    session
+                }
+            } =
+                await client.auth.getSession();
 
 
-    /*
-     * =========================
-     * ВИХІД
-     * =========================
-     */
-
-    const logoutButton =
-        document.getElementById(
-            "logoutButton"
-        );
-
-    if (logoutButton) {
-
-        logoutButton.addEventListener(
-            "click",
-            async function() {
-
-                await client.auth.signOut();
+            if (!session) {
 
                 window.location.href =
                     "../index.html";
 
-            }
-        );
-
-    }
-
-
-    /*
-     * =========================
-     * МОБІЛЬНЕ МЕНЮ
-     * =========================
-     */
-
-    const adminMenuButton =
-        document.querySelector(
-            ".menu-toggle"
-        );
-
-    const adminMenu =
-        document.querySelector(
-            "nav"
-        );
-
-    if (
-        adminMenuButton &&
-        adminMenu
-    ) {
-
-        adminMenuButton.addEventListener(
-            "click",
-            function() {
-
-                const isOpen =
-                    adminMenu.classList.toggle(
-                        "menu-open"
-                    );
-
-                adminMenuButton.textContent =
-                    isOpen
-                        ? "ЗАКРИТИ"
-                        : "МЕНЮ";
-
-                adminMenuButton.setAttribute(
-                    "aria-label",
-                    isOpen
-                        ? "Закрити меню"
-                        : "Відкрити меню"
-                );
-
-            }
-        );
-
-    }
-Quill.register(
-    "modules/imageResize",
-    ImageResize
-);
-async function uploadArticleImage(
-    quillEditor
-) {
-
-    const input =
-        document.createElement(
-            "input"
-        );
-
-    input.type = "file";
-    input.accept =
-        "image/jpeg,image/png,image/webp,image/svg+xml";
-
-    input.click();
-
-    input.addEventListener(
-        "change",
-        async function() {
-
-            const file =
-                input.files[0];
-
-            if (!file) {
                 return;
-            }
-
-            const fileExtension =
-                file.name
-                    .split(".")
-                    .pop()
-                    .toLowerCase();
-
-            const fileName =
-                `${Date.now()}-${Math.random()
-                    .toString(36)
-                    .substring(2)}.${fileExtension}`;
-
-            const filePath =
-                `articles/${fileName}`;
-
-console.log(
-    "Файл:",
-    file.name,
-    "Тип:",
-    file.type,
-    "Розмір:",
-    file.size
-);
-            
-            const {
-    error: uploadError
-} =
-    await client.storage
-        .from("article-images")
-        .upload(
-            filePath,
-            file
-        );
-
-            if (uploadError) {
-
-                alert(
-                    "Не вдалося завантажити зображення."
-                );
-
-                console.error(
-                    uploadError
-                );
-
-                return;
-            }
-
-            const {
-                data
-            } =
-                client.storage
-                    .from("article-images")
-                    .getPublicUrl(
-                        filePath
-                    );
-
-            const imageUrl =
-                data.publicUrl;
-
-            const range =
-                quillEditor.getSelection(
-                    true
-                );
-
-            quillEditor.insertEmbed(
-                range.index,
-                "image",
-                imageUrl
-            );
-
-            quillEditor.setSelection(
-                range.index + 1
-            );
-
-        }
-    );
-
-}
-    
-const articleEditorUA =
-    document.getElementById(
-        "articleEditorUA"
-    );
-
-let articleQuillUA = null;
-
-if (articleEditorUA) {
-
-    articleQuillUA =
-        new Quill(
-            "#articleEditorUA",
-            {
-                theme: "snow",
-
-               modules: {
-
-    toolbar: [
-        [
-            {
-                header: [
-                    1,
-                    2,
-                    3,
-                    false
-                ]
-            }
-        ],
-        [
-            "bold",
-            "italic",
-            "underline"
-        ],
-        [
-            {
-                list: "ordered"
-            },
-            {
-                list: "bullet"
-            }
-        ],
-        [
-            "blockquote"
-        ],
-        [
-            "link",
-            "image"
-        ],
-        [
-            {
-                align: []
-            }
-        ],
-        [
-            "clean"
-        ]
-    ],
-
-    imageResize: {
-        showToolbar: true,
-        persistAlignment: true,
-        keepAspectRatio: true
-    }
-
-}
-            }
-                );
-
-}
-
-/*
- * =========================
- * ОБТІКАННЯ ЗОБРАЖЕННЯ UA
- * =========================
- */
-
-let selectedArticleImageUA = null;
-
-const imageWrapToolbarUA =
-    document.createElement("div");
-
-imageWrapToolbarUA.className =
-    "article-image-wrap-toolbar";
-
-imageWrapToolbarUA.innerHTML = `
-    <button
-        type="button"
-        data-align="left"
-    >
-        Ліворуч
-    </button>
-
-    <button
-        type="button"
-        data-align="center"
-    >
-        По центру
-    </button>
-
-    <button
-        type="button"
-        data-align="right"
-    >
-        Праворуч
-    </button>
-`;
-
-document.body.appendChild(
-    imageWrapToolbarUA
-);
-
-
-function hideImageWrapToolbarUA() {
-
-    imageWrapToolbarUA.style.display =
-        "none";
-
-    selectedArticleImageUA =
-        null;
-}
-
-
-function showImageWrapToolbarUA(
-    image
-) {
-
-    selectedArticleImageUA =
-        image;
-
-    const rect =
-        image.getBoundingClientRect();
-
-    imageWrapToolbarUA.style.left =
-        (
-            window.scrollX +
-            rect.left
-        ) + "px";
-
-    imageWrapToolbarUA.style.top =
-        (
-            window.scrollY +
-            rect.bottom +
-            5
-        ) + "px";
-
-    imageWrapToolbarUA.style.display =
-        "block";
-}
-
-
-articleEditorUA.addEventListener(
-    "click",
-    function(event) {
-
-        if (
-            event.target &&
-            event.target.tagName === "IMG"
-        ) {
-
-            showImageWrapToolbarUA(
-                event.target
-            );
-
-            return;
-        }
-
-        hideImageWrapToolbarUA();
-
-    }
-);
-
-
-imageWrapToolbarUA
-    .addEventListener(
-        "click",
-        function(event) {
-
-            const button =
-                event.target.closest(
-                    "button"
-                );
-
-            if (
-                !button ||
-                !selectedArticleImageUA
-            ) {
-                return;
-            }
-
-            const align =
-                button.dataset.align;
-
-
-            selectedArticleImageUA.classList.remove(
-                "article-image-float-left",
-                "article-image-float-right",
-                "article-image-center"
-            );
-
-
-            if (align === "left") {
-
-                selectedArticleImageUA.classList.add(
-                    "article-image-float-left"
-                );
-
-            }
-
-
-            if (align === "right") {
-
-                selectedArticleImageUA.classList.add(
-                    "article-image-float-right"
-                );
-
-            }
-
-
-            if (align === "center") {
-
-                selectedArticleImageUA.classList.add(
-                    "article-image-center"
-                );
-
-            }
-
-
-            if (articleQuillUA) {
-
-                articleQuillUA.update();
 
             }
 
         }
-    );
 
 
-document.addEventListener(
-    "click",
-    function(event) {
 
-        if (
-            !articleEditorUA.contains(
-                event.target
-            ) &&
-            !imageWrapToolbarUA.contains(
-                event.target
-            )
-        ) {
+        /*
+         * =========================
+         * ВИХІД
+         * =========================
+         */
 
-            hideImageWrapToolbarUA();
+        const logoutButton =
+            document.getElementById(
+                "logoutButton"
+            );
 
-        }
 
-    }
-);
+        if (logoutButton) {
 
-    const toolbarUA =
-    articleQuillUA.getModule(
-        "toolbar"
-    );
+            logoutButton.addEventListener(
+                "click",
+                async function() {
 
-toolbarUA.addHandler(
-    "image",
-    function() {
+                    await client.auth.signOut();
 
-        uploadArticleImage(
-            articleQuillUA
-        );
+                    window.location.href =
+                        "../index.html";
 
-    }
-);
-
-const articleEditorEN =
-    document.getElementById(
-        "articleEditorEN"
-    );
-
-let articleQuillEN = null;
-
-if (articleEditorEN) {
-
-    articleQuillEN =
-        new Quill(
-            "#articleEditorEN",
-            {
-                theme: "snow",
-
-                modules: {
-                    toolbar: [
-                        [
-                            {
-                                header: [
-                                    1,
-                                    2,
-                                    3,
-                                    false
-                                ]
-                            }
-                        ],
-                        [
-                            "bold",
-                            "italic",
-                            "underline"
-                        ],
-                        [
-                            {
-                                list: "ordered"
-                            },
-                            {
-                                list: "bullet"
-                            }
-                        ],
-                        [
-                            "blockquote"
-                        ],
-                     [
-    "link",
-    "image"
-],
-                        [
-                            {
-                                align: []
-                            }
-                        ],
-                        [
-                            "clean"
-                        ]
-                    ]
-
-,
-
-imageResize: {
-    showToolbar: true,
-    persistAlignment: true,
-    keepAspectRatio: true
-}
-                    
                 }
-            }
-        );
-
-/*
- * =========================
- * ОБТІКАННЯ ЗОБРАЖЕННЯ EN
- * =========================
- */
-
-let selectedArticleImageEN = null;
-
-const imageWrapToolbarEN =
-    document.createElement("div");
-
-imageWrapToolbarEN.className =
-    "article-image-wrap-toolbar";
-
-imageWrapToolbarEN.innerHTML = `
-    <button
-        type="button"
-        data-align="left"
-    >
-        Left
-    </button>
-
-    <button
-        type="button"
-        data-align="center"
-    >
-        Center
-    </button>
-
-    <button
-        type="button"
-        data-align="right"
-    >
-        Right
-    </button>
-`;
-
-document.body.appendChild(
-    imageWrapToolbarEN
-);
-
-
-function hideImageWrapToolbarEN() {
-
-    imageWrapToolbarEN.style.display =
-        "none";
-
-    selectedArticleImageEN =
-        null;
-}
-
-
-function showImageWrapToolbarEN(
-    image
-) {
-
-    selectedArticleImageEN =
-        image;
-
-    const rect =
-        image.getBoundingClientRect();
-
-    imageWrapToolbarEN.style.left =
-        (
-            window.scrollX +
-            rect.left
-        ) + "px";
-
-    imageWrapToolbarEN.style.top =
-        (
-            window.scrollY +
-            rect.bottom +
-            5
-        ) + "px";
-
-    imageWrapToolbarEN.style.display =
-        "block";
-}
-
-
-articleEditorEN.addEventListener(
-    "click",
-    function(event) {
-
-        if (
-            event.target &&
-            event.target.tagName === "IMG"
-        ) {
-
-            showImageWrapToolbarEN(
-                event.target
             );
 
-            return;
         }
 
-        hideImageWrapToolbarEN();
-
-    }
-);
 
 
-imageWrapToolbarEN
-    .addEventListener(
-        "click",
-        function(event) {
+        /*
+         * =========================
+         * МОБІЛЬНЕ МЕНЮ
+         * =========================
+         */
 
-            const button =
-                event.target.closest(
-                    "button"
-                );
-
-            if (
-                !button ||
-                !selectedArticleImageEN
-            ) {
-                return;
-            }
-
-            const align =
-                button.dataset.align;
-
-
-            selectedArticleImageEN.classList.remove(
-                "article-image-float-left",
-                "article-image-float-right",
-                "article-image-center"
+        const adminMenuButton =
+            document.querySelector(
+                ".menu-toggle"
             );
 
 
-            if (align === "left") {
+        const adminMenu =
+            document.querySelector(
+                "nav"
+            );
 
-                selectedArticleImageEN.classList.add(
-                    "article-image-float-left"
-                );
-
-            }
-
-
-            if (align === "right") {
-
-                selectedArticleImageEN.classList.add(
-                    "article-image-float-right"
-                );
-
-            }
-
-
-            if (align === "center") {
-
-                selectedArticleImageEN.classList.add(
-                    "article-image-center"
-                );
-
-            }
-
-
-            if (articleQuillEN) {
-
-                articleQuillEN.update();
-
-            }
-
-        }
-    );
-
-
-document.addEventListener(
-    "click",
-    function(event) {
 
         if (
-            !articleEditorEN.contains(
-                event.target
-            ) &&
-            !imageWrapToolbarEN.contains(
-                event.target
-            )
+            adminMenuButton &&
+            adminMenu
         ) {
 
-            hideImageWrapToolbarEN();
+            adminMenuButton.addEventListener(
+                "click",
+                function() {
+
+                    const isOpen =
+                        adminMenu.classList.toggle(
+                            "menu-open"
+                        );
+
+
+                    adminMenuButton.textContent =
+                        isOpen
+                            ? "ЗАКРИТИ"
+                            : "МЕНЮ";
+
+
+                    adminMenuButton.setAttribute(
+                        "aria-label",
+                        isOpen
+                            ? "Закрити меню"
+                            : "Відкрити меню"
+                    );
+
+                }
+            );
 
         }
 
-    }
-);
-    
-    const toolbarEN =
-    articleQuillEN.getModule(
-        "toolbar"
-    );
 
-toolbarEN.addHandler(
-    "image",
-    function() {
 
-        uploadArticleImage(
-            articleQuillEN
-        );
+        /*
+         * =========================
+         * QUILL
+         * =========================
+         */
 
-    }
-);
-
-}
-
-    /*
-     * =========================
-     * СТВОРЕННЯ СТАТТІ
-     * =========================
-     */
-
-    const createArticleButton =
-        document.getElementById(
-            "createArticleButton"
-        );
-
-    const cancelArticleButton =
-        document.getElementById(
-            "cancelArticleButton"
-        );
-
-    const articleForm =
-        document.getElementById(
-            "articleForm"
+        Quill.register(
+            "modules/imageResize",
+            ImageResize
         );
 
 
-    if (
-        createArticleButton &&
-        articleForm
-    ) {
 
-        createArticleButton.addEventListener(
-            "click",
-            function() {
+        /*
+         * =========================
+         * ЗАВАНТАЖЕННЯ ЗОБРАЖЕННЯ В QUILL
+         * =========================
+         */
 
-                articleForm.style.display =
-                    "block";
+        async function uploadArticleImage(
+            quillEditor
+        ) {
 
-                createArticleButton.style.display =
-                    "none";
-
-                window.scrollTo({
-                    top:
-                        articleForm.offsetTop - 30,
-                    behavior:
-                        "smooth"
-                });
-
-            }
-        );
-
-    }
-
-
-    if (
-        cancelArticleButton &&
-        articleForm
-    ) {
-
-        cancelArticleButton.addEventListener(
-            "click",
-            function() {
-
-                articleForm.style.display =
-                    "none";
-
-                createArticleButton.style.display =
-                    "block";
-
-            }
-        );
-
-    }
-
-/*
- * =========================
- * ЗБЕРЕЖЕННЯ СТАТТІ
- * =========================
- */
-
-const saveArticleButton =
-    document.getElementById(
-        "saveArticleButton"
-    );
-
-
-if (saveArticleButton) {
-
-    saveArticleButton.addEventListener(
-        "click",
-        async function() {
-
-            const titleUA =
-                document.getElementById(
-                    "titleUA"
-                ).value.trim();
-
-            const titleEN =
-                document.getElementById(
-                    "titleEN"
-                ).value.trim();
-
-            const category =
-                document.getElementById(
-                    "category"
-                ).value;
-
-            const publicationDate =
-                document.getElementById(
-                    "publicationDate"
-                ).value;
-
-            const status =
-                document.getElementById(
-                    "articleStatus"
-                ).value;
-
-            const excerptUA =
-                document.getElementById(
-                    "excerptUA"
-                ).value.trim();
-
-            const excerptEN =
-                document.getElementById(
-                    "excerptEN"
-                ).value.trim();
-
-            const captionUA =
-                document.getElementById(
-                    "captionUA"
-                ).value.trim();
-
-            const captionEN =
-                document.getElementById(
-                    "captionEN"
-                ).value.trim();
-
-            const slug =
-                document.getElementById(
-                    "slug"
-                ).value.trim();
-
-
-            const mainImageInput =
-                document.getElementById(
-                    "mainImage"
+            const input =
+                document.createElement(
+                    "input"
                 );
 
 
-            const contentUA =
-                articleQuillUA
-                    ? articleQuillUA.root.innerHTML
-                    : "";
-
-            const contentEN =
-                articleQuillEN
-                    ? articleQuillEN.root.innerHTML
-                    : "";
+            input.type =
+                "file";
 
 
-            /*
-             * ПЕРЕВІРКА ОБОВ'ЯЗКОВИХ ПОЛІВ
-             */
-
-            if (
-                !titleUA ||
-                !titleEN ||
-                !category ||
-                !publicationDate ||
-                !excerptUA ||
-                !excerptEN ||
-                !contentUA ||
-                !contentEN
-            ) {
-
-                alert(
-                    "Заповніть усі обов'язкові поля."
-                );
-
-                return;
-
-            }
+            input.accept =
+                "image/jpeg,image/png,image/webp,image/svg+xml";
 
 
-            saveArticleButton.disabled =
-                true;
-
-            saveArticleButton.textContent =
-                "ЗБЕРІГАЄМО...";
+            input.click();
 
 
-            try {
-
-                /*
-                 * =========================
-                 * ЗАВАНТАЖЕННЯ ГОЛОВНОГО ЗОБРАЖЕННЯ
-                 * =========================
-                 */
-
-                let mainImageUrl = null;
-
-
-                if (
-                    mainImageInput &&
-                    mainImageInput.files &&
-                    mainImageInput.files.length > 0
-                ) {
+            input.addEventListener(
+                "change",
+                async function() {
 
                     const file =
-                        mainImageInput.files[0];
+                        input.files[0];
+
+
+                    if (!file) {
+                        return;
+                    }
 
 
                     const fileExtension =
@@ -1575,32 +829,38 @@ if (saveArticleButton) {
                         `articles/${fileName}`;
 
 
+                    console.log(
+                        "Файл:",
+                        file.name,
+                        "Тип:",
+                        file.type,
+                        "Розмір:",
+                        file.size
+                    );
+
+
                     const {
-                        error:
-                            imageUploadError
+                        error: uploadError
                     } =
                         await client.storage
-                            .from(
-                                "article-images"
-                            )
+                            .from("article-images")
                             .upload(
                                 filePath,
                                 file
                             );
 
 
-                    if (
-                        imageUploadError
-                    ) {
-
-                        console.error(
-                            "Помилка завантаження головного зображення:",
-                            imageUploadError
-                        );
+                    if (uploadError) {
 
                         alert(
-                            "Не вдалося завантажити головне зображення."
+                            "Не вдалося завантажити зображення."
                         );
+
+
+                        console.error(
+                            uploadError
+                        );
+
 
                         return;
 
@@ -1608,2138 +868,4083 @@ if (saveArticleButton) {
 
 
                     const {
-                        data:
-                            imageData
+                        data
                     } =
                         client.storage
-                            .from(
-                                "article-images"
-                            )
+                            .from("article-images")
                             .getPublicUrl(
                                 filePath
                             );
 
 
-                    mainImageUrl =
-                        imageData.publicUrl;
-
-                }
+                    const imageUrl =
+                        data.publicUrl;
 
 
-                /*
-                 * =========================
-                 * ЗБЕРЕЖЕННЯ СТАТТІ
-                 * =========================
-                 */
-
-                const {
-                    data,
-                    error
-                } =
-                    await client
-                        .from("articles")
-                        .insert({
-
-                            title_ua:
-                                titleUA,
-
-                            title_en:
-                                titleEN,
-
-                            category:
-                                category,
-
-                            publication_date:
-                                publicationDate,
-
-                            status:
-                                status,
-
-                            excerpt_ua:
-                                excerptUA,
-
-                            excerpt_en:
-                                excerptEN,
-
-                            content_ua:
-                                contentUA,
-
-                            content_en:
-                                contentEN,
-
-                            main_image:
-                                mainImageUrl,
-
-                            caption_ua:
-                                captionUA ||
-                                null,
-
-                            caption_en:
-                                captionEN ||
-                                null,
-
-                            slug:
-                                slug ||
-                                null
-
-                        })
-                        .select()
-                        .single();
+                    const range =
+                        quillEditor.getSelection(
+                            true
+                        );
 
 
-                if (error) {
-
-                    console.error(
-                        "Помилка збереження статті:",
-                        error
+                    quillEditor.insertEmbed(
+                        range.index,
+                        "image",
+                        imageUrl
                     );
 
-                    alert(
-                        "Не вдалося зберегти статтю."
+
+                    quillEditor.setSelection(
+                        range.index + 1
+                    );
+
+                }
+            );
+
+        }
+
+
+
+        /*
+         * =========================
+         * QUILL UA
+         * =========================
+         */
+
+        const articleEditorUA =
+            document.getElementById(
+                "articleEditorUA"
+            );
+
+
+        let articleQuillUA =
+            null;
+
+
+        if (articleEditorUA) {
+
+            articleQuillUA =
+                new Quill(
+                    "#articleEditorUA",
+                    {
+                        theme: "snow",
+
+                        modules: {
+
+                            toolbar: [
+                                [
+                                    {
+                                        header: [
+                                            1,
+                                            2,
+                                            3,
+                                            false
+                                        ]
+                                    }
+                                ],
+
+                                [
+                                    "bold",
+                                    "italic",
+                                    "underline"
+                                ],
+
+                                [
+                                    {
+                                        list: "ordered"
+                                    },
+                                    {
+                                        list: "bullet"
+                                    }
+                                ],
+
+                                [
+                                    "blockquote"
+                                ],
+
+                                [
+                                    "link",
+                                    "image"
+                                ],
+
+                                [
+                                    {
+                                        align: []
+                                    }
+                                ],
+
+                                [
+                                    "clean"
+                                ]
+                            ],
+
+                            imageResize: {
+                                showToolbar: true,
+                                persistAlignment: true,
+                                keepAspectRatio: true
+                            }
+
+                        }
+                    }
+                );
+
+        }
+
+
+
+        /*
+         * =========================
+         * ОБТІКАННЯ ЗОБРАЖЕННЯ UA
+         * =========================
+         */
+
+        let selectedArticleImageUA =
+            null;
+
+
+        const imageWrapToolbarUA =
+            document.createElement(
+                "div"
+            );
+
+
+        imageWrapToolbarUA.className =
+            "article-image-wrap-toolbar";
+
+
+        imageWrapToolbarUA.innerHTML = `
+            <button
+                type="button"
+                data-align="left"
+            >
+                Ліворуч
+            </button>
+
+            <button
+                type="button"
+                data-align="center"
+            >
+                По центру
+            </button>
+
+            <button
+                type="button"
+                data-align="right"
+            >
+                Праворуч
+            </button>
+        `;
+
+
+        document.body.appendChild(
+            imageWrapToolbarUA
+        );
+
+
+        function hideImageWrapToolbarUA() {
+
+            imageWrapToolbarUA.style.display =
+                "none";
+
+            selectedArticleImageUA =
+                null;
+
+        }
+
+
+        function showImageWrapToolbarUA(
+            image
+        ) {
+
+            selectedArticleImageUA =
+                image;
+
+
+            const rect =
+                image.getBoundingClientRect();
+
+
+            imageWrapToolbarUA.style.left =
+                (
+                    window.scrollX +
+                    rect.left
+                ) + "px";
+
+
+            imageWrapToolbarUA.style.top =
+                (
+                    window.scrollY +
+                    rect.bottom +
+                    5
+                ) + "px";
+
+
+            imageWrapToolbarUA.style.display =
+                "block";
+
+        }
+
+
+        articleEditorUA.addEventListener(
+            "click",
+            function(event) {
+
+                if (
+                    event.target &&
+                    event.target.tagName === "IMG"
+                ) {
+
+                    showImageWrapToolbarUA(
+                        event.target
                     );
 
                     return;
 
                 }
 
+                hideImageWrapToolbarUA();
 
-                console.log(
-                    "Статтю створено:",
-                    data
+            }
+        );
+
+
+        imageWrapToolbarUA.addEventListener(
+            "click",
+            function(event) {
+
+                const button =
+                    event.target.closest(
+                        "button"
+                    );
+
+
+                if (
+                    !button ||
+                    !selectedArticleImageUA
+                ) {
+                    return;
+                }
+
+
+                const align =
+                    button.dataset.align;
+
+
+                selectedArticleImageUA.classList.remove(
+                    "article-image-float-left",
+                    "article-image-float-right",
+                    "article-image-center"
                 );
 
 
-                alert(
-                    "Статтю успішно збережено."
-                );
+                if (align === "left") {
+
+                    selectedArticleImageUA.classList.add(
+                        "article-image-float-left"
+                    );
+
+                }
 
 
-                /*
-                 * =========================
-                 * ОЧИЩЕННЯ ФОРМИ
-                 * =========================
-                 */
+                if (align === "right") {
 
-                document.getElementById(
-                    "titleUA"
-                ).value = "";
+                    selectedArticleImageUA.classList.add(
+                        "article-image-float-right"
+                    );
 
-                document.getElementById(
-                    "titleEN"
-                ).value = "";
+                }
 
-                document.getElementById(
-                    "category"
-                ).value = "";
 
-                document.getElementById(
-                    "publicationDate"
-                ).value = "";
+                if (align === "center") {
 
-                document.getElementById(
-                    "articleStatus"
-                ).value = "draft";
+                    selectedArticleImageUA.classList.add(
+                        "article-image-center"
+                    );
 
-                document.getElementById(
-                    "excerptUA"
-                ).value = "";
-
-                document.getElementById(
-                    "excerptEN"
-                ).value = "";
-
-                document.getElementById(
-                    "captionUA"
-                ).value = "";
-
-                document.getElementById(
-                    "captionEN"
-                ).value = "";
-
-                document.getElementById(
-                    "slug"
-                ).value = "";
-
-                document.getElementById(
-                    "mainImage"
-                ).value = "";
+                }
 
 
                 if (articleQuillUA) {
 
-                    articleQuillUA.setContents([]);
+                    articleQuillUA.update();
 
                 }
 
+            }
+        );
 
-                if (articleQuillEN) {
 
-                    articleQuillEN.setContents([]);
+        document.addEventListener(
+            "click",
+            function(event) {
+
+                if (
+                    !articleEditorUA.contains(
+                        event.target
+                    ) &&
+                    !imageWrapToolbarUA.contains(
+                        event.target
+                    )
+                ) {
+
+                    hideImageWrapToolbarUA();
 
                 }
 
-
-                /*
-                 * ОНОВЛЮЄМО СПИСОК
-                 */
-
-                loadArticles();
+            }
+        );
 
 
-            } catch (error) {
+        const toolbarUA =
+            articleQuillUA.getModule(
+                "toolbar"
+            );
+
+
+        toolbarUA.addHandler(
+            "image",
+            function() {
+
+                uploadArticleImage(
+                    articleQuillUA
+                );
+
+            }
+        );
+
+
+
+        /*
+         * =========================
+         * QUILL EN
+         * =========================
+         */
+
+        const articleEditorEN =
+            document.getElementById(
+                "articleEditorEN"
+            );
+
+
+        let articleQuillEN =
+            null;
+
+
+        if (articleEditorEN) {
+
+            articleQuillEN =
+                new Quill(
+                    "#articleEditorEN",
+                    {
+                        theme: "snow",
+
+                        modules: {
+
+                            toolbar: [
+                                [
+                                    {
+                                        header: [
+                                            1,
+                                            2,
+                                            3,
+                                            false
+                                        ]
+                                    }
+                                ],
+
+                                [
+                                    "bold",
+                                    "italic",
+                                    "underline"
+                                ],
+
+                                [
+                                    {
+                                        list: "ordered"
+                                    },
+                                    {
+                                        list: "bullet"
+                                    }
+                                ],
+
+                                [
+                                    "blockquote"
+                                ],
+
+                                [
+                                    "link",
+                                    "image"
+                                ],
+
+                                [
+                                    {
+                                        align: []
+                                    }
+                                ],
+
+                                [
+                                    "clean"
+                                ]
+                            ],
+
+                            imageResize: {
+                                showToolbar: true,
+                                persistAlignment: true,
+                                keepAspectRatio: true
+                            }
+
+                        }
+                    }
+                );
+
+
+
+            /*
+             * =========================
+             * ОБТІКАННЯ ЗОБРАЖЕННЯ EN
+             * =========================
+             */
+
+            let selectedArticleImageEN =
+                null;
+
+
+            const imageWrapToolbarEN =
+                document.createElement(
+                    "div"
+                );
+
+
+            imageWrapToolbarEN.className =
+                "article-image-wrap-toolbar";
+
+
+            imageWrapToolbarEN.innerHTML = `
+                <button
+                    type="button"
+                    data-align="left"
+                >
+                    Left
+                </button>
+
+                <button
+                    type="button"
+                    data-align="center"
+                >
+                    Center
+                </button>
+
+                <button
+                    type="button"
+                    data-align="right"
+                >
+                    Right
+                </button>
+            `;
+
+
+            document.body.appendChild(
+                imageWrapToolbarEN
+            );
+
+
+            function hideImageWrapToolbarEN() {
+
+                imageWrapToolbarEN.style.display =
+                    "none";
+
+                selectedArticleImageEN =
+                    null;
+
+            }
+
+
+            function showImageWrapToolbarEN(
+                image
+            ) {
+
+                selectedArticleImageEN =
+                    image;
+
+
+                const rect =
+                    image.getBoundingClientRect();
+
+
+                imageWrapToolbarEN.style.left =
+                    (
+                        window.scrollX +
+                        rect.left
+                    ) + "px";
+
+
+                imageWrapToolbarEN.style.top =
+                    (
+                        window.scrollY +
+                        rect.bottom +
+                        5
+                    ) + "px";
+
+
+                imageWrapToolbarEN.style.display =
+                    "block";
+
+            }
+
+
+            articleEditorEN.addEventListener(
+                "click",
+                function(event) {
+
+                    if (
+                        event.target &&
+                        event.target.tagName === "IMG"
+                    ) {
+
+                        showImageWrapToolbarEN(
+                            event.target
+                        );
+
+                        return;
+
+                    }
+
+                    hideImageWrapToolbarEN();
+
+                }
+            );
+
+
+            imageWrapToolbarEN.addEventListener(
+                "click",
+                function(event) {
+
+                    const button =
+                        event.target.closest(
+                            "button"
+                        );
+
+
+                    if (
+                        !button ||
+                        !selectedArticleImageEN
+                    ) {
+                        return;
+                    }
+
+
+                    const align =
+                        button.dataset.align;
+
+
+                    selectedArticleImageEN.classList.remove(
+                        "article-image-float-left",
+                        "article-image-float-right",
+                        "article-image-center"
+                    );
+
+
+                    if (align === "left") {
+
+                        selectedArticleImageEN.classList.add(
+                            "article-image-float-left"
+                        );
+
+                    }
+
+
+                    if (align === "right") {
+
+                        selectedArticleImageEN.classList.add(
+                            "article-image-float-right"
+                        );
+
+                    }
+
+
+                    if (align === "center") {
+
+                        selectedArticleImageEN.classList.add(
+                            "article-image-center"
+                        );
+
+                    }
+
+
+                    if (articleQuillEN) {
+
+                        articleQuillEN.update();
+
+                    }
+
+                }
+            );
+
+
+            document.addEventListener(
+                "click",
+                function(event) {
+
+                    if (
+                        !articleEditorEN.contains(
+                            event.target
+                        ) &&
+                        !imageWrapToolbarEN.contains(
+                            event.target
+                        )
+                    ) {
+
+                        hideImageWrapToolbarEN();
+
+                    }
+
+                }
+            );
+
+
+            const toolbarEN =
+                articleQuillEN.getModule(
+                    "toolbar"
+                );
+
+
+            toolbarEN.addHandler(
+                "image",
+                function() {
+
+                    uploadArticleImage(
+                        articleQuillEN
+                    );
+
+                }
+            );
+
+        }
+
+
+
+        /*
+         * =========================
+         * ДОПОМІЖНІ ФУНКЦІЇ
+         * ДЛЯ TITLE EN / SLUG
+         * =========================
+         */
+
+        function generateArticleSlug(
+            title
+        ) {
+
+            return String(
+                title || ""
+            )
+                .toLowerCase()
+                .trim()
+                .replace(
+                    /&/g,
+                    "and"
+                )
+                .normalize("NFD")
+                .replace(
+                    /[\u0300-\u036f]/g,
+                    ""
+                )
+                .replace(
+                    /[^a-z0-9\s-]/g,
+                    ""
+                )
+                .replace(
+                    /\s+/g,
+                    "-"
+                )
+                .replace(
+                    /-+/g,
+                    "-"
+                )
+                .replace(
+                    /^-|-$/g,
+                    ""
+                );
+
+        }
+
+
+
+        async function translateArticleTitle(
+            titleUA
+        ) {
+
+            const {
+                data,
+                error
+            } =
+                await client.functions.invoke(
+                    "rapid-function",
+                    {
+                        body: {
+                            title: titleUA,
+                            organization: "",
+                            description: ""
+                        }
+                    }
+                );
+
+
+            if (error) {
 
                 console.error(
-                    "Непередбачена помилка:",
+                    "Помилка перекладу назви:",
                     error
                 );
 
-                alert(
-                    "Сталася помилка під час збереження статті."
-                );
-
-            } finally {
-
-                saveArticleButton.disabled =
-                    false;
-
-                saveArticleButton.textContent =
-                    "ЗБЕРЕГТИ СТАТТЮ";
+                throw error;
 
             }
-
-        }
-    );
-
-}
-
-/*
- * =========================
- * ЗАВАНТАЖЕННЯ СТАТЕЙ
- * =========================
- */
-let allArticles = [];
-
-let editingArticleId = null;
-
-async function loadArticles() {
-
-    if (!articlesList) {
-        return;
-    }
-
-    articlesList.innerHTML =
-        "<p>Завантаження статей...</p>";
-
-    const {
-        data,
-        error
-    } =
-        await client
-            .from("articles")
-            .select("*")
-            .order(
-                "publication_date",
-                {
-                    ascending: false
-                }
-            );
-
-    if (error) {
-
-        console.error(
-            "Помилка завантаження статей:",
-            error
-        );
-
-        articlesList.innerHTML =
-            "<p>Не вдалося завантажити статті.</p>";
-
-        return;
-    }
-
-    allArticles = data || [];
-
-    renderArticles();
-}
-
-
-function renderArticles() {
-
-    if (!articlesList) {
-        return;
-    }
-
-    const titleUA =
-        document.getElementById(
-            "filterTitleUA"
-        ).value
-            .trim()
-            .toLowerCase();
-
-    const titleEN =
-        document.getElementById(
-            "filterTitleEN"
-        ).value
-            .trim()
-            .toLowerCase();
-
-    const category =
-        document.getElementById(
-            "filterCategory"
-        ).value;
-
-    const dateFrom =
-        document.getElementById(
-            "filterDateFrom"
-        ).value;
-
-    const dateTo =
-        document.getElementById(
-            "filterDateTo"
-        ).value;
-
-    const status =
-        document.getElementById(
-            "filterStatus"
-        ).value;
-
-
-    const filteredArticles =
-        allArticles.filter(
-            function(article) {
-
-                const articleTitleUA =
-                    String(
-                        article.title_ua || ""
-                    ).toLowerCase();
-
-                const articleTitleEN =
-                    String(
-                        article.title_en || ""
-                    ).toLowerCase();
-
-
-                if (
-                    titleUA &&
-                    !articleTitleUA.includes(
-                        titleUA
-                    )
-                ) {
-                    return false;
-                }
-
-
-                if (
-                    titleEN &&
-                    !articleTitleEN.includes(
-                        titleEN
-                    )
-                ) {
-                    return false;
-                }
-
-
-                if (
-                    category &&
-                    article.category !==
-                        category
-                ) {
-                    return false;
-                }
-
-
-                if (
-                    dateFrom &&
-                    article.publication_date <
-                        dateFrom
-                ) {
-                    return false;
-                }
-
-
-                if (
-                    dateTo &&
-                    article.publication_date >
-                        dateTo
-                ) {
-                    return false;
-                }
-
-
-                if (
-                    status &&
-                    article.status !==
-                        status
-                ) {
-                    return false;
-                }
-
-
-                return true;
-            }
-        );
-
-
-    articlesCount.textContent =
-        "Знайдено: " +
-        filteredArticles.length;
-
-
-    if (
-        filteredArticles.length === 0
-    ) {
-
-        articlesList.innerHTML =
-            "<p>За заданими фільтрами статей не знайдено.</p>";
-
-        return;
-    }
-
-
-    articlesList.innerHTML = "";
-
-
-    filteredArticles.forEach(
-        function(article) {
-
-            const articleItem =
-                document.createElement(
-                    "article"
-                );
-
-            articleItem.className =
-                "admin-item";
-
-
-            const categoryLabel =
-    document.createElement(
-        "div"
-    );
-
-categoryLabel.className =
-    "admin-item-category";
-
-categoryLabel.textContent =
-    article.category ||
-    "Без категорії";
-
-
-const title =
-    document.createElement(
-        "h4"
-    );
-
-title.textContent =
-    article.title_ua ||
-    "Без назви";
-
-title.style.cursor =
-    "pointer";
-
-
-            const details =
-                document.createElement(
-                    "div"
-                );
-
-            details.style.display =
-                "none";
-
-
-            const mainInfo =
-                document.createElement(
-                    "div"
-                );
-
-            mainInfo.className =
-                "admin-item-section";
-
-
-            mainInfo.innerHTML = `
-                <h5>Основна інформація</h5>
-
-                <p>
-                    <strong>Назва UA:</strong>
-                    ${escapeArticleHtml(
-                        article.title_ua
-                    )}
-                </p>
-
-                <p>
-                    <strong>Назва EN:</strong>
-                    ${escapeArticleHtml(
-                        article.title_en
-                    )}
-                </p>
-
-                <p>
-                    <strong>Категорія:</strong>
-                    ${escapeArticleHtml(
-                        article.category
-                    )}
-                </p>
-
-                <p>
-                    <strong>Дата публікації:</strong>
-                    ${escapeArticleHtml(
-                        article.publication_date
-                    )}
-                </p>
-
-                <p>
-                    <strong>Статус:</strong>
-                    ${
-                        article.status ===
-                        "published"
-                            ? "Опубліковано"
-                            : "Чернетка"
-                    }
-                </p>
-            `;
-
-
-            details.appendChild(
-                mainInfo
-            );
-
-
-            const excerpts =
-                document.createElement(
-                    "div"
-                );
-
-            excerpts.className =
-                "admin-item-section";
-
-
-            excerpts.innerHTML = `
-                <h5>Короткий опис</h5>
-
-                <p>
-                    <strong>Анонс UA:</strong>
-                </p>
-
-                <div class="admin-article-text">
-                    ${escapeArticleHtml(
-                        article.excerpt_ua
-                    )}
-                </div>
-
-                <p>
-                    <strong>Анонс EN:</strong>
-                </p>
-
-                <div class="admin-article-text">
-                    ${escapeArticleHtml(
-                        article.excerpt_en
-                    )}
-                </div>
-            `;
-
-
-            details.appendChild(
-                excerpts
-            );
-
-
-            const contents =
-                document.createElement(
-                    "div"
-                );
-
-            contents.className =
-                "admin-item-section";
-
-
-            contents.innerHTML = `
-                <h5>Основний текст UA</h5>
-
-                <div class="admin-article-content">
-                    ${
-                        article.content_ua ||
-                        ""
-                    }
-                </div>
-
-                <h5>Основний текст EN</h5>
-
-                <div class="admin-content">
-                    ${
-                        article.content_en ||
-                        ""
-                    }
-                </div>
-            `;
-
-
-            details.appendChild(
-                contents
-            );
-
-
-            const imageSection =
-                document.createElement(
-                    "div"
-                );
-
-            imageSection.className =
-                "admin-item-section";
-
-
-            let imageHtml =
-                "<p><strong>Головне зображення:</strong> не завантажено</p>";
 
 
             if (
-                article.main_image
+                !data ||
+                !data.title_en
             ) {
 
-                imageHtml = `
-                    <p>
-                        <strong>
-                            Головне зображення:
-                        </strong>
-                    </p>
+                console.error(
+                    "Некоректна відповідь rapid-function:",
+                    data
+                );
 
-                    <img
-                        src="${escapeArticleAttribute(
-                            article.main_image
-                        )}"
-                        alt="${escapeArticleAttribute(
-                            article.caption_ua ||
-                            article.title_ua ||
-                            ""
-                        )}"
-                        class="admin-image"
-                    >
-                `;
+                throw new Error(
+                    "Не вдалося отримати англійську назву."
+                );
+
             }
 
 
-            imageSection.innerHTML = `
-                <h5>Зображення</h5>
+            return data.title_en.trim();
 
-                ${imageHtml}
-
-                <p>
-                    <strong>Підпис UA:</strong>
-                    ${
-                        escapeArticleHtml(
-                            article.caption_ua ||
-                            "—"
-                        )
-                    }
-                </p>
-
-                <p>
-                    <strong>Підпис EN:</strong>
-                    ${
-                        escapeArticleHtml(
-                            article.caption_en ||
-                            "—"
-                        )
-                    }
-                </p>
-            `;
-
-
-            details.appendChild(
-                imageSection
-            );
-
-
-            const additionalData =
-                document.createElement(
-                    "div"
-                );
-
-            additionalData.className =
-                "admin-item-section";
-
-
-            additionalData.innerHTML = `
-                <h5>Додаткові дані</h5>
-
-                <p>
-                    <strong>Slug:</strong>
-                    ${
-                        escapeArticleHtml(
-                            article.slug ||
-                            "—"
-                        )
-                    }
-                </p>
-            `;
-
-
-            details.appendChild(
-                additionalData
-            );
-
-
-            const systemData =
-                document.createElement(
-                    "div"
-                );
-
-            systemData.className =
-                "admin-system-info";
-
-
-            systemData.innerHTML = `
-                <p>
-                    <strong>ID:</strong>
-                    ${escapeArticleHtml(
-                        article.id
-                    )}
-                </p>
-
-                <p>
-                    <strong>Створено:</strong>
-                    ${formatArticleDateTime(
-                        article.created_at
-                    )}
-                </p>
-
-                <p>
-                    <strong>Оновлено:</strong>
-                    ${formatArticleDateTime(
-                        article.updated_at
-                    )}
-                </p>
-            `;
-
-
-            details.appendChild(
-                systemData
-            );
-
-
-            const actions =
-                document.createElement(
-                    "div"
-                );
-
-            actions.className =
-                "admin-item-actions";
-
-
-            const editButton =
-                document.createElement(
-                    "button"
-                );
-
-            editButton.type =
-                "button";
-
-            editButton.className =
-                "admin-button";
-
-            editButton.textContent =
-                "РЕДАГУВАТИ";
-
-
-            const deleteButton =
-                document.createElement(
-                    "button"
-                );
-
-            deleteButton.type =
-                "button";
-
-            deleteButton.className =
-                "admin-button admin-button-danger";
-
-            deleteButton.textContent =
-                "ВИДАЛИТИ";
-
-            deleteButton.addEventListener(
-    "click",
-    async function() {
-
-        const confirmed =
-            confirm(
-                "Ви впевнені, що хочете видалити цю статтю?"
-            );
-
-        if (!confirmed) {
-            return;
         }
 
 
-        deleteButton.disabled =
-            true;
 
-        deleteButton.textContent =
-            "ВИДАЛЯЄМО...";
+        /*
+         * =========================
+         * ПЕРЕВІРКА УНІКАЛЬНОСТІ SLUG
+         * =========================
+         */
+
+        async function checkSlugExists(
+            slug,
+            excludeId = null
+        ) {
+
+            if (!slug) {
+                return false;
+            }
 
 
-        try {
+            let query =
+                client
+                    .from("articles")
+                    .select("id")
+                    .ilike(
+                        "slug",
+                        slug
+                    );
+
+
+            if (excludeId !== null) {
+
+                query =
+                    query.neq(
+                        "id",
+                        excludeId
+                    );
+
+            }
+
 
             const {
+                data,
+                error
+            } =
+                await query.limit(1);
+
+
+            if (error) {
+
+                console.error(
+                    "Помилка перевірки Slug:",
+                    error
+                );
+
+                throw error;
+
+            }
+
+
+            return (
+                Array.isArray(data) &&
+                data.length > 0
+            );
+
+        }
+
+
+
+        /*
+         * =========================
+         * ПРОПОЗИЦІЯ АНГЛІЙСЬКОЇ НАЗВИ
+         * ПРИ СТВОРЕННІ
+         * =========================
+         */
+
+        const suggestTitleENButton =
+            document.getElementById(
+                "suggestTitleENButton"
+            );
+
+
+        if (suggestTitleENButton) {
+
+            suggestTitleENButton.addEventListener(
+                "click",
+                async function() {
+
+                    const titleUA =
+                        document.getElementById(
+                            "titleUA"
+                        ).value.trim();
+
+
+                    if (!titleUA) {
+
+                        alert(
+                            "Спочатку введіть назву українською."
+                        );
+
+                        return;
+
+                    }
+
+
+                    const originalText =
+                        suggestTitleENButton.textContent;
+
+
+                    try {
+
+                        suggestTitleENButton.disabled =
+                            true;
+
+
+                        suggestTitleENButton.textContent =
+                            "ПЕРЕКЛАДАЄМО...";
+
+
+                        const translatedTitle =
+                            await translateArticleTitle(
+                                titleUA
+                            );
+
+
+                        document.getElementById(
+                            "titleEN"
+                        ).value =
+                            translatedTitle;
+
+                    } catch (error) {
+
+                        console.error(
+                            error
+                        );
+
+
+                        alert(
+                            "Не вдалося запропонувати англійську назву. Спробуйте ще раз."
+                        );
+
+                    } finally {
+
+                        suggestTitleENButton.disabled =
+                            false;
+
+
+                        suggestTitleENButton.textContent =
+                            originalText;
+
+                    }
+
+                }
+            );
+
+        }
+
+
+
+        /*
+         * =========================
+         * ПРОПОЗИЦІЯ SLUG
+         * ПРИ СТВОРЕННІ
+         * =========================
+         */
+
+        const suggestSlugButton =
+            document.getElementById(
+                "suggestSlugButton"
+            );
+
+
+        if (suggestSlugButton) {
+
+            suggestSlugButton.addEventListener(
+                "click",
+                function() {
+
+                    const titleEN =
+                        document.getElementById(
+                            "titleEN"
+                        ).value.trim();
+
+
+                    if (!titleEN) {
+
+                        alert(
+                            "Спочатку введіть англійську назву."
+                        );
+
+                        return;
+
+                    }
+
+
+                    const slug =
+                        generateArticleSlug(
+                            titleEN
+                        );
+
+
+                    if (!slug) {
+
+                        alert(
+                            "Не вдалося сформувати Slug. Перевірте англійську назву."
+                        );
+
+                        return;
+
+                    }
+
+
+                    document.getElementById(
+                        "slug"
+                    ).value =
+                        slug;
+
+                }
+            );
+
+        }
+
+
+
+        /*
+         * =========================
+         * СТВОРЕННЯ СТАТТІ
+         * =========================
+         */
+
+        const createArticleButton =
+            document.getElementById(
+                "createArticleButton"
+            );
+
+
+        const cancelArticleButton =
+            document.getElementById(
+                "cancelArticleButton"
+            );
+
+
+        const articleForm =
+            document.getElementById(
+                "articleForm"
+            );
+
+
+        if (
+            createArticleButton &&
+            articleForm
+        ) {
+
+            createArticleButton.addEventListener(
+                "click",
+                function() {
+
+                    articleForm.style.display =
+                        "block";
+
+
+                    createArticleButton.style.display =
+                        "none";
+
+
+                    window.scrollTo({
+                        top:
+                            articleForm.offsetTop - 30,
+                        behavior:
+                            "smooth"
+                    });
+
+                }
+            );
+
+        }
+
+
+        if (
+            cancelArticleButton &&
+            articleForm
+        ) {
+
+            cancelArticleButton.addEventListener(
+                "click",
+                function() {
+
+                    articleForm.style.display =
+                        "none";
+
+
+                    createArticleButton.style.display =
+                        "block";
+
+                }
+            );
+
+        }
+
+
+
+        /*
+         * =========================
+         * ЗБЕРЕЖЕННЯ НОВОЇ СТАТТІ
+         * =========================
+         */
+
+        const saveArticleButton =
+            document.getElementById(
+                "saveArticleButton"
+            );
+
+
+        if (saveArticleButton) {
+
+            saveArticleButton.addEventListener(
+                "click",
+                async function() {
+
+                    const titleUA =
+                        document.getElementById(
+                            "titleUA"
+                        ).value.trim();
+
+
+                    const titleEN =
+                        document.getElementById(
+                            "titleEN"
+                        ).value.trim();
+
+
+                    const category =
+                        document.getElementById(
+                            "category"
+                        ).value;
+
+
+                    const publicationDate =
+                        document.getElementById(
+                            "publicationDate"
+                        ).value;
+
+
+                    const status =
+                        document.getElementById(
+                            "articleStatus"
+                        ).value;
+
+
+                    const excerptUA =
+                        document.getElementById(
+                            "excerptUA"
+                        ).value.trim();
+
+
+                    const excerptEN =
+                        document.getElementById(
+                            "excerptEN"
+                        ).value.trim();
+
+
+                    const captionUA =
+                        document.getElementById(
+                            "captionUA"
+                        ).value.trim();
+
+
+                    const captionEN =
+                        document.getElementById(
+                            "captionEN"
+                        ).value.trim();
+
+
+                    const slug =
+                        document.getElementById(
+                            "slug"
+                        ).value.trim();
+
+
+                    const mainImageInput =
+                        document.getElementById(
+                            "mainImage"
+                        );
+
+
+                    const contentUA =
+                        articleQuillUA
+                            ? articleQuillUA.root.innerHTML
+                            : "";
+
+
+                    const contentEN =
+                        articleQuillEN
+                            ? articleQuillEN.root.innerHTML
+                            : "";
+
+
+
+                    /*
+                     * ПЕРЕВІРКА ОБОВ'ЯЗКОВИХ ПОЛІВ
+                     */
+
+                    if (
+                        !titleUA ||
+                        !titleEN ||
+                        !category ||
+                        !publicationDate ||
+                        !excerptUA ||
+                        !excerptEN ||
+                        !contentUA ||
+                        !contentEN
+                    ) {
+
+                        alert(
+                            "Заповніть усі обов'язкові поля."
+                        );
+
+                        return;
+
+                    }
+
+
+
+                    saveArticleButton.disabled =
+                        true;
+
+
+                    saveArticleButton.textContent =
+                        "ПЕРЕВІРЯЄМО...";
+
+
+                    try {
+
+
+                        /*
+                         * =========================
+                         * ПЕРЕВІРКА SLUG
+                         * =========================
+                         */
+
+                        if (slug) {
+
+                            const slugExists =
+                                await checkSlugExists(
+                                    slug
+                                );
+
+
+                            if (slugExists) {
+
+                                alert(
+                                    "Такий Slug уже існує. Замініть його на інший."
+                                );
+
+
+                                document.getElementById(
+                                    "slug"
+                                ).focus();
+
+
+                                return;
+
+                            }
+
+                        }
+
+
+
+                        saveArticleButton.textContent =
+                            "ЗБЕРІГАЄМО...";
+
+
+
+                        /*
+                         * =========================
+                         * ЗАВАНТАЖЕННЯ ГОЛОВНОГО
+                         * ЗОБРАЖЕННЯ
+                         * =========================
+                         */
+
+                        let mainImageUrl =
+                            null;
+
+
+                        if (
+                            mainImageInput &&
+                            mainImageInput.files &&
+                            mainImageInput.files.length > 0
+                        ) {
+
+                            const file =
+                                mainImageInput.files[0];
+
+
+                            const fileExtension =
+                                file.name
+                                    .split(".")
+                                    .pop()
+                                    .toLowerCase();
+
+
+                            const fileName =
+                                `${Date.now()}-${Math.random()
+                                    .toString(36)
+                                    .substring(2)}.${fileExtension}`;
+
+
+                            const filePath =
+                                `articles/${fileName}`;
+
+
+                            const {
+                                error:
+                                    imageUploadError
+                            } =
+                                await client.storage
+                                    .from(
+                                        "article-images"
+                                    )
+                                    .upload(
+                                        filePath,
+                                        file
+                                    );
+
+
+                            if (
+                                imageUploadError
+                            ) {
+
+                                console.error(
+                                    "Помилка завантаження головного зображення:",
+                                    imageUploadError
+                                );
+
+
+                                alert(
+                                    "Не вдалося завантажити головне зображення."
+                                );
+
+
+                                return;
+
+                            }
+
+
+                            const {
+                                data:
+                                    imageData
+                            } =
+                                client.storage
+                                    .from(
+                                        "article-images"
+                                    )
+                                    .getPublicUrl(
+                                        filePath
+                                    );
+
+
+                            mainImageUrl =
+                                imageData.publicUrl;
+
+                        }
+
+
+
+                        /*
+                         * =========================
+                         * ЗБЕРЕЖЕННЯ СТАТТІ
+                         * =========================
+                         */
+
+                        const {
+                            data,
+                            error
+                        } =
+                            await client
+                                .from("articles")
+                                .insert({
+
+                                    title_ua:
+                                        titleUA,
+
+                                    title_en:
+                                        titleEN,
+
+                                    category:
+                                        category,
+
+                                    publication_date:
+                                        publicationDate,
+
+                                    status:
+                                        status,
+
+                                    excerpt_ua:
+                                        excerptUA,
+
+                                    excerpt_en:
+                                        excerptEN,
+
+                                    content_ua:
+                                        contentUA,
+
+                                    content_en:
+                                        contentEN,
+
+                                    main_image:
+                                        mainImageUrl,
+
+                                    caption_ua:
+                                        captionUA ||
+                                        null,
+
+                                    caption_en:
+                                        captionEN ||
+                                        null,
+
+                                    slug:
+                                        slug ||
+                                        null
+
+                                })
+                                .select()
+                                .single();
+
+
+                        if (error) {
+
+                            console.error(
+                                "Помилка збереження статті:",
+                                error
+                            );
+
+
+                            alert(
+                                "Не вдалося зберегти статтю."
+                            );
+
+
+                            return;
+
+                        }
+
+
+                        console.log(
+                            "Статтю створено:",
+                            data
+                        );
+
+
+                        alert(
+                            "Статтю успішно збережено."
+                        );
+
+
+
+                        /*
+                         * =========================
+                         * ОЧИЩЕННЯ ФОРМИ
+                         * =========================
+                         */
+
+                        document.getElementById(
+                            "titleUA"
+                        ).value = "";
+
+
+                        document.getElementById(
+                            "titleEN"
+                        ).value = "";
+
+
+                        document.getElementById(
+                            "category"
+                        ).value = "";
+
+
+                        document.getElementById(
+                            "publicationDate"
+                        ).value = "";
+
+
+                        document.getElementById(
+                            "articleStatus"
+                        ).value = "draft";
+
+
+                        document.getElementById(
+                            "excerptUA"
+                        ).value = "";
+
+
+                        document.getElementById(
+                            "excerptEN"
+                        ).value = "";
+
+
+                        document.getElementById(
+                            "captionUA"
+                        ).value = "";
+
+
+                        document.getElementById(
+                            "captionEN"
+                        ).value = "";
+
+
+                        document.getElementById(
+                            "slug"
+                        ).value = "";
+
+
+                        document.getElementById(
+                            "mainImage"
+                        ).value = "";
+
+
+                        if (articleQuillUA) {
+
+                            articleQuillUA.setContents([]);
+
+                        }
+
+
+                        if (articleQuillEN) {
+
+                            articleQuillEN.setContents([]);
+
+                        }
+
+
+                        /*
+                         * ОНОВЛЮЄМО СПИСОК
+                         */
+
+                        loadArticles();
+
+
+                    } catch (error) {
+
+                        console.error(
+                            "Непередбачена помилка:",
+                            error
+                        );
+
+
+                        alert(
+                            "Сталася помилка під час збереження статті."
+                        );
+
+
+                    } finally {
+
+                        saveArticleButton.disabled =
+                            false;
+
+
+                        saveArticleButton.textContent =
+                            "ЗБЕРЕГТИ СТАТТЮ";
+
+                    }
+
+                }
+            );
+
+        }
+
+
+
+        /*
+         * =========================
+         * СПИСОК СТАТЕЙ
+         * =========================
+         */
+
+        let allArticles =
+            [];
+
+
+        let editingArticleId =
+            null;
+
+
+        const articlesList =
+            document.getElementById(
+                "articlesList"
+            );
+
+
+        const articlesCount =
+            document.getElementById(
+                "articlesCount"
+            );
+
+
+
+        async function loadArticles() {
+
+            if (!articlesList) {
+                return;
+            }
+
+
+            articlesList.innerHTML =
+                "<p>Завантаження статей...</p>";
+
+
+            const {
+                data,
                 error
             } =
                 await client
                     .from("articles")
-                    .delete()
-                    .eq(
-                        "id",
-                        article.id
+                    .select("*")
+                    .order(
+                        "publication_date",
+                        {
+                            ascending: false
+                        }
                     );
 
 
             if (error) {
 
                 console.error(
-                    "Помилка видалення статті:",
+                    "Помилка завантаження статей:",
                     error
                 );
 
-                alert(
-                    "Не вдалося видалити статтю."
-                );
 
+                articlesList.innerHTML =
+                    "<p>Не вдалося завантажити статті.</p>";
+
+
+                return;
+
+            }
+
+
+            allArticles =
+                data || [];
+
+
+            renderArticles();
+
+        }
+
+
+
+        function renderArticles() {
+
+            if (!articlesList) {
                 return;
             }
 
 
-            alert(
-                "Статтю успішно видалено."
+            const titleUA =
+                document.getElementById(
+                    "filterTitleUA"
+                ).value
+                    .trim()
+                    .toLowerCase();
+
+
+            const titleEN =
+                document.getElementById(
+                    "filterTitleEN"
+                ).value
+                    .trim()
+                    .toLowerCase();
+
+
+            const category =
+                document.getElementById(
+                    "filterCategory"
+                ).value;
+
+
+            const dateFrom =
+                document.getElementById(
+                    "filterDateFrom"
+                ).value;
+
+
+            const dateTo =
+                document.getElementById(
+                    "filterDateTo"
+                ).value;
+
+
+            const status =
+                document.getElementById(
+                    "filterStatus"
+                ).value;
+
+
+
+            const filteredArticles =
+                allArticles.filter(
+                    function(article) {
+
+                        const articleTitleUA =
+                            String(
+                                article.title_ua || ""
+                            ).toLowerCase();
+
+
+                        const articleTitleEN =
+                            String(
+                                article.title_en || ""
+                            ).toLowerCase();
+
+
+                        if (
+                            titleUA &&
+                            !articleTitleUA.includes(
+                                titleUA
+                            )
+                        ) {
+
+                            return false;
+
+                        }
+
+
+                        if (
+                            titleEN &&
+                            !articleTitleEN.includes(
+                                titleEN
+                            )
+                        ) {
+
+                            return false;
+
+                        }
+
+
+                        if (
+                            category &&
+                            article.category !==
+                                category
+                        ) {
+
+                            return false;
+
+                        }
+
+
+                        if (
+                            dateFrom &&
+                            article.publication_date <
+                                dateFrom
+                        ) {
+
+                            return false;
+
+                        }
+
+
+                        if (
+                            dateTo &&
+                            article.publication_date >
+                                dateTo
+                        ) {
+
+                            return false;
+
+                        }
+
+
+                        if (
+                            status &&
+                            article.status !==
+                                status
+                        ) {
+
+                            return false;
+
+                        }
+
+
+                        return true;
+
+                    }
+                );
+
+
+
+            articlesCount.textContent =
+                "Знайдено: " +
+                filteredArticles.length;
+
+
+
+            if (
+                filteredArticles.length === 0
+            ) {
+
+                articlesList.innerHTML =
+                    "<p>За заданими фільтрами статей не знайдено.</p>";
+
+
+                return;
+
+            }
+
+
+
+            articlesList.innerHTML =
+                "";
+
+
+
+            filteredArticles.forEach(
+                function(article) {
+
+                    const articleItem =
+                        document.createElement(
+                            "article"
+                        );
+
+
+                    articleItem.className =
+                        "admin-item";
+
+
+
+                    const categoryLabel =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    categoryLabel.className =
+                        "admin-item-category";
+
+
+                    categoryLabel.textContent =
+                        article.category ||
+                        "Без категорії";
+
+
+
+                    const title =
+                        document.createElement(
+                            "h4"
+                        );
+
+
+                    title.textContent =
+                        article.title_ua ||
+                        "Без назви";
+
+
+                    title.style.cursor =
+                        "pointer";
+
+
+
+                    const details =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    details.style.display =
+                        "none";
+
+
+
+                    const mainInfo =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    mainInfo.className =
+                        "admin-item-section";
+
+
+                    mainInfo.innerHTML = `
+                        <h5>
+                            Основна інформація
+                        </h5>
+
+                        <p>
+                            <strong>
+                                Назва UA:
+                            </strong>
+
+                            ${escapeArticleHtml(
+                                article.title_ua
+                            )}
+                        </p>
+
+                        <p>
+                            <strong>
+                                Назва EN:
+                            </strong>
+
+                            ${escapeArticleHtml(
+                                article.title_en
+                            )}
+                        </p>
+
+                        <p>
+                            <strong>
+                                Категорія:
+                            </strong>
+
+                            ${escapeArticleHtml(
+                                article.category
+                            )}
+                        </p>
+
+                        <p>
+                            <strong>
+                                Дата публікації:
+                            </strong>
+
+                            ${escapeArticleHtml(
+                                article.publication_date
+                            )}
+                        </p>
+
+                        <p>
+                            <strong>
+                                Статус:
+                            </strong>
+
+                            ${
+                                article.status ===
+                                "published"
+                                    ? "Опубліковано"
+                                    : "Чернетка"
+                            }
+                        </p>
+                    `;
+
+
+                    details.appendChild(
+                        mainInfo
+                    );
+
+
+
+                    const excerpts =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    excerpts.className =
+                        "admin-item-section";
+
+
+                    excerpts.innerHTML = `
+                        <h5>
+                            Короткий опис
+                        </h5>
+
+                        <p>
+                            <strong>
+                                Анонс UA:
+                            </strong>
+                        </p>
+
+                        <div class="admin-article-text">
+                            ${escapeArticleHtml(
+                                article.excerpt_ua
+                            )}
+                        </div>
+
+                        <p>
+                            <strong>
+                                Анонс EN:
+                            </strong>
+                        </p>
+
+                        <div class="admin-article-text">
+                            ${escapeArticleHtml(
+                                article.excerpt_en
+                            )}
+                        </div>
+                    `;
+
+
+                    details.appendChild(
+                        excerpts
+                    );
+
+
+
+                    const contents =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    contents.className =
+                        "admin-item-section";
+
+
+                    contents.innerHTML = `
+                        <h5>
+                            Основний текст UA
+                        </h5>
+
+                        <div class="admin-article-content">
+                            ${
+                                article.content_ua ||
+                                ""
+                            }
+                        </div>
+
+                        <h5>
+                            Основний текст EN
+                        </h5>
+
+                        <div class="admin-content">
+                            ${
+                                article.content_en ||
+                                ""
+                            }
+                        </div>
+                    `;
+
+
+                    details.appendChild(
+                        contents
+                    );
+
+
+
+                    const imageSection =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    imageSection.className =
+                        "admin-item-section";
+
+
+                    let imageHtml =
+                        "<p><strong>Головне зображення:</strong> не завантажено</p>";
+
+
+                    if (
+                        article.main_image
+                    ) {
+
+                        imageHtml = `
+                            <p>
+                                <strong>
+                                    Головне зображення:
+                                </strong>
+                            </p>
+
+                            <img
+                                src="${escapeArticleAttribute(
+                                    article.main_image
+                                )}"
+                                alt="${escapeArticleAttribute(
+                                    article.caption_ua ||
+                                    article.title_ua ||
+                                    ""
+                                )}"
+                                class="admin-image"
+                            >
+                        `;
+
+                    }
+
+
+                    imageSection.innerHTML = `
+                        <h5>
+                            Зображення
+                        </h5>
+
+                        ${imageHtml}
+
+                        <p>
+                            <strong>
+                                Підпис UA:
+                            </strong>
+
+                            ${
+                                escapeArticleHtml(
+                                    article.caption_ua ||
+                                    "—"
+                                )
+                            }
+                        </p>
+
+                        <p>
+                            <strong>
+                                Підпис EN:
+                            </strong>
+
+                            ${
+                                escapeArticleHtml(
+                                    article.caption_en ||
+                                    "—"
+                                )
+                            }
+                        </p>
+                    `;
+
+
+                    details.appendChild(
+                        imageSection
+                    );
+
+
+
+                    const additionalData =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    additionalData.className =
+                        "admin-item-section";
+
+
+                    additionalData.innerHTML = `
+                        <h5>
+                            Додаткові дані
+                        </h5>
+
+                        <p>
+                            <strong>
+                                Slug:
+                            </strong>
+
+                            ${
+                                escapeArticleHtml(
+                                    article.slug ||
+                                    "—"
+                                )
+                            }
+                        </p>
+                    `;
+
+
+                    details.appendChild(
+                        additionalData
+                    );
+
+
+
+                    const systemData =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    systemData.className =
+                        "admin-system-info";
+
+
+                    systemData.innerHTML = `
+                        <p>
+                            <strong>
+                                ID:
+                            </strong>
+
+                            ${escapeArticleHtml(
+                                article.id
+                            )}
+                        </p>
+
+                        <p>
+                            <strong>
+                                Створено:
+                            </strong>
+
+                            ${formatArticleDateTime(
+                                article.created_at
+                            )}
+                        </p>
+
+                        <p>
+                            <strong>
+                                Оновлено:
+                            </strong>
+
+                            ${formatArticleDateTime(
+                                article.updated_at
+                            )}
+                        </p>
+                    `;
+
+
+                    details.appendChild(
+                        systemData
+                    );
+
+
+
+                    const actions =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    actions.className =
+                        "admin-item-actions";
+
+
+
+                    const editButton =
+                        document.createElement(
+                            "button"
+                        );
+
+
+                    editButton.type =
+                        "button";
+
+
+                    editButton.className =
+                        "admin-button";
+
+
+                    editButton.textContent =
+                        "РЕДАГУВАТИ";
+
+
+
+                    const deleteButton =
+                        document.createElement(
+                            "button"
+                        );
+
+
+                    deleteButton.type =
+                        "button";
+
+
+                    deleteButton.className =
+                        "admin-button admin-button-danger";
+
+
+                    deleteButton.textContent =
+                        "ВИДАЛИТИ";
+
+
+
+                    deleteButton.addEventListener(
+                        "click",
+                        async function() {
+
+                            const confirmed =
+                                confirm(
+                                    "Ви впевнені, що хочете видалити цю статтю?"
+                                );
+
+
+                            if (!confirmed) {
+                                return;
+                            }
+
+
+                            deleteButton.disabled =
+                                true;
+
+
+                            deleteButton.textContent =
+                                "ВИДАЛЯЄМО...";
+
+
+                            try {
+
+                                const {
+                                    error
+                                } =
+                                    await client
+                                        .from("articles")
+                                        .delete()
+                                        .eq(
+                                            "id",
+                                            article.id
+                                        );
+
+
+                                if (error) {
+
+                                    console.error(
+                                        "Помилка видалення статті:",
+                                        error
+                                    );
+
+
+                                    alert(
+                                        "Не вдалося видалити статтю."
+                                    );
+
+
+                                    return;
+
+                                }
+
+
+                                alert(
+                                    "Статтю успішно видалено."
+                                );
+
+
+                                await loadArticles();
+
+
+                            } catch (error) {
+
+                                console.error(
+                                    "Непередбачена помилка:",
+                                    error
+                                );
+
+
+                                alert(
+                                    "Сталася помилка під час видалення статті."
+                                );
+
+
+                            } finally {
+
+                                deleteButton.disabled =
+                                    false;
+
+
+                                deleteButton.textContent =
+                                    "ВИДАЛИТИ";
+
+                            }
+
+                        }
+                    );
+
+
+
+                    actions.appendChild(
+                        editButton
+                    );
+
+
+                    actions.appendChild(
+                        deleteButton
+                    );
+
+
+
+                    editButton.addEventListener(
+                        "click",
+                        function() {
+
+                            startArticleEditing(
+                                article,
+                                articleItem
+                            );
+
+                        }
+                    );
+
+
+                    details.appendChild(
+                        actions
+                    );
+
+
+
+                    title.addEventListener(
+                        "click",
+                        function() {
+
+                            const isOpen =
+                                details.style.display ===
+                                "block";
+
+
+                            details.style.display =
+                                isOpen
+                                    ? "none"
+                                    : "block";
+
+                        }
+                    );
+
+
+
+                    articleItem.appendChild(
+                        categoryLabel
+                    );
+
+
+                    articleItem.appendChild(
+                        title
+                    );
+
+
+                    articleItem.appendChild(
+                        details
+                    );
+
+
+                    articlesList.appendChild(
+                        articleItem
+                    );
+
+                }
             );
-
-
-            await loadArticles();
-
-
-        } catch (error) {
-
-            console.error(
-                "Непередбачена помилка:",
-                error
-            );
-
-            alert(
-                "Сталася помилка під час видалення статті."
-            );
-
-
-        } finally {
-
-            deleteButton.disabled =
-                false;
-
-            deleteButton.textContent =
-                "ВИДАЛИТИ";
 
         }
 
-    }
-);
 
-            actions.appendChild(
-                editButton
-            );
 
-            actions.appendChild(
-                deleteButton
-            );
+        /*
+         * =========================
+         * РЕДАГУВАННЯ СТАТТІ
+         * =========================
+         */
 
-            editButton.addEventListener(
-    "click",
-    function() {
-
-        startArticleEditing(
+        function startArticleEditing(
             article,
             articleItem
-        );
+        ) {
 
-    }
-);
+            if (editingArticleId) {
+                return;
+            }
 
-            details.appendChild(
-                actions
+
+            editingArticleId =
+                article.id;
+
+
+
+            const editForm =
+                document.createElement(
+                    "div"
+                );
+
+
+            editForm.className =
+                "admin-form";
+
+
+
+            editForm.innerHTML = `
+
+                <div class="admin-form-section">
+
+                    <h3>
+                        Редагування статті
+                    </h3>
+
+
+                    <div class="admin-form-group">
+
+                        <label>
+                            Назва UA *
+                        </label>
+
+                        <input
+                            type="text"
+                            class="edit-title-ua"
+                            value="${escapeArticleAttribute(
+                                article.title_ua || ""
+                            )}"
+                        >
+
+                    </div>
+
+
+                    <div class="admin-form-group">
+
+                        <label>
+                            Назва EN *
+                        </label>
+
+                        <input
+                            type="text"
+                            class="edit-title-en"
+                            value="${escapeArticleAttribute(
+                                article.title_en || ""
+                            )}"
+                        >
+
+                        <button
+                            type="button"
+                            class="admin-button article-suggest-button edit-suggest-title-en-button"
+                        >
+                            ЗАПРОПОНУВАТИ АНГЛІЙСЬКУ
+                        </button>
+
+                    </div>
+
+
+                    <div class="admin-form-group">
+
+                        <label>
+                            Категорія *
+                        </label>
+
+                        <select class="edit-category">
+
+                            <option value="Репортаж">
+                                Репортаж
+                            </option>
+
+                            <option value="Аналітика">
+                                Аналітика
+                            </option>
+
+                            <option value="Інтерв’ю">
+                                Інтерв'ю
+                            </option>
+
+                            <option value="Колонка">
+                                Колонка
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="admin-form-group">
+
+                        <label>
+                            Дата публікації *
+                        </label>
+
+                        <input
+                            type="date"
+                            class="edit-publication-date"
+                            value="${escapeArticleAttribute(
+                                article.publication_date || ""
+                            )}"
+                        >
+
+                    </div>
+
+
+                    <div class="admin-form-group">
+
+                        <label>
+                            Статус
+                        </label>
+
+                        <select class="edit-status">
+
+                            <option value="draft">
+                                Чернетка
+                            </option>
+
+                            <option value="published">
+                                Опубліковано
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="admin-form-group">
+
+                        <label>
+                            Анонс UA *
+                        </label>
+
+                        <textarea
+                            class="edit-excerpt-ua"
+                            rows="6"
+                        >${escapeArticleHtml(
+                            article.excerpt_ua || ""
+                        )}</textarea>
+
+                    </div>
+
+
+                    <div class="admin-form-group">
+
+                        <label>
+                            Анонс EN *
+                        </label>
+
+                        <textarea
+                            class="edit-excerpt-en"
+                            rows="6"
+                        >${escapeArticleHtml(
+                            article.excerpt_en || ""
+                        )}</textarea>
+
+                    </div>
+
+
+                    <div class="admin-form-group">
+
+                        <label>
+                            Основний текст UA *
+                        </label>
+
+                        <div class="edit-content-ua"></div>
+
+                    </div>
+
+
+                    <div class="admin-form-group">
+
+                        <label>
+                            Основний текст EN *
+                        </label>
+
+                        <div class="edit-content-en"></div>
+
+                    </div>
+
+
+                    <div class="admin-form-group">
+
+                        <label>
+                            Підпис UA
+                        </label>
+
+                        <input
+                            type="text"
+                            class="edit-caption-ua"
+                            value="${escapeArticleAttribute(
+                                article.caption_ua || ""
+                            )}"
+                        >
+
+                    </div>
+
+
+                    <div class="admin-form-group">
+
+                        <label>
+                            Підпис EN
+                        </label>
+
+                        <input
+                            type="text"
+                            class="edit-caption-en"
+                            value="${escapeArticleAttribute(
+                                article.caption_en || ""
+                            )}"
+                        >
+
+                    </div>
+
+
+                    <div class="admin-form-group">
+
+                        <label>
+                            Slug
+                        </label>
+
+                        <input
+                            type="text"
+                            class="edit-slug"
+                            value="${escapeArticleAttribute(
+                                article.slug || ""
+                            )}"
+                        >
+
+                        <button
+                            type="button"
+                            class="admin-button article-suggest-button edit-suggest-slug-button"
+                        >
+                            ЗАПРОПОНУВАТИ SLUG
+                        </button>
+
+                    </div>
+
+
+                    <div class="admin-form-actions">
+
+                        <button
+                            type="button"
+                            class="admin-button admin-button-primary edit-save-button"
+                        >
+                            ЗБЕРЕГТИ ЗМІНИ
+                        </button>
+
+                        <button
+                            type="button"
+                            class="admin-button edit-cancel-button"
+                        >
+                            СКАСУВАТИ
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+
+
+            const categorySelect =
+                editForm.querySelector(
+                    ".edit-category"
+                );
+
+
+            categorySelect.value =
+                article.category || "";
+
+
+
+            const statusSelect =
+                editForm.querySelector(
+                    ".edit-status"
+                );
+
+
+            statusSelect.value =
+                article.status || "draft";
+
+
+
+            articleItem.appendChild(
+                editForm
             );
 
 
-            title.addEventListener(
+
+            /*
+             * =========================
+             * КНОПКА ПЕРЕКЛАДУ
+             * В РЕДАГУВАННІ
+             * =========================
+             */
+
+            const editSuggestTitleENButton =
+                editForm.querySelector(
+                    ".edit-suggest-title-en-button"
+                );
+
+
+            const editSuggestSlugButton =
+                editForm.querySelector(
+                    ".edit-suggest-slug-button"
+                );
+
+
+
+            if (editSuggestTitleENButton) {
+
+                editSuggestTitleENButton.addEventListener(
+                    "click",
+                    async function() {
+
+                        const titleUA =
+                            editForm.querySelector(
+                                ".edit-title-ua"
+                            ).value.trim();
+
+
+                        if (!titleUA) {
+
+                            alert(
+                                "Спочатку введіть назву українською."
+                            );
+
+                            return;
+
+                        }
+
+
+                        const originalText =
+                            editSuggestTitleENButton.textContent;
+
+
+                        try {
+
+                            editSuggestTitleENButton.disabled =
+                                true;
+
+
+                            editSuggestTitleENButton.textContent =
+                                "ПЕРЕКЛАДАЄМО...";
+
+
+                            const translatedTitle =
+                                await translateArticleTitle(
+                                    titleUA
+                                );
+
+
+                            editForm.querySelector(
+                                ".edit-title-en"
+                            ).value =
+                                translatedTitle;
+
+
+                        } catch (error) {
+
+                            console.error(
+                                error
+                            );
+
+
+                            alert(
+                                "Не вдалося запропонувати англійську назву. Спробуйте ще раз."
+                            );
+
+
+                        } finally {
+
+                            editSuggestTitleENButton.disabled =
+                                false;
+
+
+                            editSuggestTitleENButton.textContent =
+                                originalText;
+
+                        }
+
+                    }
+                );
+
+            }
+
+
+
+            /*
+             * =========================
+             * КНОПКА SLUG
+             * В РЕДАГУВАННІ
+             * =========================
+             */
+
+            if (editSuggestSlugButton) {
+
+                editSuggestSlugButton.addEventListener(
+                    "click",
+                    function() {
+
+                        const titleEN =
+                            editForm.querySelector(
+                                ".edit-title-en"
+                            ).value.trim();
+
+
+                        if (!titleEN) {
+
+                            alert(
+                                "Спочатку введіть англійську назву."
+                            );
+
+                            return;
+
+                        }
+
+
+                        const slug =
+                            generateArticleSlug(
+                                titleEN
+                            );
+
+
+                        if (!slug) {
+
+                            alert(
+                                "Не вдалося сформувати Slug. Перевірте англійську назву."
+                            );
+
+                            return;
+
+                        }
+
+
+                        editForm.querySelector(
+                            ".edit-slug"
+                        ).value =
+                            slug;
+
+                    }
+                );
+
+            }
+
+
+
+            /*
+             * =========================
+             * QUILL EDIT UA
+             * =========================
+             */
+
+            const editContentUA =
+                editForm.querySelector(
+                    ".edit-content-ua"
+                );
+
+
+            const editContentEN =
+                editForm.querySelector(
+                    ".edit-content-en"
+                );
+
+
+
+            const editQuillUA =
+                new Quill(
+                    editContentUA,
+                    {
+                        theme: "snow",
+
+                        modules: {
+
+                            toolbar: [
+                                [
+                                    {
+                                        header: [
+                                            1,
+                                            2,
+                                            3,
+                                            false
+                                        ]
+                                    }
+                                ],
+
+                                [
+                                    "bold",
+                                    "italic",
+                                    "underline"
+                                ],
+
+                                [
+                                    {
+                                        list: "ordered"
+                                    },
+                                    {
+                                        list: "bullet"
+                                    }
+                                ],
+
+                                [
+                                    "blockquote"
+                                ],
+
+                                [
+                                    "link",
+                                    "image"
+                                ],
+
+                                [
+                                    {
+                                        align: []
+                                    }
+                                ],
+
+                                [
+                                    "clean"
+                                ]
+                            ],
+
+                            imageResize: {
+                                showToolbar: true,
+                                persistAlignment: true,
+                                keepAspectRatio: true
+                            }
+
+                        }
+                    }
+                );
+
+
+
+            /*
+             * =========================
+             * ОБТІКАННЯ ЗОБРАЖЕННЯ
+             * EDIT UA
+             * =========================
+             */
+
+            let selectedEditImageUA =
+                null;
+
+
+            const editImageWrapToolbarUA =
+                document.createElement(
+                    "div"
+                );
+
+
+            editImageWrapToolbarUA.className =
+                "article-image-wrap-toolbar";
+
+
+            editImageWrapToolbarUA.innerHTML = `
+                <button
+                    type="button"
+                    data-align="left"
+                >
+                    Ліворуч
+                </button>
+
+                <button
+                    type="button"
+                    data-align="center"
+                >
+                    По центру
+                </button>
+
+                <button
+                    type="button"
+                    data-align="right"
+                >
+                    Праворуч
+                </button>
+            `;
+
+
+            document.body.appendChild(
+                editImageWrapToolbarUA
+            );
+
+
+
+            function hideEditImageWrapToolbarUA() {
+
+                editImageWrapToolbarUA.style.display =
+                    "none";
+
+
+                selectedEditImageUA =
+                    null;
+
+            }
+
+
+
+            function showEditImageWrapToolbarUA(
+                image
+            ) {
+
+                selectedEditImageUA =
+                    image;
+
+
+                const rect =
+                    image.getBoundingClientRect();
+
+
+                editImageWrapToolbarUA.style.left =
+                    (
+                        window.scrollX +
+                        rect.left
+                    ) + "px";
+
+
+                editImageWrapToolbarUA.style.top =
+                    (
+                        window.scrollY +
+                        rect.bottom +
+                        5
+                    ) + "px";
+
+
+                editImageWrapToolbarUA.style.display =
+                    "block";
+
+            }
+
+
+
+            editContentUA.addEventListener(
+                "click",
+                function(event) {
+
+                    if (
+                        event.target &&
+                        event.target.tagName === "IMG"
+                    ) {
+
+                        showEditImageWrapToolbarUA(
+                            event.target
+                        );
+
+                        return;
+
+                    }
+
+
+                    hideEditImageWrapToolbarUA();
+
+                }
+            );
+
+
+
+            editImageWrapToolbarUA.addEventListener(
+                "click",
+                function(event) {
+
+                    const button =
+                        event.target.closest(
+                            "button"
+                        );
+
+
+                    if (
+                        !button ||
+                        !selectedEditImageUA
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    const align =
+                        button.dataset.align;
+
+
+                    selectedEditImageUA.classList.remove(
+                        "article-image-float-left",
+                        "article-image-float-right",
+                        "article-image-center"
+                    );
+
+
+                    selectedEditImageUA.style.float =
+                        "";
+
+
+                    selectedEditImageUA.style.display =
+                        "";
+
+
+                    selectedEditImageUA.style.margin =
+                        "";
+
+
+
+                    if (align === "left") {
+
+                        selectedEditImageUA.classList.add(
+                            "article-image-float-left"
+                        );
+
+
+                        selectedEditImageUA.style.float =
+                            "left";
+
+
+                        selectedEditImageUA.style.margin =
+                            "0 20px 10px 0";
+
+                    }
+
+
+
+                    if (align === "right") {
+
+                        selectedEditImageUA.classList.add(
+                            "article-image-float-right"
+                        );
+
+
+                        selectedEditImageUA.style.float =
+                            "right";
+
+
+                        selectedEditImageUA.style.margin =
+                            "0 0 10px 20px";
+
+                    }
+
+
+
+                    if (align === "center") {
+
+                        selectedEditImageUA.classList.add(
+                            "article-image-center"
+                        );
+
+
+                        selectedEditImageUA.style.float =
+                            "none";
+
+
+                        selectedEditImageUA.style.display =
+                            "block";
+
+
+                        selectedEditImageUA.style.margin =
+                            "10px auto";
+
+                    }
+
+
+
+                    if (editQuillUA) {
+
+                        editQuillUA.update();
+
+                    }
+
+                }
+            );
+
+
+
+            document.addEventListener(
+                "click",
+                function(event) {
+
+                    if (
+                        !editContentUA.contains(
+                            event.target
+                        ) &&
+                        !editImageWrapToolbarUA.contains(
+                            event.target
+                        )
+                    ) {
+
+                        hideEditImageWrapToolbarUA();
+
+                    }
+
+                }
+            );
+
+
+
+            /*
+             * =========================
+             * QUILL EDIT EN
+             * =========================
+             */
+
+            const editQuillEN =
+                new Quill(
+                    editContentEN,
+                    {
+                        theme: "snow",
+
+                        modules: {
+
+                            toolbar: [
+                                [
+                                    {
+                                        header: [
+                                            1,
+                                            2,
+                                            3,
+                                            false
+                                        ]
+                                    }
+                                ],
+
+                                [
+                                    "bold",
+                                    "italic",
+                                    "underline"
+                                ],
+
+                                [
+                                    {
+                                        list: "ordered"
+                                    },
+                                    {
+                                        list: "bullet"
+                                    }
+                                ],
+
+                                [
+                                    "blockquote"
+                                ],
+
+                                [
+                                    "link",
+                                    "image"
+                                ],
+
+                                [
+                                    {
+                                        align: []
+                                    }
+                                ],
+
+                                [
+                                    "clean"
+                                ]
+                            ],
+
+                            imageResize: {
+                                showToolbar: true,
+                                persistAlignment: true,
+                                keepAspectRatio: true
+                            }
+
+                        }
+                    }
+                );
+
+
+
+            /*
+             * =========================
+             * IMAGE WRAP
+             * EDIT EN
+             * =========================
+             */
+
+            let selectedEditImageEN =
+                null;
+
+
+            const editImageWrapToolbarEN =
+                document.createElement(
+                    "div"
+                );
+
+
+            editImageWrapToolbarEN.className =
+                "article-image-wrap-toolbar";
+
+
+            editImageWrapToolbarEN.innerHTML = `
+                <button
+                    type="button"
+                    data-align="left"
+                >
+                    Left
+                </button>
+
+                <button
+                    type="button"
+                    data-align="center"
+                >
+                    Center
+                </button>
+
+                <button
+                    type="button"
+                    data-align="right"
+                >
+                    Right
+                </button>
+            `;
+
+
+            document.body.appendChild(
+                editImageWrapToolbarEN
+            );
+
+
+
+            function hideEditImageWrapToolbarEN() {
+
+                editImageWrapToolbarEN.style.display =
+                    "none";
+
+
+                selectedEditImageEN =
+                    null;
+
+            }
+
+
+
+            function showEditImageWrapToolbarEN(
+                image
+            ) {
+
+                selectedEditImageEN =
+                    image;
+
+
+                const rect =
+                    image.getBoundingClientRect();
+
+
+                editImageWrapToolbarEN.style.left =
+                    (
+                        window.scrollX +
+                        rect.left
+                    ) + "px";
+
+
+                editImageWrapToolbarEN.style.top =
+                    (
+                        window.scrollY +
+                        rect.bottom +
+                        5
+                    ) + "px";
+
+
+                editImageWrapToolbarEN.style.display =
+                    "block";
+
+            }
+
+
+
+            editContentEN.addEventListener(
+                "click",
+                function(event) {
+
+                    if (
+                        event.target &&
+                        event.target.tagName === "IMG"
+                    ) {
+
+                        showEditImageWrapToolbarEN(
+                            event.target
+                        );
+
+                        return;
+
+                    }
+
+
+                    hideEditImageWrapToolbarEN();
+
+                }
+            );
+
+
+
+            editImageWrapToolbarEN.addEventListener(
+                "click",
+                function(event) {
+
+                    const button =
+                        event.target.closest(
+                            "button"
+                        );
+
+
+                    if (
+                        !button ||
+                        !selectedEditImageEN
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    const align =
+                        button.dataset.align;
+
+
+                    selectedEditImageEN.classList.remove(
+                        "article-image-float-left",
+                        "article-image-float-right",
+                        "article-image-center"
+                    );
+
+
+                    selectedEditImageEN.style.float =
+                        "";
+
+
+                    selectedEditImageEN.style.display =
+                        "";
+
+
+                    selectedEditImageEN.style.margin =
+                        "";
+
+
+
+                    if (align === "left") {
+
+                        selectedEditImageEN.classList.add(
+                            "article-image-float-left"
+                        );
+
+
+                        selectedEditImageEN.style.float =
+                            "left";
+
+
+                        selectedEditImageEN.style.margin =
+                            "0 20px 10px 0";
+
+                    }
+
+
+
+                    if (align === "right") {
+
+                        selectedEditImageEN.classList.add(
+                            "article-image-float-right"
+                        );
+
+
+                        selectedEditImageEN.style.float =
+                            "right";
+
+
+                        selectedEditImageEN.style.margin =
+                            "0 0 10px 20px";
+
+                    }
+
+
+
+                    if (align === "center") {
+
+                        selectedEditImageEN.classList.add(
+                            "article-image-center"
+                        );
+
+
+                        selectedEditImageEN.style.float =
+                            "none";
+
+
+                        selectedEditImageEN.style.display =
+                            "block";
+
+
+                        selectedEditImageEN.style.margin =
+                            "10px auto";
+
+                    }
+
+
+
+                    if (editQuillEN) {
+
+                        editQuillEN.update();
+
+                    }
+
+                }
+            );
+
+
+
+            document.addEventListener(
+                "click",
+                function(event) {
+
+                    if (
+                        !editContentEN.contains(
+                            event.target
+                        ) &&
+                        !editImageWrapToolbarEN.contains(
+                            event.target
+                        )
+                    ) {
+
+                        hideEditImageWrapToolbarEN();
+
+                    }
+
+                }
+            );
+
+
+
+            /*
+             * =========================
+             * ЗАВАНТАЖЕННЯ ДАНИХ У QUILL
+             * =========================
+             */
+
+            editQuillUA.root.innerHTML =
+                article.content_ua || "";
+
+
+            editQuillEN.root.innerHTML =
+                article.content_en || "";
+
+
+
+            /*
+             * =========================
+             * КНОПКИ РЕДАГУВАННЯ
+             * =========================
+             */
+
+            const cancelButton =
+                editForm.querySelector(
+                    ".edit-cancel-button"
+                );
+
+
+            const saveEditButton =
+                editForm.querySelector(
+                    ".edit-save-button"
+                );
+
+
+
+            /*
+             * =========================
+             * ЗБЕРЕЖЕННЯ ЗМІН
+             * =========================
+             */
+
+            saveEditButton.addEventListener(
+                "click",
+                async function() {
+
+                    const titleUA =
+                        editForm.querySelector(
+                            ".edit-title-ua"
+                        ).value.trim();
+
+
+                    const titleEN =
+                        editForm.querySelector(
+                            ".edit-title-en"
+                        ).value.trim();
+
+
+                    const category =
+                        editForm.querySelector(
+                            ".edit-category"
+                        ).value;
+
+
+                    const publicationDate =
+                        editForm.querySelector(
+                            ".edit-publication-date"
+                        ).value;
+
+
+                    const status =
+                        editForm.querySelector(
+                            ".edit-status"
+                        ).value;
+
+
+                    const excerptUA =
+                        editForm.querySelector(
+                            ".edit-excerpt-ua"
+                        ).value.trim();
+
+
+                    const excerptEN =
+                        editForm.querySelector(
+                            ".edit-excerpt-en"
+                        ).value.trim();
+
+
+                    const captionUA =
+                        editForm.querySelector(
+                            ".edit-caption-ua"
+                        ).value.trim();
+
+
+                    const captionEN =
+                        editForm.querySelector(
+                            ".edit-caption-en"
+                        ).value.trim();
+
+
+                    const slug =
+                        editForm.querySelector(
+                            ".edit-slug"
+                        ).value.trim();
+
+
+                    const contentUA =
+                        editQuillUA.root.innerHTML;
+
+
+                    const contentEN =
+                        editQuillEN.root.innerHTML;
+
+
+
+                    /*
+                     * ПЕРЕВІРКА ОБОВ'ЯЗКОВИХ ПОЛІВ
+                     */
+
+                    if (
+                        !titleUA ||
+                        !titleEN ||
+                        !category ||
+                        !publicationDate ||
+                        !excerptUA ||
+                        !excerptEN ||
+                        !contentUA ||
+                        !contentEN
+                    ) {
+
+                        alert(
+                            "Заповніть усі обов'язкові поля."
+                        );
+
+                        return;
+
+                    }
+
+
+
+                    saveEditButton.disabled =
+                        true;
+
+
+                    saveEditButton.textContent =
+                        "ПЕРЕВІРЯЄМО...";
+
+
+                    try {
+
+
+                        /*
+                         * =========================
+                         * ПЕРЕВІРКА SLUG
+                         * ПРИ РЕДАГУВАННІ
+                         * =========================
+                         */
+
+                        if (slug) {
+
+                            const slugExists =
+                                await checkSlugExists(
+                                    slug,
+                                    article.id
+                                );
+
+
+                            if (slugExists) {
+
+                                alert(
+                                    "Такий Slug уже існує. Замініть його на інший."
+                                );
+
+
+                                editForm.querySelector(
+                                    ".edit-slug"
+                                ).focus();
+
+
+                                return;
+
+                            }
+
+                        }
+
+
+
+                        saveEditButton.textContent =
+                            "ЗБЕРІГАЄМО...";
+
+
+
+                        /*
+                         * =========================
+                         * ОНОВЛЕННЯ СТАТТІ
+                         * =========================
+                         */
+
+                        const {
+                            error
+                        } =
+                            await client
+                                .from("articles")
+                                .update({
+
+                                    title_ua:
+                                        titleUA,
+
+                                    title_en:
+                                        titleEN,
+
+                                    category:
+                                        category,
+
+                                    publication_date:
+                                        publicationDate,
+
+                                    status:
+                                        status,
+
+                                    excerpt_ua:
+                                        excerptUA,
+
+                                    excerpt_en:
+                                        excerptEN,
+
+                                    content_ua:
+                                        contentUA,
+
+                                    content_en:
+                                        contentEN,
+
+                                    caption_ua:
+                                        captionUA ||
+                                        null,
+
+                                    caption_en:
+                                        captionEN ||
+                                        null,
+
+                                    slug:
+                                        slug ||
+                                        null
+
+                                })
+                                .eq(
+                                    "id",
+                                    article.id
+                                );
+
+
+
+                        if (error) {
+
+                            console.error(
+                                "Помилка оновлення статті:",
+                                error
+                            );
+
+
+                            alert(
+                                "Не вдалося зберегти зміни."
+                            );
+
+
+                            return;
+
+                        }
+
+
+
+                        alert(
+                            "Зміни успішно збережено."
+                        );
+
+
+                        editForm.remove();
+
+
+                        editingArticleId =
+                            null;
+
+
+                        await loadArticles();
+
+
+                    } catch (error) {
+
+                        console.error(
+                            "Непередбачена помилка:",
+                            error
+                        );
+
+
+                        alert(
+                            "Сталася помилка під час збереження змін."
+                        );
+
+
+                    } finally {
+
+                        saveEditButton.disabled =
+                            false;
+
+
+                        saveEditButton.textContent =
+                            "ЗБЕРЕГТИ ЗМІНИ";
+
+                    }
+
+                }
+            );
+
+
+
+            /*
+             * =========================
+             * СКАСУВАННЯ РЕДАГУВАННЯ
+             * =========================
+             */
+
+            cancelButton.addEventListener(
+                "click",
+                function() {
+
+                    editForm.remove();
+
+
+                    editingArticleId =
+                        null;
+
+                }
+            );
+
+
+
+            window.scrollTo({
+                top:
+                    editForm.offsetTop - 30,
+                behavior:
+                    "smooth"
+            });
+
+        }
+
+
+
+        /*
+         * =========================
+         * ФІЛЬТРИ
+         * =========================
+         */
+
+        const toggleArticleFilters =
+            document.getElementById(
+                "toggleArticleFilters"
+            );
+
+
+        const articleFiltersPanel =
+            document.getElementById(
+                "articleFiltersPanel"
+            );
+
+
+        if (
+            toggleArticleFilters &&
+            articleFiltersPanel
+        ) {
+
+            toggleArticleFilters.addEventListener(
                 "click",
                 function() {
 
                     const isOpen =
-                        details.style.display ===
+                        articleFiltersPanel.style.display ===
                         "block";
 
-                    details.style.display =
+
+                    articleFiltersPanel.style.display =
                         isOpen
                             ? "none"
                             : "block";
+
                 }
             );
 
-
-            articleItem.appendChild(
-    categoryLabel
-);
-
-articleItem.appendChild(
-    title
-);
-
-articleItem.appendChild(
-    details
-);
-
-articlesList.appendChild(
-    articleItem
-);
         }
-    );
-}
 
-function startArticleEditing(
-    article,
-    articleItem
-) {
 
-    if (editingArticleId) {
-        return;
-    }
 
-    editingArticleId =
-        article.id;
+        const applyArticleFilters =
+            document.getElementById(
+                "applyArticleFilters"
+            );
 
 
-    const editForm =
-        document.createElement(
-            "div"
-        );
+        if (applyArticleFilters) {
 
-    editForm.className =
-        "admin-form";
+            applyArticleFilters.addEventListener(
+                "click",
+                function() {
 
+                    renderArticles();
 
-    editForm.innerHTML = `
-        <div class="admin-form-section">
-
-            <h3>Редагування статті</h3>
-
-            <div class="admin-form-group">
-
-                <label>
-                    Назва UA *
-                </label>
-
-                <input
-                    type="text"
-                    class="edit-title-ua"
-                    value="${escapeArticleAttribute(
-                        article.title_ua || ""
-                    )}"
-                >
-
-            </div>
-
-
-            <div class="admin-form-group">
-
-                <label>
-                    Назва EN *
-                </label>
-
-                <input
-                    type="text"
-                    class="edit-title-en"
-                    value="${escapeArticleAttribute(
-                        article.title_en || ""
-                    )}"
-                >
-
-            </div>
-
-
-            <div class="admin-form-group">
-
-                <label>
-                    Категорія *
-                </label>
-
-                <select class="edit-category">
-
-                    <option value="Репортаж">
-                        Репортаж
-                    </option>
-
-                    <option value="Аналітика">
-                        Аналітика
-                    </option>
-
-                    <option value="Інтерв’ю">
-                        Інтерв’ю
-                    </option>
-
-                    <option value="Колонка">
-                        Колонка
-                    </option>
-
-                </select>
-
-            </div>
-
-
-            <div class="admin-form-group">
-
-                <label>
-                    Дата публікації *
-                </label>
-
-                <input
-                    type="date"
-                    class="edit-publication-date"
-                    value="${escapeArticleAttribute(
-                        article.publication_date || ""
-                    )}"
-                >
-
-            </div>
-
-
-            <div class="admin-form-group">
-
-                <label>
-                    Статус
-                </label>
-
-                <select class="edit-status">
-
-                    <option value="draft">
-                        Чернетка
-                    </option>
-
-                    <option value="published">
-                        Опубліковано
-                    </option>
-
-                </select>
-
-            </div>
-
-
-            <div class="admin-form-group">
-
-                <label>
-                    Анонс UA *
-                </label>
-
-                <textarea
-                    class="edit-excerpt-ua"
-                    rows="6"
-                >${escapeArticleHtml(
-                    article.excerpt_ua || ""
-                )}</textarea>
-
-            </div>
-
-
-            <div class="admin-form-group">
-
-                <label>
-                    Анонс EN *
-                </label>
-
-                <textarea
-                    class="edit-excerpt-en"
-                    rows="6"
-                >${escapeArticleHtml(
-                    article.excerpt_en || ""
-                )}</textarea>
-
-            </div>
-
-<div class="admin-form-group">
-
-    <label>
-        Основний текст UA *
-    </label>
-
-    <div class="edit-content-ua"></div>
-
-</div>
-
-
-<div class="admin-form-group">
-
-    <label>
-        Основний текст EN *
-    </label>
-
-    <div class="edit-content-en"></div>
-
-</div>
-
-            <div class="admin-form-group">
-
-                <label>
-                    Підпис UA
-                </label>
-
-                <input
-                    type="text"
-                    class="edit-caption-ua"
-                    value="${escapeArticleAttribute(
-                        article.caption_ua || ""
-                    )}"
-                >
-
-            </div>
-
-
-            <div class="admin-form-group">
-
-                <label>
-                    Підпис EN
-                </label>
-
-                <input
-                    type="text"
-                    class="edit-caption-en"
-                    value="${escapeArticleAttribute(
-                        article.caption_en || ""
-                    )}"
-                >
-
-            </div>
-
-
-            <div class="admin-form-group">
-
-                <label>
-                    Slug
-                </label>
-
-                <input
-                    type="text"
-                    class="edit-slug"
-                    value="${escapeArticleAttribute(
-                        article.slug || ""
-                    )}"
-                >
-
-            </div>
-
-
-            <div class="admin-form-actions">
-
-                <button
-                    type="button"
-                    class="admin-button admin-button-primary edit-save-button"
-                >
-                    ЗБЕРЕГТИ ЗМІНИ
-                </button>
-
-                <button
-                    type="button"
-                    class="admin-button edit-cancel-button"
-                >
-                    СКАСУВАТИ
-                </button>
-
-            </div>
-
-        </div>
-    `;
-
-
-    const categorySelect =
-        editForm.querySelector(
-            ".edit-category"
-        );
-
-    categorySelect.value =
-        article.category || "";
-
-
-    const statusSelect =
-        editForm.querySelector(
-            ".edit-status"
-        );
-
-    statusSelect.value =
-        article.status || "draft";
-
-
-    articleItem.appendChild(
-        editForm
-    );
-
-    const editContentUA =
-    editForm.querySelector(
-        ".edit-content-ua"
-    );
-
-const editContentEN =
-    editForm.querySelector(
-        ".edit-content-en"
-    );
-
-
-const editQuillUA =
-    new Quill(
-        editContentUA,
-        {
-            theme: "snow",
-
-            modules: {
-                toolbar: [
-                    [
-                        {
-                            header: [
-                                1,
-                                2,
-                                3,
-                                false
-                            ]
-                        }
-                    ],
-                    [
-                        "bold",
-                        "italic",
-                        "underline"
-                    ],
-                    [
-                        {
-                            list: "ordered"
-                        },
-                        {
-                            list: "bullet"
-                        }
-                    ],
-                    [
-                        "blockquote"
-                    ],
-                    [
-                        "link",
-                        "image"
-                    ],
-                    [
-                        {
-                            align: []
-                        }
-                    ],
-                    [
-                        "clean"
-                    ]
-                ],
-
-                imageResize: {
-                    showToolbar: true,
-                    persistAlignment: true,
-                    keepAspectRatio: true
                 }
-            }
+            );
+
         }
-    );
-
-/*
- * =========================
- * ОБТІКАННЯ ЗОБРАЖЕННЯ
- * EDIT UA
- * =========================
- */
-
-let selectedEditImageUA = null;
-
-const editImageWrapToolbarUA =
-    document.createElement("div");
-
-editImageWrapToolbarUA.className =
-    "article-image-wrap-toolbar";
-
-editImageWrapToolbarUA.innerHTML = `
-    <button
-        type="button"
-        data-align="left"
-    >
-        Ліворуч
-    </button>
-
-    <button
-        type="button"
-        data-align="center"
-    >
-        По центру
-    </button>
-
-    <button
-        type="button"
-        data-align="right"
-    >
-        Праворуч
-    </button>
-`;
-
-document.body.appendChild(
-    editImageWrapToolbarUA
-);
 
 
-function hideEditImageWrapToolbarUA() {
 
-    editImageWrapToolbarUA.style.display =
-        "none";
-
-    selectedEditImageUA =
-        null;
-}
+        const resetArticleFilters =
+            document.getElementById(
+                "resetArticleFilters"
+            );
 
 
-function showEditImageWrapToolbarUA(
-    image
-) {
+        if (resetArticleFilters) {
 
-    selectedEditImageUA =
-        image;
+            resetArticleFilters.addEventListener(
+                "click",
+                function() {
 
-    const rect =
-        image.getBoundingClientRect();
-
-    editImageWrapToolbarUA.style.left =
-        (
-            window.scrollX +
-            rect.left
-        ) + "px";
-
-    editImageWrapToolbarUA.style.top =
-        (
-            window.scrollY +
-            rect.bottom +
-            5
-        ) + "px";
-
-    editImageWrapToolbarUA.style.display =
-        "block";
-}
+                    document.getElementById(
+                        "filterTitleUA"
+                    ).value = "";
 
 
-editContentUA.addEventListener(
-    "click",
-    function(event) {
+                    document.getElementById(
+                        "filterTitleEN"
+                    ).value = "";
 
-        if (
-            event.target &&
-            event.target.tagName === "IMG"
+
+                    document.getElementById(
+                        "filterCategory"
+                    ).value = "";
+
+
+                    document.getElementById(
+                        "filterDateFrom"
+                    ).value = "";
+
+
+                    document.getElementById(
+                        "filterDateTo"
+                    ).value = "";
+
+
+                    document.getElementById(
+                        "filterStatus"
+                    ).value = "";
+
+
+                    renderArticles();
+
+                }
+            );
+
+        }
+
+
+
+        /*
+         * =========================
+         * ДОПОМІЖНІ ФУНКЦІЇ
+         * =========================
+         */
+
+        function escapeArticleHtml(
+            value
         ) {
-
-            showEditImageWrapToolbarUA(
-                event.target
-            );
-
-            return;
-        }
-
-        hideEditImageWrapToolbarUA();
-
-    }
-);
-
-
-editImageWrapToolbarUA
-    .addEventListener(
-        "click",
-        function(event) {
-
-            const button =
-                event.target.closest(
-                    "button"
-                );
 
             if (
-                !button ||
-                !selectedEditImageUA
+                value === null ||
+                value === undefined
             ) {
-                return;
-            }
 
-            const align =
-                button.dataset.align;
-
-selectedEditImageUA.classList.remove(
-    "article-image-float-left",
-    "article-image-float-right",
-    "article-image-center"
-);
-
-selectedEditImageUA.style.float = "";
-selectedEditImageUA.style.display = "";
-selectedEditImageUA.style.margin = "";
-
-
-if (align === "left") {
-
-    selectedEditImageUA.classList.add(
-        "article-image-float-left"
-    );
-
-    selectedEditImageUA.style.float =
-        "left";
-
-    selectedEditImageUA.style.margin =
-        "0 20px 10px 0";
-
-}
-
-
-if (align === "right") {
-
-    selectedEditImageUA.classList.add(
-        "article-image-float-right"
-    );
-
-    selectedEditImageUA.style.float =
-        "right";
-
-    selectedEditImageUA.style.margin =
-        "0 0 10px 20px";
-
-}
-
-
-if (align === "center") {
-
-    selectedEditImageUA.classList.add(
-        "article-image-center"
-    );
-
-    selectedEditImageUA.style.float =
-        "none";
-
-    selectedEditImageUA.style.display =
-        "block";
-
-    selectedEditImageUA.style.margin =
-        "10px auto";
-
-}
-
-
-            if (editQuillUA) {
-
-                editQuillUA.update();
+                return "";
 
             }
+
+
+            return String(value)
+                .replace(
+                    /&/g,
+                    "&amp;"
+                )
+                .replace(
+                    /</g,
+                    "&lt;"
+                )
+                .replace(
+                    />/g,
+                    "&gt;"
+                )
+                .replace(
+                    /"/g,
+                    "&quot;"
+                )
+                .replace(
+                    /'/g,
+                    "&#039;"
+                );
 
         }
-    );
 
 
-document.addEventListener(
-    "click",
-    function(event) {
 
-        if (
-            !editContentUA.contains(
-                event.target
-            ) &&
-            !editImageWrapToolbarUA.contains(
-                event.target
-            )
+        function escapeArticleAttribute(
+            value
         ) {
 
-            hideEditImageWrapToolbarUA();
-
-        }
-
-    }
-);
-    
-const editQuillEN =
-    new Quill(
-        editContentEN,
-        {
-            theme: "snow",
-
-            modules: {
-                toolbar: [
-                    [
-                        {
-                            header: [
-                                1,
-                                2,
-                                3,
-                                false
-                            ]
-                        }
-                    ],
-                    [
-                        "bold",
-                        "italic",
-                        "underline"
-                    ],
-                    [
-                        {
-                            list: "ordered"
-                        },
-                        {
-                            list: "bullet"
-                        }
-                    ],
-                    [
-                        "blockquote"
-                    ],
-                    [
-                        "link",
-                        "image"
-                    ],
-                    [
-                        {
-                            align: []
-                        }
-                    ],
-                    [
-                        "clean"
-                    ]
-                ],
-
-                imageResize: {
-                    showToolbar: true,
-                    persistAlignment: true,
-                    keepAspectRatio: true
-                }
-            }
-        }
-    );
-
-/*
- * =========================
- * IMAGE WRAP
- * EDIT EN
- * =========================
- */
-
-let selectedEditImageEN = null;
-
-const editImageWrapToolbarEN =
-    document.createElement("div");
-
-editImageWrapToolbarEN.className =
-    "article-image-wrap-toolbar";
-
-editImageWrapToolbarEN.innerHTML = `
-    <button
-        type="button"
-        data-align="left"
-    >
-        Left
-    </button>
-
-    <button
-        type="button"
-        data-align="center"
-    >
-        Center
-    </button>
-
-    <button
-        type="button"
-        data-align="right"
-    >
-        Right
-    </button>
-`;
-
-document.body.appendChild(
-    editImageWrapToolbarEN
-);
-
-
-function hideEditImageWrapToolbarEN() {
-
-    editImageWrapToolbarEN.style.display =
-        "none";
-
-    selectedEditImageEN =
-        null;
-}
-
-
-function showEditImageWrapToolbarEN(
-    image
-) {
-
-    selectedEditImageEN =
-        image;
-
-    const rect =
-        image.getBoundingClientRect();
-
-    editImageWrapToolbarEN.style.left =
-        (
-            window.scrollX +
-            rect.left
-        ) + "px";
-
-    editImageWrapToolbarEN.style.top =
-        (
-            window.scrollY +
-            rect.bottom +
-            5
-        ) + "px";
-
-    editImageWrapToolbarEN.style.display =
-        "block";
-}
-
-
-editContentEN.addEventListener(
-    "click",
-    function(event) {
-
-        if (
-            event.target &&
-            event.target.tagName === "IMG"
-        ) {
-
-            showEditImageWrapToolbarEN(
-                event.target
+            return escapeArticleHtml(
+                value
             );
 
-            return;
         }
 
-        hideEditImageWrapToolbarEN();
-
-    }
-);
 
 
-editImageWrapToolbarEN
-    .addEventListener(
-        "click",
-        function(event) {
+        function formatArticleDateTime(
+            value
+        ) {
 
-            const button =
-                event.target.closest(
-                    "button"
-                );
+            if (!value) {
+                return "—";
+            }
+
+
+            const date =
+                new Date(value);
+
 
             if (
-                !button ||
-                !selectedEditImageEN
+                Number.isNaN(
+                    date.getTime()
+                )
             ) {
-                return;
-            }
 
-            const align =
-                button.dataset.align;
-
-selectedEditImageEN.classList.remove(
-    "article-image-float-left",
-    "article-image-float-right",
-    "article-image-center"
-);
-
-selectedEditImageEN.style.float = "";
-selectedEditImageEN.style.display = "";
-selectedEditImageEN.style.margin = "";
-
-
-if (align === "left") {
-
-    selectedEditImageEN.classList.add(
-        "article-image-float-left"
-    );
-
-    selectedEditImageEN.style.float =
-        "left";
-
-    selectedEditImageEN.style.margin =
-        "0 20px 10px 0";
-
-}
-
-
-if (align === "right") {
-
-    selectedEditImageEN.classList.add(
-        "article-image-float-right"
-    );
-
-    selectedEditImageEN.style.float =
-        "right";
-
-    selectedEditImageEN.style.margin =
-        "0 0 10px 20px";
-
-}
-
-
-if (align === "center") {
-
-    selectedEditImageEN.classList.add(
-        "article-image-center"
-    );
-
-    selectedEditImageEN.style.float =
-        "none";
-
-    selectedEditImageEN.style.display =
-        "block";
-
-    selectedEditImageEN.style.margin =
-        "10px auto";
-
-}
-
-            if (editQuillEN) {
-
-                editQuillEN.update();
+                return value;
 
             }
 
-        }
-    );
 
-
-document.addEventListener(
-    "click",
-    function(event) {
-
-        if (
-            !editContentEN.contains(
-                event.target
-            ) &&
-            !editImageWrapToolbarEN.contains(
-                event.target
-            )
-        ) {
-
-            hideEditImageWrapToolbarEN();
-
-        }
-
-    }
-);
-
-    
-editQuillUA.root.innerHTML =
-    article.content_ua || "";
-
-
-editQuillEN.root.innerHTML =
-    article.content_en || "";
-
-
-const cancelButton =
-    editForm.querySelector(
-        ".edit-cancel-button"
-    );
-
-   const saveEditButton =
-    editForm.querySelector(
-        ".edit-save-button"
-    );
-
-saveEditButton.addEventListener(
-    "click",
-    async function() {
-
-        const titleUA =
-            editForm.querySelector(
-                ".edit-title-ua"
-            ).value.trim();
-
-        const titleEN =
-            editForm.querySelector(
-                ".edit-title-en"
-            ).value.trim();
-
-        const category =
-            editForm.querySelector(
-                ".edit-category"
-            ).value;
-
-        const publicationDate =
-            editForm.querySelector(
-                ".edit-publication-date"
-            ).value;
-
-        const status =
-            editForm.querySelector(
-                ".edit-status"
-            ).value;
-
-        const excerptUA =
-            editForm.querySelector(
-                ".edit-excerpt-ua"
-            ).value.trim();
-
-        const excerptEN =
-            editForm.querySelector(
-                ".edit-excerpt-en"
-            ).value.trim();
-
-        const captionUA =
-            editForm.querySelector(
-                ".edit-caption-ua"
-            ).value.trim();
-
-        const captionEN =
-            editForm.querySelector(
-                ".edit-caption-en"
-            ).value.trim();
-
-        const slug =
-            editForm.querySelector(
-                ".edit-slug"
-            ).value.trim();
-
-        const contentUA =
-            editQuillUA.root.innerHTML;
-
-        const contentEN =
-            editQuillEN.root.innerHTML;
-
-
-        if (
-            !titleUA ||
-            !titleEN ||
-            !category ||
-            !publicationDate ||
-            !excerptUA ||
-            !excerptEN ||
-            !contentUA ||
-            !contentEN
-        ) {
-
-            alert(
-                "Заповніть усі обов'язкові поля."
+            return date.toLocaleString(
+                "uk-UA"
             );
 
-            return;
         }
 
 
-        saveEditButton.disabled =
-            true;
 
-        saveEditButton.textContent =
-            "ЗБЕРІГАЄМО...";
+        /*
+         * =========================
+         * ЗАПУСК
+         * =========================
+         */
 
+        checkSession();
 
-        try {
+        loadArticles();
 
-            const {
-                error
-            } =
-                await client
-                    .from("articles")
-                    .update({
-
-                        title_ua:
-                            titleUA,
-
-                        title_en:
-                            titleEN,
-
-                        category:
-                            category,
-
-                        publication_date:
-                            publicationDate,
-
-                        status:
-                            status,
-
-                        excerpt_ua:
-                            excerptUA,
-
-                        excerpt_en:
-                            excerptEN,
-
-                        content_ua:
-                            contentUA,
-
-                        content_en:
-                            contentEN,
-
-                        caption_ua:
-                            captionUA ||
-                            null,
-
-                        caption_en:
-                            captionEN ||
-                            null,
-
-                        slug:
-                            slug ||
-                            null
-
-                    })
-                    .eq(
-                        "id",
-                        article.id
-                    );
-
-
-            if (error) {
-
-                console.error(
-                    "Помилка оновлення статті:",
-                    error
-                );
-
-                alert(
-                    "Не вдалося зберегти зміни."
-                );
-
-                return;
-            }
-
-
-            alert(
-                "Зміни успішно збережено."
-            );
-
-
-            editForm.remove();
-
-            editingArticleId =
-                null;
-
-            await loadArticles();
-
-
-        } catch (error) {
-
-            console.error(
-                "Непередбачена помилка:",
-                error
-            );
-
-            alert(
-                "Сталася помилка під час збереження змін."
-            );
-
-        } finally {
-
-            saveEditButton.disabled =
-                false;
-
-            saveEditButton.textContent =
-                "ЗБЕРЕГТИ ЗМІНИ";
-
-        }
-
-    }
-); 
-
-    cancelButton.addEventListener(
-        "click",
-        function() {
-
-            editForm.remove();
-
-            editingArticleId =
-                null;
-
-        }
-    );
-
-
-    window.scrollTo({
-        top:
-            editForm.offsetTop - 30,
-        behavior:
-            "smooth"
-    });
-
-}
-    
-const toggleArticleFilters =
-    document.getElementById(
-        "toggleArticleFilters"
-    );
-
-const articleFiltersPanel =
-    document.getElementById(
-        "articleFiltersPanel"
-    );
-
-if (
-    toggleArticleFilters &&
-    articleFiltersPanel
-) {
-
-    toggleArticleFilters.addEventListener(
-        "click",
-        function() {
-
-            const isOpen =
-                articleFiltersPanel.style.display ===
-                "block";
-
-            articleFiltersPanel.style.display =
-                isOpen
-                    ? "none"
-                    : "block";
-        }
-    );
-}
-
-const applyArticleFilters =
-    document.getElementById(
-        "applyArticleFilters"
-    );
-
-if (applyArticleFilters) {
-
-    applyArticleFilters.addEventListener(
-        "click",
-        function() {
-
-            renderArticles();
-
-        }
-    );
-
-}
-    
-const resetArticleFilters =
-    document.getElementById(
-        "resetArticleFilters"
-    );
-
-if (resetArticleFilters) {
-
-    resetArticleFilters.addEventListener(
-        "click",
-        function() {
-
-            document.getElementById(
-                "filterTitleUA"
-            ).value = "";
-
-            document.getElementById(
-                "filterTitleEN"
-            ).value = "";
-
-            document.getElementById(
-                "filterCategory"
-            ).value = "";
-
-            document.getElementById(
-                "filterDateFrom"
-            ).value = "";
-
-            document.getElementById(
-                "filterDateTo"
-            ).value = "";
-
-            document.getElementById(
-                "filterStatus"
-            ).value = "";
-
-            renderArticles();
-        }
-    );
-
-}
-    
-/*
- * =========================
- * ДОПОМІЖНІ ФУНКЦІЇ
- * =========================
- */
-
-function escapeArticleHtml(
-    value
-) {
-
-    if (
-        value === null ||
-        value === undefined
-    ) {
-
-        return "";
-
-    }
-
-
-    return String(value)
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-        .replace(
-            /</g,
-            "&lt;"
-        )
-        .replace(
-            />/g,
-            "&gt;"
-        )
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-        .replace(
-            /'/g,
-            "&#039;"
-        );
-
-}
-
-
-function escapeArticleAttribute(
-    value
-) {
-
-    return escapeArticleHtml(
-        value
-    );
-
-}
-
-
-function formatArticleDateTime(
-    value
-) {
-
-    if (!value) {
-        return "—";
-    }
-
-
-    const date =
-        new Date(value);
-
-
-    if (
-        Number.isNaN(
-            date.getTime()
-        )
-    ) {
-
-        return value;
-
-    }
-
-
-    return date.toLocaleString(
-        "uk-UA"
-    );
-
-}
-    
-    /*
-     * =========================
-     * ЗАПУСК
-     * =========================
-     */
-    checkSession();
-
-    loadArticles();
-
-</script>
+    </script>
 
 
 

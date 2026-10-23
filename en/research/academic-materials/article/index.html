@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Material — Yaroslav Maslakov</title>
+    <link rel="stylesheet" href="../../../../style.css">
+</head>
+<body>
+
+<header>
+    <div class="header-inner">
+        <div class="logo">YAROSLAV MASLAKOV</div>
+
+        <nav>
+            <a href="../../../index.html">Home</a>
+            <a href="../../../articles/index.html">Articles</a>
+            <a href="../../../research/index.html" class="active">Research</a>
+            <a href="../../../publications/index.html">Publications</a>
+            <a href="../../../certificates/index.html">Certificates</a>
+            <a href="../../../about/index.html">About</a>
+            <a href="../../../contacts/index.html">Contacts</a>
+        </nav>
+
+        <button class="menu-toggle" type="button" aria-label="Open menu"
+            onclick="this.textContent = this.textContent === 'MENU' ? 'CLOSE' : 'MENU'; document.querySelector('nav').classList.toggle('menu-open')">
+            MENU
+        </button>
+
+        <div class="language">
+            <a id="ua-link" href="../../../../uk/research/academic-materials/article/index.html">UA</a>
+            <span>|</span>
+            <a id="en-link" href="../../../../en/research/academic-materials/article/index.html">EN</a>
+        </div>
+    </div>
+</header>
+
+<main class="page">
+    <div class="page-header">
+        <h1 id="material-title">Loading material...</h1>
+        <p id="material-date"></p>
+    </div>
+
+    <div class="page-content">
+        <div id="material-content" class="page-card">
+            <p>Loading material text...</p>
+        </div>
+
+        <p>
+            <a href="../index.html">← Back to academic materials</a>
+        </p>
+    </div>
+</main>
+
+<footer>
+    © 2026 Yaroslav Maslakov
+</footer>
+
+<script>
+    const menuButton = document.querySelector('.menu-toggle');
+    const menu = document.querySelector('nav');
+
+    document.addEventListener('click', function(event) {
+        if (!menuButton || !menu) return;
+
+        if (!menu.contains(event.target) && !menuButton.contains(event.target)) {
+            menu.classList.remove('menu-open');
+            menuButton.textContent = 'MENU';
+        }
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+    const SUPABASE_URL = "https://jtplvfweyguheyqyewal.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_jAg0mG8Pj30tCF7qND3ydQ_-WDv4EhP";
+
+    const supabaseClient = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+    function escapeHtml(text) {
+        const div = document.createElement("div");
+        div.textContent = text ?? "";
+        return div.innerHTML;
+    }
+
+    async function loadMaterial() {
+        const params = new URLSearchParams(window.location.search);
+        const materialId = params.get("id");
+
+        const titleElement = document.getElementById("material-title");
+        const dateElement = document.getElementById("material-date");
+        const contentElement = document.getElementById("material-content");
+
+        if (!materialId) {
+            titleElement.textContent = "Material not found";
+            contentElement.innerHTML =
+                "<p>No material ID was provided.</p>";
+            return;
+        }
+
+        const { data, error } = await supabaseClient
+            .from("articles")
+            .select("*")
+            .eq("id", materialId)
+            .eq("status", "published")
+            .eq("category", "Академічні матеріали")
+            .maybeSingle();
+
+        if (error) {
+            console.error("Error loading material:", error);
+            titleElement.textContent = "Error loading material";
+            contentElement.innerHTML =
+                "<p>Sorry, the material could not be loaded.</p>";
+            return;
+        }
+
+        if (!data) {
+            titleElement.textContent = "Material not found";
+            contentElement.innerHTML =
+                "<p>This material does not exist or is not available.</p>";
+            return;
+        }
+
+        document.title =
+            (data.title_en || "Academic Material") + " — Yaroslav Maslakov";
+
+        titleElement.textContent = data.title_en || "Untitled material";
+
+        if (data.publication_date) {
+            const date = new Date(data.publication_date + "T00:00:00");
+
+            dateElement.textContent = isNaN(date.getTime())
+                ? data.publication_date
+                : date.toLocaleDateString("en-GB", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric"
+                });
+        } else {
+            dateElement.textContent = "";
+        }
+
+        const fullText = data.content_en || data.body_en || "";
+
+        contentElement.innerHTML = fullText
+            ? `<div>${escapeHtml(fullText).replace(/\n/g, "<br>")}</div>`
+            : `<p>${escapeHtml(data.excerpt_en || "The full text is not available yet.")}</p>`;
+
+        document.getElementById("ua-link").href =
+            `../../../../uk/research/academic-materials/article/index.html?id=${encodeURIComponent(data.id)}`;
+
+        document.getElementById("en-link").href =
+            `../../../../en/research/academic-materials/article/index.html?id=${encodeURIComponent(data.id)}`;
+    }
+
+    loadMaterial();
+</script>
+
+</body>
+</html>

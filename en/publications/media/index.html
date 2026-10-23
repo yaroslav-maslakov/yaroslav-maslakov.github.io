@@ -116,20 +116,33 @@
         publicationsList.innerHTML = "";
 
         data.forEach(publication => {
+    const card = document.createElement("article");
+    card.className = "page-card";
+    card.style.cursor = "pointer";
+    card.setAttribute("tabindex", "0");
+    card.setAttribute("role", "link");
 
-            const card = document.createElement("article");
-            card.className = "page-card";
+    card.innerHTML = `
+        <h2>${escapeHtml(publication.title_en || "")}</h2>
+        <p>${escapeHtml(publication.description_en || "")}</p>
+    `;
 
-            card.innerHTML = `
-                <h2>${escapeHtml(publication.title_en || "")}</h2>
+    const openPublication = () => {
+        window.location.href =
+            `article/index.html?id=${encodeURIComponent(publication.id)}`;
+    };
 
-                <p>
-                    ${escapeHtml(publication.description_en || "")}
-                </p>
-            `;
+    card.addEventListener("click", openPublication);
 
-            publicationsList.appendChild(card);
-        });
+    card.addEventListener("keydown", event => {
+        if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            openPublication();
+        }
+    });
+
+    publicationsList.appendChild(card);
+});
     }
 
     function escapeHtml(text) {

@@ -116,21 +116,29 @@
         publicationsList.innerHTML = "";
 
         data.forEach(publication => {
-
     const card = document.createElement("article");
     card.className = "page-card";
     card.style.cursor = "pointer";
+    card.setAttribute("tabindex", "0");
+    card.setAttribute("role", "link");
 
     card.innerHTML = `
         <h2>${escapeHtml(publication.title_ua || "")}</h2>
-
-        <p>
-            ${escapeHtml(publication.description_ua || "")}
-        </p>
+        <p>${escapeHtml(publication.description_ua || "")}</p>
     `;
 
-    card.addEventListener("click", () => {
-        window.location.href = `article/index.html?id=${encodeURIComponent(publication.id)}`;
+    const openPublication = () => {
+        window.location.href =
+            `article/index.html?id=${encodeURIComponent(publication.id)}`;
+    };
+
+    card.addEventListener("click", openPublication);
+
+    card.addEventListener("keydown", event => {
+        if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            openPublication();
+        }
     });
 
     publicationsList.appendChild(card);

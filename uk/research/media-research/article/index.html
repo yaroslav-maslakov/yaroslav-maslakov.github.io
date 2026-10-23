@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Медіадослідження — Ярослав Маслаков</title>
+    <link rel="stylesheet" href="../../../../style.css">
+</head>
+<body>
+
+<header>
+    <div class="header-inner">
+        <div class="logo">ЯРОСЛАВ МАСЛАКОВ</div>
+
+        <nav>
+            <a href="../../../index.html">Головна</a>
+            <a href="../../../articles/index.html">Статті</a>
+            <a href="../../../research/index.html" class="active">Дослідження</a>
+            <a href="../../../publications/index.html">Публікації</a>
+            <a href="../../../certificates/index.html">Сертифікати</a>
+            <a href="../../../about/index.html">Про мене</a>
+            <a href="../../../contacts/index.html">Контакти</a>
+        </nav>
+
+        <button class="menu-toggle" type="button" aria-label="Відкрити меню"
+            onclick="this.textContent = this.textContent === 'МЕНЮ' ? 'ЗАКРИТИ' : 'МЕНЮ'; document.querySelector('nav').classList.toggle('menu-open')">
+            МЕНЮ
+        </button>
+
+        <div class="language">
+            <a id="ua-link" href="../../../../uk/research/media-research/article/index.html">UA</a>
+            <span>|</span>
+            <a id="en-link" href="../../../../en/research/media-research/article/index.html">EN</a>
+        </div>
+    </div>
+</header>
+
+<main class="page">
+    <div class="page-header">
+        <h1 id="material-title">Завантаження дослідження...</h1>
+        <p id="material-date"></p>
+    </div>
+
+    <div class="page-content">
+        <div id="material-content" class="page-card">
+            <p>Завантаження тексту...</p>
+        </div>
+
+        <p>
+            <a href="../index.html">← До медіадосліджень</a>
+        </p>
+    </div>
+</main>
+
+<footer>
+    © 2026 Ярослав Маслаков
+</footer>
+
+<script>
+    const menuButton = document.querySelector('.menu-toggle');
+    const menu = document.querySelector('nav');
+
+    document.addEventListener('click', function(event) {
+        if (!menuButton || !menu) return;
+
+        if (!menu.contains(event.target) && !menuButton.contains(event.target)) {
+            menu.classList.remove('menu-open');
+            menuButton.textContent = 'МЕНЮ';
+        }
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+    const SUPABASE_URL = "https://jtplvfweyguheyqyewal.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_jAg0mG8Pj30tCF7qND3ydQ_-WDv4EhP";
+
+    const supabaseClient = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+    function escapeHtml(text) {
+        const div = document.createElement("div");
+        div.textContent = text ?? "";
+        return div.innerHTML;
+    }
+
+    async function loadMaterial() {
+        const params = new URLSearchParams(window.location.search);
+        const materialId = params.get("id");
+
+        const titleElement = document.getElementById("material-title");
+        const dateElement = document.getElementById("material-date");
+        const contentElement = document.getElementById("material-content");
+
+        if (!materialId) {
+            titleElement.textContent = "Матеріал не знайдено";
+            contentElement.innerHTML =
+                "<p>Не вказано ідентифікатор матеріалу.</p>";
+            return;
+        }
+
+        const { data, error } = await supabaseClient
+            .from("articles")
+            .select("*")
+            .eq("id", materialId)
+            .eq("status", "published")
+            .eq("category", "Медіадослідження")
+            .maybeSingle();
+
+        if (error) {
+            console.error("Помилка завантаження дослідження:", error);
+            titleElement.textContent = "Помилка завантаження";
+            contentElement.innerHTML =
+                "<p>Не вдалося завантажити дослідження.</p>";
+            return;
+        }
+
+        if (!data) {
+            titleElement.textContent = "Дослідження не знайдено";
+            contentElement.innerHTML =
+                "<p>Матеріал не існує або недоступний.</p>";
+            return;
+        }
+
+        document.title =
+            (data.title_ua || "Медіадослідження") +
+            " — Ярослав Маслаков";
+
+        titleElement.textContent = data.title_ua || "Без назви";
+
+        if (data.publication_date) {
+            const date = new Date(data.publication_date + "T00:00:00");
+
+            dateElement.textContent = isNaN(date.getTime())
+                ? data.publication_date
+                : date.toLocaleDateString("uk-UA", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric"
+                });
+        } else {
+            dateElement.textContent = "";
+        }
+
+        const fullText = data.content_ua || data.body_ua || "";
+
+        contentElement.innerHTML = fullText
+            ? `<div>${escapeHtml(fullText).replace(/\n/g, "<br>")}</div>`
+            : `<p>${escapeHtml(data.excerpt_ua || "Повний текст поки недоступний.")}</p>`;
+
+        document.getElementById("ua-link").href =
+            `../../../../uk/research/media-research/article/index.html?id=${encodeURIComponent(data.id)}`;
+
+        document.getElementById("en-link").href =
+            `../../../../en/research/media-research/article/index.html?id=${encodeURIComponent(data.id)}`;
+    }
+
+    loadMaterial();
+</script>
+
+</body>
+</html>

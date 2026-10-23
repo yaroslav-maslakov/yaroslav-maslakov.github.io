@@ -2222,3 +2222,70 @@ body.admin-auth-pending {
 body.admin-auth-ready {
     visibility: visible;
 }
+/* Навігація внизу сторінки матеріалу */
+
+.article-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 20px;
+    margin-top: 50px;
+    padding-top: 25px;
+    border-top: 1px solid rgba(128, 128, 128, 0.3);
+}
+
+.article-navigation-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex: 1;
+    padding: 18px 20px;
+    border: 1px solid rgba(128, 128, 128, 0.3);
+    border-radius: 8px;
+    color: inherit;
+    text-decoration: none;
+    transition: border-color 0.2s ease,
+                background-color 0.2s ease,
+                transform 0.2s ease;
+}
+
+.article-navigation-link:hover {
+    border-color: currentColor;
+    background-color: rgba(128, 128, 128, 0.06);
+    transform: translateY(-2px);
+}
+
+.article-navigation-arrow {
+    font-size: 26px;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.article-navigation-link strong,
+.article-navigation-link small {
+    display: block;
+}
+
+.article-navigation-link strong {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.article-navigation-link small {
+    font-size: 13px;
+    opacity: 0.7;
+    line-height: 1.5;
+}
+
+@media (max-width: 600px) {
+    .article-navigation {
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 35px;
+        padding-top: 20px;
+    }
+
+    .article-navigation-link {
+        padding: 15px;
+    }
+}

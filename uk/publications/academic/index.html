@@ -117,19 +117,24 @@
 
         data.forEach(publication => {
 
-            const card = document.createElement("article");
-            card.className = "page-card";
+    const card = document.createElement("article");
+    card.className = "page-card";
+    card.style.cursor = "pointer";
 
-            card.innerHTML = `
-                <h2>${escapeHtml(publication.title_ua || "")}</h2>
+    card.innerHTML = `
+        <h2>${escapeHtml(publication.title_ua || "")}</h2>
 
-                <p>
-                    ${escapeHtml(publication.description_ua || "")}
-                </p>
-            `;
+        <p>
+            ${escapeHtml(publication.description_ua || "")}
+        </p>
+    `;
 
-            publicationsList.appendChild(card);
-        });
+    card.addEventListener("click", () => {
+        window.location.href = `article/index.html?id=${encodeURIComponent(publication.id)}`;
+    });
+
+    publicationsList.appendChild(card);
+});
     }
 
     function escapeHtml(text) {

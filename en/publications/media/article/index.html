@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publication — Yaroslav Maslakov</title>
+    <link rel="stylesheet" href="../../../../style.css">
+</head>
+<body>
+
+<header>
+    <div class="header-inner">
+        <div class="logo">YAROSLAV MASLAKOV</div>
+
+        <nav>
+            <a href="../../../index.html">Home</a>
+            <a href="../../../articles/index.html">Articles</a>
+            <a href="../../../research/index.html">Research</a>
+            <a href="../../../publications/index.html" class="active">Publications</a>
+            <a href="../../../certificates/index.html">Certificates</a>
+            <a href="../../../about/index.html">About</a>
+            <a href="../../../contacts/index.html">Contacts</a>
+        </nav>
+
+        <button class="menu-toggle" type="button" aria-label="Open menu"
+            onclick="this.textContent = this.textContent === 'MENU' ? 'CLOSE' : 'MENU'; document.querySelector('nav').classList.toggle('menu-open')">
+            MENU
+        </button>
+
+        <div class="language">
+            <a id="ua-link" href="../../../../uk/publications/media/article/index.html">UA</a>
+            <span>|</span>
+            <a id="en-link" href="../../../../en/publications/media/article/index.html">EN</a>
+        </div>
+    </div>
+</header>
+
+<main class="page">
+    <div class="page-header">
+        <h1 id="publication-title">Loading publication...</h1>
+        <p id="publication-date"></p>
+    </div>
+
+    <div class="page-content">
+        <div id="publication-content" class="page-card">
+            <p>Loading publication text...</p>
+        </div>
+
+        <p>
+            <a href="../index.html">← Back to journalistic publications</a>
+        </p>
+    </div>
+</main>
+
+<footer>
+    © 2026 Yaroslav Maslakov
+</footer>
+
+<script>
+    const menuButton = document.querySelector('.menu-toggle');
+    const menu = document.querySelector('nav');
+
+    document.addEventListener('click', function(event) {
+        if (!menuButton || !menu) return;
+
+        if (!menu.contains(event.target) && !menuButton.contains(event.target)) {
+            menu.classList.remove('menu-open');
+            menuButton.textContent = 'MENU';
+        }
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+    const SUPABASE_URL = "https://jtplvfweyguheyqyewal.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_jAg0mG8Pj30tCF7qND3ydQ_-WDv4EhP";
+
+    const supabaseClient = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+    function escapeHtml(text) {
+        const div = document.createElement("div");
+        div.textContent = text ?? "";
+        return div.innerHTML;
+    }
+
+    async function loadPublication() {
+        const params = new URLSearchParams(window.location.search);
+        const publicationId = params.get("id");
+
+        const titleElement = document.getElementById("publication-title");
+        const dateElement = document.getElementById("publication-date");
+        const contentElement = document.getElementById("publication-content");
+
+        if (!publicationId) {
+            titleElement.textContent = "Publication not found";
+            contentElement.innerHTML = "<p>No publication ID was provided.</p>";
+            return;
+        }
+
+        const { data, error } = await supabaseClient
+            .from("publications")
+            .select("*")
+            .eq("id", publicationId)
+            .eq("status", "published")
+            .eq("publication_type", "media")
+            .maybeSingle();
+
+        if (error) {
+            console.error("Error loading publication:", error);
+            titleElement.textContent = "Error loading publication";
+            contentElement.innerHTML =
+                "<p>Sorry, the publication could not be loaded.</p>";
+            return;
+        }
+
+        if (!data) {
+            titleElement.textContent = "Publication not found";
+            contentElement.innerHTML =
+                "<p>This publication does not exist or is not available.</p>";
+            return;
+        }
+
+        document.title = (data.title_en || "Publication") + " — Yaroslav Maslakov";
+        titleElement.textContent = data.title_en || "Untitled publication";
+
+        if (data.publication_date) {
+            const date = new Date(data.publication_date + "T00:00:00");
+
+            dateElement.textContent = isNaN(date.getTime())
+                ? data.publication_date
+                : date.toLocaleDateString("en-GB", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric"
+                });
+        } else {
+            dateElement.textContent = "";
+        }
+
+        contentElement.innerHTML = `
+            <p>${escapeHtml(data.description_en || "")}</p>
+            ${
+                data.url
+                    ? `<p><a href="${escapeHtml(data.url)}" target="_blank" rel="noopener noreferrer">Read the original publication ↗</a></p>`
+                    : ""
+            }
+        `;
+
+        const uaLink = document.getElementById("ua-link");
+        const enLink = document.getElementById("en-link");
+
+        uaLink.href =
+            `../../../../uk/publications/media/article/index.html?id=${encodeURIComponent(data.id)}`;
+
+        enLink.href =
+            `../../../../en/publications/media/article/index.html?id=${encodeURIComponent(data.id)}`;
+    }
+
+    loadPublication();
+</script>
+
+</body>
+</html>

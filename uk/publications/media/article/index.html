@@ -1,0 +1,148 @@
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Публікація — Ярослав Маслаков</title>
+    <link rel="stylesheet" href="../../../../style.css">
+</head>
+<body>
+
+<header>
+    <div class="header-inner">
+        <div class="logo">ЯРОСЛАВ МАСЛАКОВ</div>
+
+        <nav>
+            <a href="../../../index.html">Головна</a>
+            <a href="../../../articles/index.html">Статті</a>
+            <a href="../../../research/index.html">Дослідження</a>
+            <a href="../../index.html" class="active">Публікації</a>
+            <a href="../../../certificates/index.html">Сертифікати</a>
+            <a href="../../../about/index.html">Про мене</a>
+            <a href="../../../contacts/index.html">Контакти</a>
+        </nav>
+
+        <button class="menu-toggle" type="button" aria-label="Відкрити меню"
+            onclick="this.textContent = this.textContent === 'МЕНЮ' ? 'ЗАКРИТИ' : 'МЕНЮ'; document.querySelector('nav').classList.toggle('menu-open')">МЕНЮ</button>
+
+        <div class="language">
+            <a href="../../../../uk/publications/media/index.html">UA</a>
+            <span>|</span>
+            <a href="../../../../en/publications/media/article/index.html">EN</a>
+        </div>
+    </div>
+</header>
+
+<main class="page">
+    <div class="page-header">
+        <h1 id="publication-title">Завантаження публікації...</h1>
+    </div>
+
+    <div class="page-content">
+        <article class="page-card">
+            <p id="publication-date"></p>
+            <div id="publication-description"></div>
+            <p id="original-link"></p>
+            <p id="error-message"></p>
+        </article>
+
+        <p>
+            <a href="../index.html">← До журналістських публікацій</a>
+        </p>
+    </div>
+</main>
+
+<footer>
+    © 2026 Ярослав Маслаков
+</footer>
+
+<script>
+    const menuButton = document.querySelector('.menu-toggle');
+    const menu = document.querySelector('nav');
+
+    document.addEventListener('click', function(event) {
+        if (!menuButton || !menu) return;
+
+        if (!menu.contains(event.target) && !menuButton.contains(event.target)) {
+            menu.classList.remove('menu-open');
+            menuButton.textContent = 'МЕНЮ';
+        }
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+    const SUPABASE_URL = "https://jtplvfweyguheyqyewal.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_jAg0mG8Pj30tCF7qND3ydQ_-WDv4EhP";
+
+    const supabaseClient = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+    function escapeHtml(value) {
+        const div = document.createElement("div");
+        div.textContent = value ?? "";
+        return div.innerHTML;
+    }
+
+    async function loadPublication() {
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get("id");
+
+        const titleElement = document.getElementById("publication-title");
+        const dateElement = document.getElementById("publication-date");
+        const descriptionElement = document.getElementById("publication-description");
+        const linkElement = document.getElementById("original-link");
+        const errorElement = document.getElementById("error-message");
+
+        if (!id) {
+            titleElement.textContent = "Публікацію не знайдено";
+            errorElement.textContent = "У посиланні відсутній ідентифікатор матеріалу.";
+            return;
+        }
+
+        const { data, error } = await supabaseClient
+            .from("publications")
+            .select("*")
+            .eq("id", id)
+            .eq("status", "published")
+            .eq("publication_type", "media")
+            .single();
+
+        if (error || !data) {
+            console.error("Помилка завантаження публікації:", error);
+            titleElement.textContent = "Не вдалося відкрити публікацію";
+            errorElement.textContent = "Перевірте посилання або спробуйте пізніше.";
+            return;
+        }
+
+        document.title = (data.title_ua || "Публікація") + " — Ярослав Маслаков";
+        titleElement.textContent = data.title_ua || "Без назви";
+
+        if (data.publication_date) {
+            const date = new Date(data.publication_date);
+            dateElement.textContent = isNaN(date.getTime())
+                ? data.publication_date
+                : date.toLocaleDateString("uk-UA");
+        }
+
+        descriptionElement.textContent = data.description_ua || "";
+
+        if (data.url) {
+            const link = document.createElement("a");
+            link.href = data.url;
+            link.target = "_blank";
+            link.rel = "noopener noreferrer";
+            link.textContent = "Читати оригінал публікації";
+            linkElement.appendChild(link);
+        }
+    }
+
+    loadPublication();
+</script>
+
+</body>
+</html>

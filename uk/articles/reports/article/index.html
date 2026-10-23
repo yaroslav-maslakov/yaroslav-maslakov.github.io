@@ -104,16 +104,52 @@
         document.title =
             `${data.title_ua || "Репортаж"} — Ярослав Маслаков`;
 
-        let contentHtml = "";
+        
+let contentHtml = "";
 
-        if (data.content_ua) {
-            contentHtml = data.content_ua
-                .split(/\n\s*\n/)
-                .map(paragraph => `
-                    <p>${escapeHtml(paragraph).replace(/\n/g, "<br>")}</p>
-                `)
-                .join("");
-        }
+if (data.content_ua) {
+    const content = data.content_ua.trim();
+
+    if (/<\/?[a-z][\s\S]*>/i.test(content)) {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(content, "text/html");
+
+        doc.querySelectorAll(
+            "script, style, iframe, object, embed, form, link, meta"
+        ).forEach(el => el.remove());
+
+        doc.body.querySelectorAll("*").forEach(el => {
+            [...el.attributes].forEach(attr => {
+                const name = attr.name.toLowerCase();
+                const value = attr.value.trim();
+
+                if (
+                    name.startsWith("on") ||
+                    (
+                        ["href", "src", "xlink:href", "action", "formaction"].includes(name) &&
+                        /^\s*(javascript|vbscript):/i.test(value)
+                    ) ||
+                    (
+                        name === "style" &&
+                        /expression\s*\(|url\s*\(\s*['"]?\s*javascript:/i.test(value)
+                    )
+                ) {
+                    el.removeAttribute(attr.name);
+                }
+            });
+        });
+
+        contentHtml = doc.body.innerHTML;
+    } else {
+        contentHtml = content
+            .split(/\n\s*\n/)
+            .map(paragraph =>
+                `<p>${escapeHtml(paragraph).replace(/\n/g, "<br>")}</p>`
+            )
+            .join("");
+    }
+}
+
 
         articleContent.innerHTML = `
             <div class="page-header">

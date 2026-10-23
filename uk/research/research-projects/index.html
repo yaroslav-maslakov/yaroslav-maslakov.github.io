@@ -116,20 +116,33 @@
         researchList.innerHTML = "";
 
         data.forEach(item => {
+    const card = document.createElement("article");
+    card.className = "page-card";
+    card.style.cursor = "pointer";
+    card.setAttribute("tabindex", "0");
+    card.setAttribute("role", "link");
 
-            const card = document.createElement("article");
-            card.className = "page-card";
+    card.innerHTML = `
+        <h2>${escapeHtml(item.title_ua || "")}</h2>
+        <p>${escapeHtml(item.excerpt_ua || "")}</p>
+    `;
 
-            card.innerHTML = `
-                <h2>${escapeHtml(item.title_ua || "")}</h2>
+    const openMaterial = () => {
+        window.location.href =
+            `article/index.html?id=${encodeURIComponent(item.id)}`;
+    };
 
-                <p>
-                    ${escapeHtml(item.excerpt_ua || "")}
-                </p>
-            `;
+    card.addEventListener("click", openMaterial);
 
-            researchList.appendChild(card);
-        });
+    card.addEventListener("keydown", event => {
+        if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            openMaterial();
+        }
+    });
+
+    researchList.appendChild(card);
+});
     }
 
     function escapeHtml(text) {

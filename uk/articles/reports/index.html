@@ -116,26 +116,19 @@
         articlesList.innerHTML = "";
 
         
-data.forEach(article => {
 
+data.forEach(article => {
     const card = document.createElement("article");
     card.className = "page-card";
 
     card.innerHTML = `
         <h2>${escapeHtml(article.title_ua || "")}</h2>
-
-        <p>
-            ${escapeHtml(article.excerpt_ua || "")}
-        </p>
+        <p>${escapeHtml(article.excerpt_ua || "")}</p>
     `;
 
     card.style.cursor = "pointer";
     card.setAttribute("tabindex", "0");
     card.setAttribute("role", "link");
-    card.setAttribute(
-        "aria-label",
-        `Відкрити матеріал: ${article.title_ua || ""}`
-    );
 
     function openArticle() {
         window.location.href =
@@ -153,6 +146,7 @@ data.forEach(article => {
 
     articlesList.appendChild(card);
 });
+
 
     }
 

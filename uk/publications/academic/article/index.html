@@ -6,60 +6,55 @@
     <title>Академічна публікація — Ярослав Маслаков</title>
     <link rel="stylesheet" href="../../../../style.css">
 </head>
-
 <body>
 
 <header>
     <div class="header-inner">
-
         <div class="logo">ЯРОСЛАВ МАСЛАКОВ</div>
 
         <nav>
             <a href="../../../index.html">Головна</a>
             <a href="../../../articles/index.html">Статті</a>
             <a href="../../../research/index.html">Дослідження</a>
-            <a href="../../index.html" class="active">Публікації</a>
+            <a href="../../../publications/index.html" class="active">Публікації</a>
             <a href="../../../certificates/index.html">Сертифікати</a>
             <a href="../../../about/index.html">Про мене</a>
             <a href="../../../contacts/index.html">Контакти</a>
         </nav>
 
-        <button
-            class="menu-toggle"
-            type="button"
-            aria-label="Відкрити меню"
-            onclick="this.textContent = this.textContent === 'МЕНЮ' ? 'ЗАКРИТИ' : 'МЕНЮ'; document.querySelector('nav').classList.toggle('menu-open')"
-        >
+        <button class="menu-toggle" type="button" aria-label="Відкрити меню"
+            onclick="this.textContent = this.textContent === 'МЕНЮ' ? 'ЗАКРИТИ' : 'МЕНЮ'; document.querySelector('nav').classList.toggle('menu-open')">
             МЕНЮ
         </button>
 
         <div class="language">
-            <a href="../../../../uk/publications/academic/article/index.html">UA</a>
+            <a id="ua-link" href="../../../../uk/publications/academic/article/index.html">UA</a>
             <span>|</span>
-            <a href="../../../../en/publications/academic/article/index.html">EN</a>
+            <a id="en-link" href="../../../../en/publications/academic/article/index.html">EN</a>
         </div>
-
     </div>
 </header>
 
-
 <main class="page">
-
-    <div class="page-content">
-
-        <article id="publication-content">
-            <p>Завантаження публікації...</p>
-        </article>
-
+    <div class="page-header">
+        <h1 id="publication-title">Завантаження публікації...</h1>
+        <p id="publication-date"></p>
     </div>
 
-</main>
+    <div class="page-content">
+        <div id="publication-content" class="page-card">
+            <p>Завантаження тексту публікації...</p>
+        </div>
 
+        <p>
+            <a href="../index.html">← До академічних публікацій</a>
+        </p>
+    </div>
+</main>
 
 <footer>
     © 2026 Ярослав Маслаков
 </footer>
-
 
 <script>
     const menuButton = document.querySelector('.menu-toggle');
@@ -75,110 +70,97 @@
     });
 </script>
 
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-    const SUPABASE_URL =
-        "https://jtplvfweyguheyqyewal.supabase.co";
+    const SUPABASE_URL = "https://jtplvfweyguheyqyewal.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_jAg0mG8Pj30tCF7qND3ydQ_-WDv4EhP";
 
-    const SUPABASE_KEY =
-        "sb_publishable_jAg0mG8Pj30tCF7qND3ydQ_-WDv4EhP";
+    const supabaseClient = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
 
-    const supabaseClient =
-        window.supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_KEY
-        );
-
+    function escapeHtml(text) {
+        const div = document.createElement("div");
+        div.textContent = text ?? "";
+        return div.innerHTML;
+    }
 
     async function loadPublication() {
+        const params = new URLSearchParams(window.location.search);
+        const publicationId = params.get("id");
 
-        const publicationContent =
-            document.getElementById("publication-content");
+        const titleElement = document.getElementById("publication-title");
+        const dateElement = document.getElementById("publication-date");
+        const contentElement = document.getElementById("publication-content");
 
-        const params =
-            new URLSearchParams(window.location.search);
-
-        const id =
-            params.get("id");
-
-        if (!id) {
-            publicationContent.innerHTML = `
-                <p>Публікацію не знайдено.</p>
-            `;
+        if (!publicationId) {
+            titleElement.textContent = "Публікацію не знайдено";
+            contentElement.innerHTML =
+                "<p>Не вказано ідентифікатор публікації.</p>";
             return;
         }
 
-        const { data, error } =
-            await supabaseClient
-                .from("publications")
-                .select("*")
-                .eq("id", id)
-                .eq("status", "published")
-                .eq("publication_type", "academic")
-                .single();
+        const { data, error } = await supabaseClient
+            .from("publications")
+            .select("*")
+            .eq("id", publicationId)
+            .eq("status", "published")
+            .eq("publication_type", "academic")
+            .maybeSingle();
 
-        if (error || !data) {
+        if (error) {
+            console.error("Помилка завантаження публікації:", error);
+            titleElement.textContent = "Помилка завантаження";
+            contentElement.innerHTML =
+                "<p>Не вдалося завантажити публікацію.</p>";
+            return;
+        }
 
-            console.error(
-                "Помилка завантаження публікації:",
-                error
-            );
-
-            publicationContent.innerHTML = `
-                <p>Не вдалося завантажити публікацію.</p>
-            `;
-
+        if (!data) {
+            titleElement.textContent = "Публікацію не знайдено";
+            contentElement.innerHTML =
+                "<p>Публікація не існує або недоступна.</p>";
             return;
         }
 
         document.title =
-            `${data.title_ua || "Академічна публікація"} — Ярослав Маслаков`;
+            (data.title_ua || "Академічна публікація") +
+            " — Ярослав Маслаков";
 
-        const contentHtml = data.description_ua
-            ? `<p>${escapeHtml(data.description_ua).replace(/\n/g, "<br>")}</p>`
-            : "";
+        titleElement.textContent =
+            data.title_ua || "Без назви";
 
-        publicationContent.innerHTML = `
+        if (data.publication_date) {
+            const date = new Date(data.publication_date + "T00:00:00");
 
-            <div class="page-header">
-                <h1>${escapeHtml(data.title_ua || "")}</h1>
-
-                <p>${formatDate(data.publication_date)}</p>
-            </div>
-
-            <div class="article-text">
-                ${contentHtml}
-            </div>
-
-        `;
-    }
-
-
-    function formatDate(date) {
-
-        if (!date) return "";
-
-        const parts = date.split("-");
-
-        if (parts.length !== 3) {
-            return escapeHtml(date);
+            dateElement.textContent = isNaN(date.getTime())
+                ? data.publication_date
+                : date.toLocaleDateString("uk-UA", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric"
+                });
+        } else {
+            dateElement.textContent = "";
         }
 
-        return `${parts[2]}.${parts[1]}.${parts[0]}`;
+        contentElement.innerHTML = `
+            <p>${escapeHtml(data.description_ua || "")}</p>
+            ${
+                data.url
+                    ? `<p><a href="${escapeHtml(data.url)}" target="_blank" rel="noopener noreferrer">Читати оригінал публікації ↗</a></p>`
+                    : ""
+            }
+        `;
+
+        document.getElementById("ua-link").href =
+            `../../../../uk/publications/academic/article/index.html?id=${encodeURIComponent(data.id)}`;
+
+        document.getElementById("en-link").href =
+            `../../../../en/publications/academic/article/index.html?id=${encodeURIComponent(data.id)}`;
     }
-
-
-    function escapeHtml(text) {
-
-        const div = document.createElement("div");
-
-        div.textContent = text || "";
-
-        return div.innerHTML;
-    }
-
 
     loadPublication();
 </script>

@@ -115,21 +115,40 @@
 
         articlesList.innerHTML = "";
 
-        data.forEach(article => {
+        
+data.forEach(article => {
 
-            const card = document.createElement("article");
-            card.className = "page-card";
+    const card = document.createElement("article");
+    card.className = "page-card";
+    card.style.cursor = "pointer";
+    card.setAttribute("tabindex", "0");
+    card.setAttribute("role", "link");
 
-            card.innerHTML = `
-                <h2>${escapeHtml(article.title_en || "")}</h2>
+    card.innerHTML = `
+        <h2>${escapeHtml(article.title_en || "")}</h2>
 
-                <p>
-                    ${escapeHtml(article.excerpt_en || "")}
-                </p>
-            `;
+        <p>
+            ${escapeHtml(article.excerpt_en || "")}
+        </p>
+    `;
 
-            articlesList.appendChild(card);
-        });
+    function openArticle() {
+        window.location.href =
+            `article/index.html?slug=${encodeURIComponent(article.slug)}`;
+    }
+
+    card.addEventListener("click", openArticle);
+
+    card.addEventListener("keydown", function(event) {
+        if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            openArticle();
+        }
+    });
+
+    articlesList.appendChild(card);
+});
+
     }
 
     function escapeHtml(text) {

@@ -2289,3 +2289,28 @@ body.admin-auth-ready {
         padding: 15px;
     }
 }
+
+/* Центрування сторінки матеріалу */
+
+#article-content {
+    width: 100%;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+}
+
+/* Заголовок і текст залишаються вирівняними ліворуч */
+
+#article-content .page-header,
+#article-content .article-text {
+    text-align: left;
+}
+
+/* Адаптація для мобільних пристроїв */
+
+@media (max-width: 600px) {
+    #article-content {
+        max-width: 100%;
+    }
+}

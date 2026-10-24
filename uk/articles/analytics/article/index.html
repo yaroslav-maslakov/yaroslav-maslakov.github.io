@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="uk">
 <head>
@@ -42,26 +43,19 @@
     </div>
 </header>
 
-
 <main class="page">
-
     <div class="page-content">
 
         <article id="article-content">
-
             <p>Завантаження матеріалу...</p>
-
         </article>
 
     </div>
-
 </main>
-
 
 <footer>
     © 2026 Ярослав Маслаков
 </footer>
-
 
 <script>
     const menuButton = document.querySelector('.menu-toggle');
@@ -77,17 +71,14 @@
     });
 </script>
 
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-
 <script>
-
     const SUPABASE_URL =
         "https://jtplvfweyguheyqyewal.supabase.co";
 
     const SUPABASE_KEY =
-        "sb_publishable_jAg0mG8Pj30tCF7qND3ydQ_-WDv4EhP";
+        "sb_publishable_jAg0m8G8Pj30tCF7qND3ydQ_-WDv4EhP";
 
     const supabaseClient =
         window.supabase.createClient(
@@ -95,34 +86,22 @@
             SUPABASE_KEY
         );
 
-
     async function loadArticle() {
-
         const articleContent =
             document.getElementById("article-content");
 
-
         const params =
-            new URLSearchParams(
-                window.location.search
-            );
-
+            new URLSearchParams(window.location.search);
 
         const slug =
             params.get("slug");
 
-
         if (!slug) {
-
             articleContent.innerHTML = `
-                <p>
-                    Матеріал не знайдено.
-                </p>
+                <p>Матеріал не знайдено.</p>
             `;
-
             return;
         }
-
 
         const { data, error } =
             await supabaseClient
@@ -133,70 +112,45 @@
                 .eq("category", "Аналітика")
                 .single();
 
-
         if (error || !data) {
-
             console.error(
                 "Помилка завантаження матеріалу:",
                 error
             );
 
             articleContent.innerHTML = `
-                <p>
-                    Не вдалося завантажити матеріал.
-                </p>
+                <p>Не вдалося завантажити матеріал.</p>
             `;
-
             return;
         }
-
 
         document.title =
             `${data.title_ua || "Аналітичний матеріал"} — Ярослав Маслаков`;
 
-
         let contentHtml = "";
 
-
-      if (data.content_ua) {
-
-    contentHtml =
-        data.content_ua
-            .split(/\n\s*\n/)
-            .map(paragraph => {
-
-                return `
-                    <p>
-                        ${paragraph.replace(/\n/g, "<br>")}
-                    </p>
-                `;
-
-            })
-            .join("");
-
-}
-
+        if (data.content_ua) {
+            contentHtml =
+                data.content_ua
+                    .split(/\n\s*\n/)
+                    .map(paragraph => `
+                        <p>
+                            ${paragraph.replace(/\n/g, "<br>")}
+                        </p>
+                    `)
+                    .join("");
+        }
 
         articleContent.innerHTML = `
-
             <div class="page-header">
-
-                <h1>
-                    ${escapeHtml(data.title_ua || "")}
-                </h1>
-
-                <p>
-                    ${formatDate(data.publication_date)}
-                </p>
-
+                <h1>${escapeHtml(data.title_ua || "")}</h1>
+                <p>${formatDate(data.publication_date)}</p>
             </div>
-
 
             ${
                 data.main_image
                     ? `
                         <div class="article-image">
-
                             <img
                                 src="${escapeHtml(data.main_image)}"
                                 alt="${escapeHtml(data.caption_ua || data.title_ua || "")}"
@@ -211,17 +165,13 @@
                                     `
                                     : ""
                             }
-
                         </div>
                     `
                     : ""
             }
 
-
-                        <div class="article-text">
-
+            <div class="article-text">
                 ${contentHtml}
-
             </div>
 
             <div class="article-navigation">
@@ -249,17 +199,13 @@
                 </a>
 
             </div>
-
         `;
     }
 
-
     function formatDate(date) {
-
         if (!date) return "";
 
-        const parts =
-            date.split("-");
+        const parts = date.split("-");
 
         if (parts.length !== 3) {
             return escapeHtml(date);
@@ -268,21 +214,13 @@
         return `${parts[2]}.${parts[1]}.${parts[0]}`;
     }
 
-
     function escapeHtml(text) {
-
-        const div =
-            document.createElement("div");
-
-        div.textContent =
-            text;
-
+        const div = document.createElement("div");
+        div.textContent = text;
         return div.innerHTML;
     }
 
-
     loadArticle();
-
 </script>
 
 </body>

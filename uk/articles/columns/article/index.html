@@ -118,7 +118,7 @@
                 .select("*")
                 .eq("slug", slug)
                 .eq("status", "published")
-                .eq("category", "Авторська колонка")
+                .eq("category", "Колонка")
                 .single();
 
         if (error || !data) {

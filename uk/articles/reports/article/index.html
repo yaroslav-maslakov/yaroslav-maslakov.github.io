@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="uk">
 <head>
@@ -41,6 +42,22 @@
         <article id="article-content">
             <p>Завантаження матеріалу...</p>
         </article>
+
+        <div class="article-navigation">
+            <a class="article-navigation-link" href="../index.html">
+                <span class="article-navigation-arrow">←</span>
+                <span>
+                    <strong>Репортажі</strong>
+                </span>
+            </a>
+
+            <a class="article-navigation-link article-home-link" href="../../../index.html">
+                <span class="article-navigation-arrow">⌂</span>
+                <span>
+                    <strong>На головну сторінку сайту</strong>
+                </span>
+            </a>
+        </div>
     </div>
 </main>
 
@@ -69,7 +86,7 @@
         "https://jtplvfweyguheyqyewal.supabase.co";
 
     const SUPABASE_KEY =
-        "sb_publishable_jAg0mG8Pj30tCF7qND3ydQ_-WDv4EhP";
+        "sb_publishable_jAg0m8G8Pj30tCF7qND3ydQ_-WDv4EhP";
 
     const supabaseClient = window.supabase.createClient(
         SUPABASE_URL,
@@ -104,52 +121,50 @@
         document.title =
             `${data.title_ua || "Репортаж"} — Ярослав Маслаков`;
 
-        
-let contentHtml = "";
+        let contentHtml = "";
 
-if (data.content_ua) {
-    const content = data.content_ua.trim();
+        if (data.content_ua) {
+            const content = data.content_ua.trim();
 
-    if (/<\/?[a-z][\s\S]*>/i.test(content)) {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(content, "text/html");
+            if (/<\/?[a-z][\s\S]*>/i.test(content)) {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(content, "text/html");
 
-        doc.querySelectorAll(
-            "script, style, iframe, object, embed, form, link, meta"
-        ).forEach(el => el.remove());
+                doc.querySelectorAll(
+                    "script, style, iframe, object, embed, form, link, meta"
+                ).forEach(el => el.remove());
 
-        doc.body.querySelectorAll("*").forEach(el => {
-            [...el.attributes].forEach(attr => {
-                const name = attr.name.toLowerCase();
-                const value = attr.value.trim();
+                doc.body.querySelectorAll("*").forEach(el => {
+                    [...el.attributes].forEach(attr => {
+                        const name = attr.name.toLowerCase();
+                        const value = attr.value.trim();
 
-                if (
-                    name.startsWith("on") ||
-                    (
-                        ["href", "src", "xlink:href", "action", "formaction"].includes(name) &&
-                        /^\s*(javascript|vbscript):/i.test(value)
-                    ) ||
-                    (
-                        name === "style" &&
-                        /expression\s*\(|url\s*\(\s*['"]?\s*javascript:/i.test(value)
+                        if (
+                            name.startsWith("on") ||
+                            (
+                                ["href", "src", "xlink:href", "action", "formaction"].includes(name) &&
+                                /^\s*(javascript|vbscript):/i.test(value)
+                            ) ||
+                            (
+                                name === "style" &&
+                                /expression\s*\(|url\s*\(\s*['"]?\s*javascript:/i.test(value)
+                            )
+                        ) {
+                            el.removeAttribute(attr.name);
+                        }
+                    });
+                });
+
+                contentHtml = doc.body.innerHTML;
+            } else {
+                contentHtml = content
+                    .split(/\n\s*\n/)
+                    .map(paragraph =>
+                        `<p>${escapeHtml(paragraph).replace(/\n/g, "<br>")}</p>`
                     )
-                ) {
-                    el.removeAttribute(attr.name);
-                }
-            });
-        });
-
-        contentHtml = doc.body.innerHTML;
-    } else {
-        contentHtml = content
-            .split(/\n\s*\n/)
-            .map(paragraph =>
-                `<p>${escapeHtml(paragraph).replace(/\n/g, "<br>")}</p>`
-            )
-            .join("");
-    }
-}
-
+                    .join("");
+            }
+        }
 
         articleContent.innerHTML = `
             <div class="page-header">

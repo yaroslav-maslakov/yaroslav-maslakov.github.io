@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="uk">
 <head>
@@ -46,9 +47,21 @@
             <p>Завантаження тексту...</p>
         </div>
 
-        <p>
-            <a href="../index.html">← До розділу «Медіа та суспільство»</a>
-        </p>
+        <div class="article-navigation">
+            <a class="article-navigation-link" href="../index.html">
+                <span class="article-navigation-arrow">←</span>
+                <span>
+                    <strong>Медіа та суспільство</strong>
+                </span>
+            </a>
+
+            <a class="article-navigation-link article-home-link" href="../../../index.html">
+                <span class="article-navigation-arrow">⌂</span>
+                <span>
+                    <strong>На головну сторінку сайту</strong>
+                </span>
+            </a>
+        </div>
     </div>
 </main>
 
@@ -74,7 +87,7 @@
 
 <script>
     const SUPABASE_URL = "https://jtplvfweyguheyqyewal.supabase.co";
-    const SUPABASE_KEY = "sb_publishable_jAg0mG8Pj30tCF7qND3ydQ_-WDv4EhP";
+    const SUPABASE_KEY = "sb_publishable_jAg0m8G8Pj30tCF7qND3ydQ_-WDv4EhP";
 
     const supabaseClient = window.supabase.createClient(
         SUPABASE_URL,
